@@ -170,7 +170,7 @@ type
     procedure HeatmapOpacityTracking(Sender: TObject);
 
   private
-    { Déclarations privées }
+    { DÃ©clarations privÃ©es }
 
     FEditLine: TecNativeLineSelect;
 
@@ -267,7 +267,7 @@ type
       const Group: TECShapes; var ShapeLinePoint: TECShape;
       const Lat, Lng: Double; const index: integer);
   public
-    { Déclarations publiques }
+    { DÃ©clarations publiques }
     procedure UpdateXapiStyles;
   end;
 
@@ -639,7 +639,7 @@ begin
     '.marker.severity:Serious{color:black;}');
 
   // get your key from http://openweathermap.org/appid
-  map.OpenWeather.Key := '80feeb4b98aad684474194921cbc7c2f';
+  map.OpenWeather.Key := 'your_key';
 
 
 
@@ -1496,7 +1496,7 @@ begin
       s := s + '<br><br><a href="#' + inttostr(18) + '/' +
         DoubleToStrDigit(Item.Latitude, 6) + '/' +
         DoubleToStrDigit(Item.Longitude, 6) +
-        '"><font hcolor=FF0000 >Zoom To Street</font></a>';
+        '"><font hcolor=FF0000 >ZoomÂ ToÂ Street</font></a>';
     end;
 
     OpenInfoWindow(s, Item.Latitude, Item.Longitude);
@@ -1770,7 +1770,7 @@ begin
     begin
       FSelectedShape := map.add(nsPolygon, Lat, Lng);
 
-      // change défault point
+      // change dÃ©fault point
       TECShapePolygone(FSelectedShape).OnCreateShapeLinePoint :=
         doCreateShapeLinePointEditable;
     end
@@ -1781,7 +1781,7 @@ begin
     begin
       FSelectedShape := map.add(nsLine, Lat, Lng);
 
-      // change défault point
+      // change dÃ©fault point
       TECShapeLine(FSelectedShape).OnCreateShapeLinePoint :=
         doCreateShapeLinePointEditable;
     end;
@@ -1953,11 +1953,11 @@ begin
 
     lbInfosize.Text := 'Perimeter : ' + DoubleToStrDigit
       (TECShapePolygone(Sender).Distance, 4) + ' Km '#13#10'Area : ' +
-      DoubleToStrDigit(TECShapePolygone(Sender).Area, 4) + ' Km²';
+      DoubleToStrDigit(TECShapePolygone(Sender).Area, 4) + ' KmÂ²';
 
     TECShapePolygone(Sender).description := 'Perimeter : ' +
       DoubleToStrDigit(TECShapePolygone(Sender).Distance, 4) + ' Km <br>Area : '
-      + DoubleToStrDigit(TECShapePolygone(Sender).Area, 4) + ' Km²'
+      + DoubleToStrDigit(TECShapePolygone(Sender).Area, 4) + ' KmÂ²'
   end
 
   else
@@ -2574,7 +2574,7 @@ begin
   ShapePOI.Width := 24;
   ShapePOI.height := 24;
 
-  ShapePOI.Hint := 'Poi n°' + inttostr(i);
+  ShapePOI.Hint := 'Poi nÂ°' + inttostr(i);
 
   ShapePOI.draggable := true;
 
