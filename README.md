@@ -9,4 +9,4 @@ Support offline mode, mappilary, multiple views, screenshot areas even off scree
 
 Available in VCL (D7 to 11) and Firemonkey (Xe3 to 11) ( Windows , Mac OS X, iOS and Android )
 
-Web site : https://www.helpandweb.com/ecmap/
+Web site https://www.helpandweb.com/ecmap/
