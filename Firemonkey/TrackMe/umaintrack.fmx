@@ -1,0 +1,75 @@
+object FormTrack: TFormTrack
+  Left = 0
+  Top = 0
+  Caption = 'Form17'
+  ClientHeight = 480
+  ClientWidth = 640
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  DesignerMasterStyle = 0
+  object map: TECNativeMap
+    Touch.InteractiveGestures = [Zoom, Rotate, DoubleTap]
+    HideShapesWhenZoom = False
+    HideShapesWhenWaitingTile = False
+    DblClickZoom = True
+    MouseWheelZoom = True
+    Latitude = 43.232951000000000000
+    Longitude = 0.078081999999994910
+    Reticle = False
+    ReticleColor = claBlack
+    ZoomScaleFactor = 0
+    DragRect = drNone
+    Draggable = True
+    Active = True
+    Align = Client
+    Size.Width = 640.000000000000000000
+    Size.Height = 480.000000000000000000
+    Size.PlatformDefault = False
+    object Label1: TLabel
+      Align = Bottom
+      StyledSettings = [Family, Style, FontColor]
+      Position.Y = 463.000000000000000000
+      Size.Width = 640.000000000000000000
+      Size.Height = 17.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.Size = 24.000000000000000000
+      TextSettings.HorzAlign = Center
+      object Circle1: TCircle
+        Align = Center
+        Fill.Color = claWhite
+        Margins.Bottom = 64.000000000000000000
+        Size.Width = 640.000000000000000000
+        Size.Height = 64.000000000000000000
+        Size.PlatformDefault = False
+        Stroke.Color = claCrimson
+        Stroke.Thickness = 6.000000000000000000
+        object speed: TLabel
+          Align = Center
+          StyledSettings = [Family, FontColor]
+          Size.Width = 46.000000000000000000
+          Size.Height = 41.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.Font.Size = 16.000000000000000000
+          TextSettings.Font.StyleExt = {00070000000000000004000000}
+          TextSettings.HorzAlign = Center
+          Text = '999'
+        end
+      end
+    end
+  end
+  object TimerSpeed: TTimer
+    Enabled = False
+    Interval = 2000
+    OnTimer = TimerSpeedTimer
+    Left = 40
+    Top = 328
+  end
+  object LocationSensor: TLocationSensor
+    Distance = 10.000000000000000000
+    OnLocationChanged = LocationSensorLocationChanged
+    Left = 40
+    Top = 376
+  end
+end

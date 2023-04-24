@@ -1,0 +1,304 @@
+object Form2: TForm2
+  Left = 0
+  Top = 0
+  Caption = 'Mappilary Layer'
+  ClientHeight = 687
+  ClientWidth = 1090
+  Position = Designed
+  StyleBook = StyleBook1
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  DesignerMasterStyle = 0
+  object Panel1: TPanel
+    Align = Right
+    Padding.Left = 4.000000000000000000
+    Padding.Top = 4.000000000000000000
+    Padding.Right = 4.000000000000000000
+    Padding.Bottom = 4.000000000000000000
+    Position.X = 762.000000000000000000
+    Size.Width = 328.000000000000000000
+    Size.Height = 687.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    object Image: TImage
+      MultiResBitmap = <
+        item
+        end
+        item
+          Scale = 2.000000000000000000
+        end>
+      Align = Top
+      Position.X = 4.000000000000000000
+      Position.Y = 65.000000000000000000
+      Size.Width = 320.000000000000000000
+      Size.Height = 240.000000000000000000
+      Size.PlatformDefault = False
+      object Rectangle1: TRectangle
+        Align = Bottom
+        Fill.Color = claBlack
+        Opacity = 0.600000023841857900
+        Position.Y = 208.000000000000000000
+        Size.Width = 320.000000000000000000
+        Size.Height = 32.000000000000000000
+        Size.PlatformDefault = False
+        object NextImage: TButton
+          Align = Right
+          Hint = 'Next image'
+          Position.X = 256.000000000000000000
+          Size.Width = 32.000000000000000000
+          Size.Height = 32.000000000000000000
+          Size.PlatformDefault = False
+          StyleLookup = 'arrowrighttoolbuttonbordered'
+          TabOrder = 0
+          Text = 'Next'
+          ParentShowHint = False
+          ShowHint = True
+          OnClick = NextImageClick
+        end
+        object PrevImage: TButton
+          Align = Left
+          Hint = 'Prev image'
+          Position.X = 32.000000000000000000
+          Size.Width = 32.000000000000000000
+          Size.Height = 32.000000000000000000
+          Size.PlatformDefault = False
+          StyleLookup = 'arrowlefttoolbuttonbordered'
+          TabOrder = 1
+          Text = 'Next'
+          ParentShowHint = False
+          ShowHint = True
+          OnClick = PrevImageClick
+        end
+        object SelectedPhoto: TLabel
+          Anchors = [akLeft, akRight]
+          StyledSettings = [Family]
+          Position.X = 48.000000000000000000
+          Size.Width = 233.000000000000000000
+          Size.Height = 32.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.Font.Size = 16.000000000000000000
+          TextSettings.Font.StyleExt = {00070000000000000004000000}
+          TextSettings.FontColor = claWhite
+          TextSettings.HorzAlign = Center
+        end
+        object startImage: TButton
+          Align = MostLeft
+          Hint = 'Start sequence'
+          Size.Width = 32.000000000000000000
+          Size.Height = 32.000000000000000000
+          Size.PlatformDefault = False
+          StyleLookup = 'rewindtoolbuttonbordered'
+          TabOrder = 2
+          Text = 'Next'
+          ParentShowHint = False
+          ShowHint = True
+          OnClick = FirstImageClick
+        end
+        object LastImage: TButton
+          Align = MostRight
+          Hint = 'End sequence'
+          Position.X = 288.000000000000000000
+          Size.Width = 32.000000000000000000
+          Size.Height = 32.000000000000000000
+          Size.PlatformDefault = False
+          StyleLookup = 'forwardtoolbuttonbordered'
+          TabOrder = 3
+          Text = 'Next'
+          ParentShowHint = False
+          ShowHint = True
+          OnClick = LastImageClick
+        end
+      end
+    end
+    object Label1: TLabel
+      Align = Bottom
+      StyledSettings = [Family]
+      Margins.Top = 4.000000000000000000
+      Margins.Right = 4.000000000000000000
+      Position.X = 4.000000000000000000
+      Position.Y = 631.000000000000000000
+      Size.Width = 316.000000000000000000
+      Size.Height = 52.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.Size = 16.000000000000000000
+      TextSettings.Font.StyleExt = {00070000000000000004000000}
+      TextSettings.FontColor = claWhite
+      TextSettings.VertAlign = Leading
+      Text = 'Address'
+      object address: TEdit
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        Anchors = [akLeft, akRight]
+        TabOrder = 0
+        Position.Y = 21.000000000000000000
+        Size.Width = 317.000000000000000000
+        Size.Height = 22.000000000000000000
+        Size.PlatformDefault = False
+        OnKeyUp = addressKeyUp
+      end
+    end
+    object totalSequences: TLabel
+      Align = Top
+      StyledSettings = [Family]
+      Margins.Right = 4.000000000000000000
+      Position.X = 4.000000000000000000
+      Position.Y = 4.000000000000000000
+      Size.Width = 316.000000000000000000
+      Size.Height = 61.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.Size = 16.000000000000000000
+      TextSettings.Font.StyleExt = {00070000000000000004000000}
+      TextSettings.FontColor = claWhite
+      TextSettings.VertAlign = Leading
+      ParentShowHint = False
+      ShowHint = False
+      object SeqAniIndicator: TAniIndicator
+        Position.X = 288.000000000000000000
+        Size.Width = 28.000000000000000000
+        Size.Height = 26.000000000000000000
+        Size.PlatformDefault = False
+      end
+      object Sequences: TComboBox
+        Align = Top
+        Position.Y = 29.000000000000000000
+        Size.Width = 316.000000000000000000
+        Size.Height = 22.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 1
+        OnChange = sequencesChange
+      end
+      object Label3: TLabel
+        Align = Top
+        StyledSettings = [Style]
+        Padding.Bottom = 4.000000000000000000
+        Margins.Bottom = 4.000000000000000000
+        Size.Width = 316.000000000000000000
+        Size.Height = 25.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.Font.Size = 14.000000000000000000
+        TextSettings.FontColor = claWhitesmoke
+        TextSettings.HorzAlign = Center
+        Text = 'Label3'
+        TabOrder = 3
+      end
+    end
+    object location: TLabel
+      Align = Top
+      StyledSettings = [Family]
+      Margins.Top = 4.000000000000000000
+      Margins.Right = 4.000000000000000000
+      Position.X = 4.000000000000000000
+      Position.Y = 337.000000000000000000
+      Size.Width = 316.000000000000000000
+      Size.Height = 24.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.Size = 16.000000000000000000
+      TextSettings.Font.StyleExt = {00070000000000000004000000}
+      TextSettings.FontColor = claWhite
+      TextSettings.VertAlign = Leading
+    end
+    object date: TLabel
+      Align = Top
+      StyledSettings = [Family]
+      Margins.Top = 4.000000000000000000
+      Margins.Right = 4.000000000000000000
+      Position.X = 4.000000000000000000
+      Position.Y = 309.000000000000000000
+      Size.Width = 316.000000000000000000
+      Size.Height = 24.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.Size = 16.000000000000000000
+      TextSettings.Font.StyleExt = {00070000000000000004000000}
+      TextSettings.FontColor = claWhite
+      TextSettings.VertAlign = Leading
+    end
+    object Label2: TLabel
+      Align = Bottom
+      StyledSettings = [Style]
+      Position.X = 4.000000000000000000
+      Position.Y = 581.000000000000000000
+      Size.Width = 320.000000000000000000
+      Size.Height = 23.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.Size = 14.000000000000000000
+      TextSettings.FontColor = claWhitesmoke
+      Text = 'DblClick max. search distance (meters)'
+      object distance: TSpinBox
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        TabOrder = 1
+        Cursor = crIBeam
+        Min = 100.000000000000000000
+        Max = 2000.000000000000000000
+        Value = 500.000000000000000000
+        Increment = 100.000000000000000000
+        Position.X = 240.000000000000000000
+        Position.Y = 2.000000000000000000
+        Size.Width = 76.000000000000000000
+        Size.Height = 22.000000000000000000
+        Size.PlatformDefault = False
+      end
+    end
+    object findImage: TLabel
+      Align = Bottom
+      StyledSettings = []
+      Margins.Left = 16.000000000000000000
+      Position.X = 20.000000000000000000
+      Position.Y = 604.000000000000000000
+      Size.Width = 304.000000000000000000
+      Size.Height = 23.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.Size = 14.000000000000000000
+      TextSettings.Font.StyleExt = {00060000000000000004000000}
+      TextSettings.FontColor = claWhitesmoke
+    end
+  end
+  object StyleBook1: TStyleBook
+    Styles = <
+      item
+      end
+      item
+        Platform = 'Windows 7'
+        ResourcesBin = {
+          464D585F5354594C4520322E3501060A50616E656C7374796C6503B100005450
+          46300A5452656374616E676C6500095374796C654E616D65060A50616E656C73
+          74796C6505416C69676E070643656E7465720A46696C6C2E436F6C6F72070A63
+          6C6144696D677261790748697454657374080A53697A652E5769647468050000
+          0000000000A407400B53697A652E4865696768740500000000000000F0074014
+          53697A652E506C6174666F726D44656661756C74080C5374726F6B652E436F6C
+          6F7207097846463937393739370000}
+      end>
+  end
+  object Rectangle2: TRectangle
+    Align = Client
+    Size.Width = 762.000000000000000000
+    Size.Height = 687.000000000000000000
+    Size.PlatformDefault = False
+    object map: TECNativeMap
+      Touch.InteractiveGestures = [Zoom, Rotate, DoubleTap]
+      HideShapesWhenZoom = False
+      HideShapesWhenWaitingTile = False
+      DblClickZoom = False
+      MouseWheelZoom = True
+      latitude = 43.232951000000000000
+      longitude = 0.078081999999994910
+      Reticle = False
+      ReticleColor = claBlack
+      ZoomScaleFactor = 0
+      DragRect = drNone
+      Draggable = True
+      TwoOrMoreFingers = False
+      OnlyOneOpenInfoWindow = False
+      WaitingForDestruction = False
+      Active = True
+      OnChangeMapZoom = mapChangeMapZoom
+      OnMapDblClick = mapMapDblClick
+      Align = Client
+      ClipChildren = True
+      Size.Width = 762.000000000000000000
+      Size.Height = 687.000000000000000000
+      Size.PlatformDefault = False
+    end
+  end
+end

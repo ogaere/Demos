@@ -1,0 +1,155 @@
+object Form2: TForm2
+  Left = 0
+  Top = 0
+  Caption = 'photographer drone'
+  ClientHeight = 480
+  ClientWidth = 1090
+  StyleBook = StyleBook1
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  DesignerMasterStyle = 0
+  object Panel1: TPanel
+    Align = Right
+    Padding.Left = 4.000000000000000000
+    Padding.Top = 4.000000000000000000
+    Padding.Right = 4.000000000000000000
+    Padding.Bottom = 4.000000000000000000
+    Position.X = 762.000000000000000000
+    Size.Width = 328.000000000000000000
+    Size.Height = 480.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    object launchdrones: TButton
+      Align = Bottom
+      StyledSettings = [FontColor]
+      Margins.Top = 8.000000000000000000
+      Position.X = 4.000000000000000000
+      Position.Y = 440.000000000000000000
+      Size.Width = 320.000000000000000000
+      Size.Height = 36.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 0
+      Text = 'Launch drones'
+      TextSettings.Font.Size = 18.000000000000000000
+      TextSettings.Font.StyleExt = {00070000000000000004000000}
+      OnClick = launchdronesClick
+    end
+    object TotalPhotos: TLabel
+      Align = Bottom
+      StyledSettings = [Style]
+      Position.X = 4.000000000000000000
+      Position.Y = 376.000000000000000000
+      Size.Width = 320.000000000000000000
+      Size.Height = 24.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.Size = 20.000000000000000000
+      TextSettings.FontColor = claWhitesmoke
+      TextSettings.HorzAlign = Center
+    end
+    object Rectangle1: TRectangle
+      Align = Bottom
+      Fill.Color = claDimgray
+      Position.X = 4.000000000000000000
+      Position.Y = 400.000000000000000000
+      Size.Width = 320.000000000000000000
+      Size.Height = 32.000000000000000000
+      Size.PlatformDefault = False
+      Stroke.Thickness = 0.000000000000000000
+      object Label1: TLabel
+        Align = Bottom
+        StyledSettings = [Style]
+        Position.Y = 8.000000000000000000
+        Size.Width = 320.000000000000000000
+        Size.Height = 24.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.Font.Size = 14.000000000000000000
+        TextSettings.FontColor = claWhitesmoke
+        Text = 'Distance (in meters) between photos'
+        object distance: TSpinBox
+          Touch.InteractiveGestures = [LongTap, DoubleTap]
+          TabOrder = 0
+          Cursor = crIBeam
+          Min = 100.000000000000000000
+          Max = 2000.000000000000000000
+          Value = 500.000000000000000000
+          Increment = 100.000000000000000000
+          Position.X = 240.000000000000000000
+          Position.Y = 2.000000000000000000
+          Size.Width = 76.000000000000000000
+          Size.Height = 22.000000000000000000
+          Size.PlatformDefault = False
+          OnChange = distanceChange
+        end
+      end
+    end
+    object BackPhoto: TRectangle
+      Align = Top
+      ClipChildren = True
+      Fill.Kind = None
+      Padding.Left = 3.000000000000000000
+      Padding.Top = 3.000000000000000000
+      Padding.Right = 3.000000000000000000
+      Padding.Bottom = 3.000000000000000000
+      Position.X = 4.000000000000000000
+      Position.Y = 4.000000000000000000
+      Size.Width = 320.000000000000000000
+      Size.Height = 240.000000000000000000
+      Size.PlatformDefault = False
+      Stroke.Thickness = 3.000000000000000000
+      object Image: TImage
+        MultiResBitmap = <
+          item
+          end>
+        Align = Client
+        Size.Width = 314.000000000000000000
+        Size.Height = 234.000000000000000000
+        Size.PlatformDefault = False
+      end
+    end
+  end
+  object StyleBook1: TStyleBook
+    Styles = <
+      item
+      end
+      item
+        Platform = 'Windows 7'
+        ResourcesBin = {
+          464D585F5354594C4520322E3501060A50616E656C7374796C6503B100005450
+          46300A5452656374616E676C6500095374796C654E616D65060A50616E656C73
+          74796C6505416C69676E070643656E7465720A46696C6C2E436F6C6F72070A63
+          6C6144696D677261790748697454657374080A53697A652E5769647468050000
+          0000000000A407400B53697A652E4865696768740500000000000000F0074014
+          53697A652E506C6174666F726D44656661756C74080C5374726F6B652E436F6C
+          6F7207097846463937393739370000}
+      end>
+  end
+  object Rectangle2: TRectangle
+    Align = Client
+    Size.Width = 762.000000000000000000
+    Size.Height = 480.000000000000000000
+    Size.PlatformDefault = False
+    object map: TECNativeMap
+      Touch.InteractiveGestures = [Zoom, Rotate, DoubleTap]
+      HideShapesWhenZoom = False
+      HideShapesWhenWaitingTile = False
+      DblClickZoom = True
+      MouseWheelZoom = True
+      Latitude = 43.232951000000000000
+      Longitude = 0.078081999999994910
+      Reticle = False
+      ReticleColor = claBlack
+      ZoomScaleFactor = 0
+      DragRect = drNone
+      Draggable = True
+      TileServer = tsHereHybrid
+      Active = True
+      Align = Client
+      Size.Width = 762.000000000000000000
+      Size.Height = 480.000000000000000000
+      Size.PlatformDefault = False
+    end
+  end
+end

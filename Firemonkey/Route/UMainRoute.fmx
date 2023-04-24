@@ -1,0 +1,315 @@
+object FDemoNativeRoute: TFDemoNativeRoute
+  Left = 0
+  Top = 0
+  Caption = 'Turn by Turn demo for Firemonkey - '#169' ESCOT-SEP Christophe'
+  ClientHeight = 480
+  ClientWidth = 841
+  Padding.Left = 8.000000000000000000
+  Padding.Right = 8.000000000000000000
+  Position = DesktopCenter
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  DesignerMasterStyle = 0
+  object LLeftRight: TLayout
+    Align = Top
+    Position.X = 8.000000000000000000
+    Size.Width = 825.000000000000000000
+    Size.Height = 40.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    OnResize = LLeftRightResize
+    object LLeft: TLayout
+      Align = Left
+      Size.Width = 281.000000000000000000
+      Size.Height = 40.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 0
+      object RouteStart: TEdit
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        Anchors = [akLeft, akTop, akRight]
+        TabOrder = 0
+        Position.X = 40.000000000000000000
+        Position.Y = 8.000000000000000000
+        Size.Width = 233.000000000000000000
+        Size.Height = 22.000000000000000000
+        Size.PlatformDefault = False
+      end
+      object From: TLabel
+        StyledSettings = [Family, Size, FontColor]
+        Position.Y = 11.000000000000000000
+        Size.Width = 41.000000000000000000
+        Size.Height = 17.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.Font.StyleExt = {00070000000000000004000000}
+        Text = 'From'
+      end
+    end
+    object LRight: TLayout
+      Align = Client
+      Size.Width = 544.000000000000000000
+      Size.Height = 40.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 1
+      object RouteEnd: TEdit
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        Anchors = [akLeft, akTop, akRight]
+        TabOrder = 0
+        Position.X = 32.000000000000000000
+        Position.Y = 8.000000000000000000
+        Size.Width = 417.000000000000000000
+        Size.Height = 22.000000000000000000
+        Size.PlatformDefault = False
+      end
+      object Label1: TLabel
+        StyledSettings = [Family, Size, FontColor]
+        Position.Y = 11.000000000000000000
+        Size.Width = 33.000000000000000000
+        Size.Height = 17.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.Font.StyleExt = {00070000000000000004000000}
+        Text = 'To'
+      end
+    end
+  end
+  object LRoute: TLayout
+    Align = Top
+    Position.X = 8.000000000000000000
+    Position.Y = 40.000000000000000000
+    Size.Width = 825.000000000000000000
+    Size.Height = 56.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
+    object RouteAdd: TButton
+      Anchors = [akTop, akRight]
+      Position.X = 744.000000000000000000
+      Position.Y = -34.000000000000000000
+      TabOrder = 0
+      Text = 'Add Route'
+      OnClick = RouteAddClick
+    end
+    object rbDriving: TRadioButton
+      IsChecked = True
+      Position.X = 248.000000000000000000
+      Position.Y = 8.000000000000000000
+      Size.Width = 73.000000000000000000
+      Size.Height = 19.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 1
+      Text = 'Driving'
+    end
+    object rbBicycling: TRadioButton
+      Position.X = 312.000000000000000000
+      Position.Y = 8.000000000000000000
+      Size.Width = 81.000000000000000000
+      Size.Height = 19.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 2
+      Text = 'Bicycling'
+    end
+    object rbWalking: TRadioButton
+      Position.X = 384.000000000000000000
+      Position.Y = 8.000000000000000000
+      Size.Width = 73.000000000000000000
+      Size.Height = 19.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 3
+      Text = 'Walking'
+    end
+    object Follow: TCheckBox
+      IsChecked = True
+      Position.Y = 32.000000000000000000
+      Size.Width = 129.000000000000000000
+      Size.Height = 19.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 4
+      Text = 'follow the vehicle'
+    end
+    object engine: TComboBox
+      Hint = 'routing engine'
+      Items.Strings = (
+        'MapBox'
+        'MapQuest'
+        'MapZen'
+        'OSRM'
+        'OpenStreetMap')
+      Position.X = 104.000000000000000000
+      Position.Y = 6.000000000000000000
+      Size.Width = 129.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 5
+    end
+    object routes: TComboBox
+      Anchors = [akLeft, akTop, akRight]
+      Position.X = 456.000000000000000000
+      Position.Y = 6.000000000000000000
+      Size.Width = 370.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 6
+      OnChange = routesChange
+    end
+    object Label2: TLabel
+      StyledSettings = [Family, Size, FontColor]
+      Position.Y = 8.000000000000000000
+      Size.Width = 105.000000000000000000
+      Size.Height = 17.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.StyleExt = {00070000000000000004000000}
+      Text = 'Routing engine :'
+      TabOrder = 7
+    end
+  end
+  object LTurnByTurn: TLayout
+    Align = Bottom
+    Padding.Left = 2.000000000000000000
+    Padding.Top = 2.000000000000000000
+    Padding.Right = 2.000000000000000000
+    Padding.Bottom = 2.000000000000000000
+    Position.X = 8.000000000000000000
+    Position.Y = 440.000000000000000000
+    Size.Width = 825.000000000000000000
+    Size.Height = 40.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 2
+    object Rectangle1: TRectangle
+      Align = Left
+      Fill.Color = claWhite
+      Position.X = 2.000000000000000000
+      Position.Y = 2.000000000000000000
+      Size.Width = 103.000000000000000000
+      Size.Height = 36.000000000000000000
+      Size.PlatformDefault = False
+      Stroke.Kind = None
+      object infos: TLabel
+        Align = Client
+        StyledSettings = [Family, Size, Style]
+        Padding.Left = 2.000000000000000000
+        Padding.Top = 2.000000000000000000
+        Padding.Right = 2.000000000000000000
+        Padding.Bottom = 2.000000000000000000
+        Size.Width = 103.000000000000000000
+        Size.Height = 36.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.HorzAlign = Center
+      end
+    end
+    object Rectangle2: TRectangle
+      Align = Right
+      Fill.Color = claBlack
+      Padding.Left = 2.000000000000000000
+      Padding.Top = 2.000000000000000000
+      Padding.Right = 2.000000000000000000
+      Padding.Bottom = 2.000000000000000000
+      Position.X = 737.000000000000000000
+      Position.Y = 2.000000000000000000
+      Size.Width = 86.000000000000000000
+      Size.Height = 36.000000000000000000
+      Size.PlatformDefault = False
+      Stroke.Kind = None
+      object NextKM: TLabel
+        Align = Client
+        StyledSettings = [Family, Size, Style]
+        Size.Width = 82.000000000000000000
+        Size.Height = 32.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.FontColor = claWhite
+        TextSettings.HorzAlign = Center
+      end
+    end
+    object Rectangle3: TRectangle
+      Align = Client
+      Fill.Color = claWhite
+      Padding.Left = 2.000000000000000000
+      Padding.Top = 2.000000000000000000
+      Padding.Right = 2.000000000000000000
+      Padding.Bottom = 2.000000000000000000
+      Size.Width = 632.000000000000000000
+      Size.Height = 36.000000000000000000
+      Size.PlatformDefault = False
+      Stroke.Kind = None
+      object instructions: TLabel
+        Align = Client
+        StyledSettings = [Family, Size, Style]
+        Size.Width = 628.000000000000000000
+        Size.Height = 32.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.HorzAlign = Center
+      end
+    end
+  end
+  object Panel1: TPanel
+    Align = Client
+    Size.Width = 825.000000000000000000
+    Size.Height = 344.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 3
+    object map: TECNativeMap
+      Touch.InteractiveGestures = [Zoom, Rotate, DoubleTap]
+      HideShapesWhenZoom = False
+      HideShapesWhenWaitingTile = False
+      DblClickZoom = True
+      MouseWheelZoom = True
+      latitude = 43.232951000000000000
+      longitude = 0.078081999999994910
+      Reticle = False
+      ReticleColor = claBlack
+      ZoomScaleFactor = 0
+      DragRect = drNone
+      Draggable = True
+      OnlyOneOpenInfoWindow = False
+      Active = True
+      Align = Client
+      ClipChildren = True
+      Size.Width = 825.000000000000000000
+      Size.Height = 344.000000000000000000
+      Size.PlatformDefault = False
+    end
+    object InfoBar: TLayout
+      Anchors = [akLeft, akRight, akBottom]
+      Padding.Left = 10.000000000000000000
+      Position.Y = 309.000000000000000000
+      Size.Width = 826.000000000000000000
+      Size.Height = 35.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 0
+      object ScaleLine: TLine
+        LineType = Top
+        Position.X = 12.000000000000000000
+        Position.Y = 25.000000000000000000
+        Size.Width = 80.000000000000000000
+        Size.Height = 9.000000000000000000
+        Size.PlatformDefault = False
+        Stroke.Thickness = 4.000000000000000000
+      end
+      object ScaleLegend: TLabel
+        StyledSettings = [Family, Size, FontColor]
+        Position.X = 12.000000000000000000
+        Position.Y = 4.000000000000000000
+        TextSettings.Font.StyleExt = {00070000000000000004000000}
+        TextSettings.HorzAlign = Center
+      end
+      object CopyrightMap: TLabel
+        Align = Right
+        AutoSize = True
+        StyledSettings = [Family, Size, Style]
+        Padding.Left = 4.000000000000000000
+        Padding.Top = 4.000000000000000000
+        Padding.Right = 4.000000000000000000
+        Margins.Top = 10.000000000000000000
+        Position.X = 749.000000000000000000
+        Position.Y = 10.000000000000000000
+        Size.Width = 77.000000000000000000
+        Size.Height = 25.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.FontColor = xFFB9B5B5
+        TextSettings.HorzAlign = Center
+        TextSettings.WordWrap = False
+        Text = 'CopyrightMap'
+      end
+    end
+  end
+end

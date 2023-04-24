@@ -1,0 +1,745 @@
+object FormMegademo: TFormMegademo
+  Left = 0
+  Top = 0
+  Caption = 'MegaDemo TECNativeMap for Firemonkey - '#169'  ESCOT-SEP Christophe'
+  ClientHeight = 763
+  ClientWidth = 845
+  Position = ScreenCenter
+  FormFactor.Width = 1908
+  FormFactor.Height = 984
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  OnCloseQuery = FormCloseQuery
+  OnDestroy = FormDestroy
+  DesignerMasterStyle = 0
+  object Panel1: TPanel
+    Align = Right
+    Position.X = 645.000000000000000000
+    Size.Width = 200.000000000000000000
+    Size.Height = 763.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    object pnLatLng: TPanel
+      Align = Bottom
+      Position.Y = 731.000000000000000000
+      Size.Width = 200.000000000000000000
+      Size.Height = 32.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 0
+      object LatLng: TLabel
+        Align = Client
+        Padding.Left = 4.000000000000000000
+        Margins.Left = 4.000000000000000000
+        Size.Width = 196.000000000000000000
+        Size.Height = 32.000000000000000000
+        Size.PlatformDefault = False
+      end
+    end
+    object GroupBox1: TGroupBox
+      Align = Top
+      Padding.Left = 4.000000000000000000
+      Padding.Right = 4.000000000000000000
+      Position.Y = 234.000000000000000000
+      Size.Width = 200.000000000000000000
+      Size.Height = 152.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'Route'
+      TabOrder = 1
+      object Label1: TLabel
+        Position.X = 8.000000000000000000
+        Position.Y = 52.000000000000000000
+        Size.Width = 33.000000000000000000
+        Size.Height = 15.000000000000000000
+        Size.PlatformDefault = False
+        Text = 'start'
+      end
+      object Label2: TLabel
+        Position.X = 8.000000000000000000
+        Position.Y = 77.000000000000000000
+        Size.Width = 25.000000000000000000
+        Size.Height = 15.000000000000000000
+        Size.PlatformDefault = False
+        Text = 'End'
+      end
+      object RouteStart: TEdit
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        TabOrder = 2
+        Position.X = 48.000000000000000000
+        Position.Y = 48.000000000000000000
+        Size.Width = 137.000000000000000000
+        Size.Height = 22.000000000000000000
+        Size.PlatformDefault = False
+      end
+      object RouteEnd: TEdit
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        TabOrder = 3
+        Position.X = 48.000000000000000000
+        Position.Y = 72.000000000000000000
+        Size.Width = 137.000000000000000000
+        Size.Height = 22.000000000000000000
+        Size.PlatformDefault = False
+      end
+      object AddRoute: TButton
+        Position.X = 48.000000000000000000
+        Position.Y = 99.000000000000000000
+        Size.Width = 136.000000000000000000
+        Size.Height = 22.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 4
+        Text = 'Add Route'
+        OnClick = AddRouteClick
+      end
+      object InfoRoute: TLabel
+        Align = Bottom
+        Padding.Left = 4.000000000000000000
+        Padding.Right = 4.000000000000000000
+        Padding.Bottom = 4.000000000000000000
+        Position.X = 4.000000000000000000
+        Position.Y = 128.000000000000000000
+        Size.Width = 192.000000000000000000
+        Size.Height = 24.000000000000000000
+        Size.PlatformDefault = False
+      end
+      object LEngine: TLabel
+        Position.X = 8.000000000000000000
+        Position.Y = 20.000000000000000000
+        Size.Width = 49.000000000000000000
+        Size.Height = 15.000000000000000000
+        Size.PlatformDefault = False
+        Text = 'Engine'
+      end
+      object engine: TComboBox
+        Items.Strings = (
+          'MapBox'
+          'MapQuest'
+          'MapZen'
+          'OSRM')
+        ItemIndex = 0
+        Position.X = 64.000000000000000000
+        Position.Y = 16.000000000000000000
+        Size.Width = 121.000000000000000000
+        Size.Height = 22.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 6
+      end
+    end
+    object GroupBox2: TGroupBox
+      Align = Top
+      Position.Y = 386.000000000000000000
+      Size.Width = 200.000000000000000000
+      Size.Height = 73.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'Markers'
+      TabOrder = 2
+      object DefaultMarker: TButton
+        Position.X = 4.000000000000000000
+        Position.Y = 24.000000000000000000
+        Size.Width = 58.000000000000000000
+        Size.Height = 22.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+        Text = 'Default'
+        OnClick = DefaultMarkerClick
+      end
+      object MarkerImage: TButton
+        Position.X = 66.000000000000000000
+        Position.Y = 24.000000000000000000
+        Size.Width = 66.000000000000000000
+        Size.Height = 22.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 1
+        Text = 'Animation'
+        OnClick = MarkerImageClick
+      end
+      object MarkerPOI: TButton
+        Position.X = 136.000000000000000000
+        Position.Y = 24.000000000000000000
+        Size.Width = 58.000000000000000000
+        Size.Height = 22.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 2
+        Text = 'POI'
+        OnClick = MarkerPOIClick
+      end
+      object ScaleToZoom: TCheckBox
+        IsChecked = True
+        Position.X = 8.000000000000000000
+        Position.Y = 48.000000000000000000
+        TabOrder = 3
+        Text = 'Adapt to Zoom'
+        OnChange = ScaleToZoomChange
+      end
+      object Clustering: TCheckBox
+        Position.X = 118.000000000000000000
+        Position.Y = 48.000000000000000000
+        TabOrder = 4
+        Text = 'Clustering'
+        OnChange = ClusteringChange
+      end
+    end
+    object Traffic: TCheckBox
+      Align = Bottom
+      Padding.Left = 4.000000000000000000
+      Position.Y = 706.000000000000000000
+      Size.Width = 200.000000000000000000
+      Size.Height = 25.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 3
+      Text = 'Traffic'
+      OnClick = TrafficClick
+    end
+    object GroupBox3: TGroupBox
+      Align = Top
+      Size.Width = 200.000000000000000000
+      Size.Height = 81.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'Maps'
+      TabOrder = 4
+      object cbMaps: TComboBox
+        Items.Strings = (
+          'OSM'
+          'Cycle Map'
+          'OPVN'
+          'ArcGis World Topo Map'
+          'ArcGis World Street Map'
+          'ArcGis World Imagery'
+          'ArcGis World Imagery Hybrid'
+          'Bing Road'
+          'Bing Aerial'
+          'Bing Aerial with labels'
+          'Here Normal'
+          'Here Terrain'
+          'Here Mobile'
+          'Here HiRes'
+          'Here Transit'
+          'Here Truck'
+          'Here Traffic'
+          'Bing Aerial + Here Traffic'
+          'Here Satellite'
+          'Here Hybrid'
+          'Bing Aerial'
+          'MapBoxStreets'
+          'MapBoxStreetsSatellite'
+          'MapBoxOutdoors'
+          'OSM Fr')
+        ListBoxResource = 'transparentlistboxstyle'
+        Position.X = 8.000000000000000000
+        Position.Y = 16.000000000000000000
+        Size.Width = 185.000000000000000000
+        Size.Height = 22.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+        OnChange = cbMapsClick
+      end
+      object LoadMap: TButton
+        Position.X = 8.000000000000000000
+        Position.Y = 48.000000000000000000
+        Size.Width = 50.000000000000000000
+        Size.Height = 22.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 1
+        Text = 'Load'
+        OnClick = LoadMapClick
+      end
+      object SaveMap: TButton
+        Position.X = 76.000000000000000000
+        Position.Y = 48.000000000000000000
+        Size.Width = 50.000000000000000000
+        Size.Height = 22.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 2
+        Text = 'Save'
+        OnClick = SaveMapClick
+      end
+      object ClearMap: TButton
+        Position.X = 144.000000000000000000
+        Position.Y = 48.000000000000000000
+        Size.Width = 50.000000000000000000
+        Size.Height = 22.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 3
+        Text = 'Clear'
+        OnClick = ClearMapClick
+      end
+    end
+    object ckPanoramio: TCheckBox
+      Align = Bottom
+      Padding.Left = 4.000000000000000000
+      Position.Y = 648.000000000000000000
+      Size.Width = 200.000000000000000000
+      Size.Height = 20.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 5
+      Text = 'Panoramio'
+      Visible = False
+      OnClick = ckPanoramioClick
+    end
+    object ckMiniMap: TCheckBox
+      Align = Bottom
+      Padding.Left = 4.000000000000000000
+      Position.Y = 668.000000000000000000
+      Size.Width = 200.000000000000000000
+      Size.Height = 19.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 7
+      Text = 'MiniMap'
+      OnChange = ckMiniMapChange
+      object ckLoupe: TCheckBox
+        ClipParent = True
+        Position.X = 76.000000000000000000
+        Position.Y = 3.000000000000000000
+        Size.Width = 120.000000000000000000
+        Size.Height = 19.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+        Text = 'Loupe'
+        Visible = False
+        OnChange = ckLoupeChange
+      end
+    end
+    object Lines: TGroupBox
+      Align = Top
+      Padding.Left = 4.000000000000000000
+      Padding.Right = 4.000000000000000000
+      Position.Y = 459.000000000000000000
+      Size.Width = 200.000000000000000000
+      Size.Height = 84.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'Lines'
+      TabOrder = 8
+      OnDblClick = LinesDblClick
+      object btLines: TButton
+        StaysPressed = True
+        Position.X = 8.000000000000000000
+        Position.Y = 20.000000000000000000
+        Size.Width = 58.000000000000000000
+        Size.Height = 25.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+        Text = 'Line'
+        OnClick = btLinesClick
+      end
+      object btPoly: TButton
+        StaysPressed = True
+        Position.X = 71.000000000000000000
+        Position.Y = 20.000000000000000000
+        Size.Width = 58.000000000000000000
+        Size.Height = 25.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 1
+        Text = 'Polygone'
+        OnClick = btLinesClick
+      end
+      object btNone: TButton
+        StaysPressed = True
+        Position.X = 134.000000000000000000
+        Position.Y = 20.000000000000000000
+        Size.Width = 58.000000000000000000
+        Size.Height = 25.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 2
+        Text = 'None'
+        OnClick = btLinesClick
+      end
+      object lbInfosize: TLabel
+        Align = Bottom
+        Padding.Left = 4.000000000000000000
+        Padding.Right = 4.000000000000000000
+        Padding.Bottom = 7.000000000000000000
+        Position.X = 4.000000000000000000
+        Position.Y = 48.000000000000000000
+        Size.Width = 192.000000000000000000
+        Size.Height = 36.000000000000000000
+        Size.PlatformDefault = False
+      end
+    end
+    object ArcDial1: TArcDial
+      Position.X = 144.000000000000000000
+      Position.Y = 608.000000000000000000
+      ShowValue = True
+      Size.Width = 48.000000000000000000
+      Size.Height = 48.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 9
+      OnChange = ArcDial1Change
+      OnDblClick = ArcDial1DblClick
+    end
+    object GroupBox4: TGroupBox
+      Align = Top
+      Position.Y = 174.000000000000000000
+      Size.Width = 200.000000000000000000
+      Size.Height = 60.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'Search Layer'
+      TabOrder = 10
+      object rbResto: TRadioButton
+        Tag = 1
+        Position.X = 8.000000000000000000
+        Position.Y = 37.000000000000000000
+        Size.Width = 89.000000000000000000
+        Size.Height = 19.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+        Text = 'Restaurant'
+        OnClick = rbNoneClick
+      end
+      object rbStore: TRadioButton
+        Tag = 2
+        Position.X = 112.000000000000000000
+        Position.Y = 37.000000000000000000
+        Size.Width = 82.000000000000000000
+        Size.Height = 19.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 1
+        Text = 'Bus Stop'
+        OnClick = rbNoneClick
+      end
+      object btFindPlaces: TButton
+        Position.X = 112.000000000000000000
+        Position.Y = 16.000000000000000000
+        Size.Width = 80.000000000000000000
+        Size.Height = 22.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 2
+        Text = 'Search'
+        Visible = False
+      end
+      object btAbort: TButton
+        Position.X = 112.000000000000000000
+        Position.Y = 48.000000000000000000
+        Size.Width = 80.000000000000000000
+        Size.Height = 22.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 3
+        Text = 'Abort'
+        Visible = False
+      end
+      object rbNone: TRadioButton
+        IsChecked = True
+        Position.X = 8.000000000000000000
+        Position.Y = 20.000000000000000000
+        Size.Width = 73.000000000000000000
+        Size.Height = 19.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 4
+        Text = 'None'
+        OnClick = rbNoneClick
+      end
+      object LayerAniIndicator: TAniIndicator
+        Position.X = 160.000000000000000000
+        Position.Y = 8.000000000000000000
+        Size.Width = 34.000000000000000000
+        Size.Height = 25.000000000000000000
+        Size.PlatformDefault = False
+      end
+    end
+    object GroupBox5: TGroupBox
+      Align = Top
+      Position.Y = 81.000000000000000000
+      Size.Width = 200.000000000000000000
+      Size.Height = 48.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'Address'
+      TabOrder = 11
+      object edAdress: TEdit
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        TabOrder = 0
+        Position.X = 8.000000000000000000
+        Position.Y = 16.000000000000000000
+        Size.Width = 185.000000000000000000
+        Size.Height = 22.000000000000000000
+        Size.PlatformDefault = False
+        OnKeyUp = edAdressKeyUp
+      end
+    end
+    object PermaLink: TGroupBox
+      Align = Top
+      Position.Y = 129.000000000000000000
+      Size.Width = 200.000000000000000000
+      Size.Height = 45.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'PermaLink '
+      TabOrder = 13
+      object cbPermaLink: TComboBox
+        ListBoxResource = 'transparentlistboxstyle'
+        Position.X = 8.000000000000000000
+        Position.Y = 16.000000000000000000
+        Size.Width = 137.000000000000000000
+        Size.Height = 22.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+        OnChange = cbPermaLinkClick
+        OnClick = cbPermaLinkClick
+      end
+      object AddLink: TButton
+        Position.X = 152.000000000000000000
+        Position.Y = 16.000000000000000000
+        Size.Width = 41.000000000000000000
+        Size.Height = 22.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 1
+        Text = 'Add'
+        OnClick = AddLinkClick
+      end
+    end
+    object GroupBox6: TGroupBox
+      Align = Top
+      Position.Y = 543.000000000000000000
+      Size.Width = 200.000000000000000000
+      Size.Height = 48.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'Download Area'
+      TabOrder = 14
+      object ProgressBar: TProgressBar
+        Orientation = Horizontal
+        Position.X = 8.000000000000000000
+        Position.Y = 17.000000000000000000
+        Size.Width = 129.000000000000000000
+        Size.Height = 20.000000000000000000
+        Size.PlatformDefault = False
+      end
+      object StartStop: TButton
+        Position.X = 144.000000000000000000
+        Position.Y = 16.000000000000000000
+        Size.Width = 48.000000000000000000
+        Size.Height = 22.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 1
+        Text = 'Start'
+        OnClick = StartStopClick
+      end
+      object LabelDownLoad: TLabel
+        Align = Bottom
+        Padding.Left = 4.000000000000000000
+        Margins.Left = 12.000000000000000000
+        Margins.Right = 8.000000000000000000
+        Position.X = 12.000000000000000000
+        Position.Y = 8.000000000000000000
+        Size.Width = 180.000000000000000000
+        Size.Height = 40.000000000000000000
+        Size.PlatformDefault = False
+      end
+    end
+    object ckMeasure: TCheckBox
+      Anchors = [akLeft, akTop, akBottom]
+      Position.Y = 649.000000000000000000
+      Size.Width = 145.000000000000000000
+      Size.Height = 19.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 15
+      Text = 'Dbl click for measure'
+      OnChange = ckMeasureChange
+    end
+    object Mappilary: TCheckBox
+      Position.Y = 630.000000000000000000
+      Size.Width = 89.000000000000000000
+      Size.Height = 19.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 16
+      Text = 'Mappilary'
+      OnChange = MappilaryChange
+    end
+    object Heatmap: TCheckBox
+      Align = Bottom
+      Padding.Left = 4.000000000000000000
+      Position.Y = 687.000000000000000000
+      Size.Width = 200.000000000000000000
+      Size.Height = 19.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 6
+      Text = 'Heatmap  Opacity'
+      OnChange = HeatmapChange
+      object CheckBox2: TCheckBox
+        ClipParent = True
+        Position.X = 76.000000000000000000
+        Position.Y = 3.000000000000000000
+        Size.Width = 120.000000000000000000
+        Size.Height = 19.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+        Text = 'Loupe'
+        Visible = False
+        OnChange = ckLoupeChange
+      end
+      object HeatmapOpacity: TTrackBar
+        Align = Right
+        CanParentFocus = True
+        Orientation = Horizontal
+        Margins.Right = 4.000000000000000000
+        Position.X = 124.000000000000000000
+        Size.Width = 72.000000000000000000
+        Size.Height = 20.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 1
+        Tracking = False
+        Value = 100.000000000000000000
+        OnTracking = HeatmapOpacityTracking
+      end
+    end
+  end
+  object OpenDialog: TOpenDialog
+    DefaultExt = 'txt'
+    Title = 'Load map (.txt, .kml, .gpx)'
+    Left = 344
+    Top = 104
+  end
+  object SaveDialog: TSaveDialog
+    DefaultExt = 'txt'
+    Title = 'Save map (.txt, .kml, .gpx)'
+    Left = 344
+    Top = 160
+  end
+  object pnMap: TPanel
+    Align = Client
+    Size.Width = 645.000000000000000000
+    Size.Height = 763.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
+    object pnInfo: TPanel
+      Align = Bottom
+      Position.Y = 120.000000000000000000
+      Size.Width = 433.000000000000000000
+      Size.Height = 25.000000000000000000
+      Size.PlatformDefault = False
+      Visible = False
+      TabOrder = 0
+      object Label3: TLabel
+        Align = Client
+        Padding.Left = 4.000000000000000000
+        Padding.Right = 4.000000000000000000
+        Size.Width = 433.000000000000000000
+        Size.Height = 25.000000000000000000
+        Size.PlatformDefault = False
+        Text = 
+          'Double click on a point to delete, double click on a line for ad' +
+          'd point, drag point , CTRL + click for move'
+      end
+    end
+  end
+  object pnNativeMap: TPanel
+    Align = Client
+    ClipChildren = True
+    Opacity = 0.500000000000000000
+    Size.Width = 645.000000000000000000
+    Size.Height = 763.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 2
+    object map: TECNativeMap
+      Touch.InteractiveGestures = [Zoom, DoubleTap]
+      HideShapesWhenZoom = False
+      HideShapesWhenWaitingTile = False
+      DblClickZoom = True
+      MouseWheelZoom = True
+      latitude = 43.233199999999990000
+      longitude = 0.073600000000000000
+      Reticle = False
+      ReticleColor = claBlack
+      ZoomScaleFactor = 0
+      NumericalZoom = 14.000000000000000000
+      ZoomEffectDelay = 750
+      DragRect = drSelect
+      Draggable = True
+      FullZoomAfterGestureZoom = False
+      TwoOrMoreFingers = False
+      OnlyOneOpenInfoWindow = False
+      WaitingForDestruction = False
+      Active = True
+      OnMapSelectRect = mapMapSelectRect
+      OnMapClick = mapMapClick
+      OnMapMouseMove = mapMapMouseMove
+      OnMapDblClick = mapMapDblClick
+      OnShapeDrag = mapShapeDrag
+      OnShapeDragEnd = mapShapeDragEnd
+      OnShapeMouseOver = mapShapeMouseOver
+      OnShapeMouseDown = mapShapeMouseDown
+      OnShapeClick = mapShapeClick
+      OnShapeRightClick = mapShapeRightClick
+      OnShapeDblClick = mapShapeDblClick
+      OnLoad = mapLoad
+      OnPanoramioClick = mapPanoramioClick
+      OnClusterClick = mapClusterClick
+      OnBeforeUrl = mapBeforeUrl
+      Align = Client
+      OnKeyUp = mapKeyUp
+      ClipChildren = True
+      Size.Width = 645.000000000000000000
+      Size.Height = 763.000000000000000000
+      Size.PlatformDefault = False
+      object TFloatAnimation
+        AnimationType = InOut
+        Duration = 0.400000005960464500
+        PropertyName = 'RotationAngle'
+        StartValue = 0.000000000000000000
+        StopValue = 0.000000000000000000
+      end
+      object TFloatAnimation
+        AnimationType = InOut
+        Duration = 0.400000005960464500
+        PropertyName = 'RotationAngle'
+        StartValue = 0.000000000000000000
+        StopValue = 0.000000000000000000
+      end
+      object TFloatAnimation
+        AnimationType = InOut
+        Duration = 0.400000005960464500
+        PropertyName = 'RotationAngle'
+        StartValue = 0.000000000000000000
+        StopValue = 0.000000000000000000
+      end
+      object TFloatAnimation
+        AnimationType = InOut
+        Duration = 0.400000005960464500
+        PropertyName = 'RotationAngle'
+        StartValue = 0.000000000000000000
+        StopValue = 0.000000000000000000
+      end
+    end
+    object InfoBar: TLayout
+      Anchors = [akLeft, akRight]
+      Margins.Left = 10.000000000000000000
+      Position.Y = 726.825195312500000000
+      Size.Width = 645.000000000000000000
+      Size.Height = 35.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 0
+      object CopyrightMap: TLabel
+        Align = Right
+        Anchors = []
+        AutoSize = True
+        StyledSettings = [Family, Size, Style]
+        Padding.Left = 4.000000000000000000
+        Padding.Top = 4.000000000000000000
+        Padding.Right = 4.000000000000000000
+        Margins.Top = 10.000000000000000000
+        Position.X = 568.000000000000000000
+        Position.Y = 10.000000000000000000
+        Size.Width = 77.000000000000000000
+        Size.Height = 25.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.FontColor = xFFB9B5B5
+        TextSettings.HorzAlign = Center
+        TextSettings.WordWrap = False
+        Text = 'CopyrightMap'
+      end
+      object ScaleLine: TLine
+        LineType = Top
+        Position.X = 10.000000000000000000
+        Position.Y = 24.000000000000000000
+        Size.Width = 89.000000000000000000
+        Size.Height = 11.000000000000000000
+        Size.PlatformDefault = False
+        Stroke.Thickness = 3.000000000000000000
+      end
+      object ScaleLegend: TLabel
+        StyledSettings = [Family, Size, FontColor]
+        Position.X = 10.000000000000000000
+        Position.Y = 4.000000000000000000
+        Size.Width = 95.000000000000000000
+        Size.Height = 17.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.Font.StyleExt = {00070000000000000004000000}
+        TextSettings.HorzAlign = Center
+      end
+    end
+  end
+end

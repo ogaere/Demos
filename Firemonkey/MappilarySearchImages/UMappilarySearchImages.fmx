@@ -1,0 +1,78 @@
+object FormMappilarySearchImages: TFormMappilarySearchImages
+  Left = 0
+  Top = 0
+  Caption = 'Form17'
+  ClientHeight = 480
+  ClientWidth = 640
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  DesignerMasterStyle = 0
+  object map: TECNativeMap
+    Touch.InteractiveGestures = [Zoom, Rotate, DoubleTap]
+    FocusedShapeWhenClicking = True
+    FocusedShapeWhenHovering = False
+    HideShapesWhenZoom = False
+    HideShapesWhenWaitingTile = False
+    DblClickZoom = True
+    MouseWheelZoom = True
+    latitude = 43.232951000000000000
+    longitude = 0.078081999999994910
+    Reticle = False
+    ReticleColor = claBlack
+    ZoomScaleFactor = 0
+    NumericalZoom = 14.000000000000000000
+    DragRect = drNone
+    Draggable = True
+    FullZoomAfterGestureZoom = False
+    TwoOrMoreFingers = False
+    OnlyOneOpenInfoWindow = False
+    WaitingForDestruction = False
+    Active = True
+    OnMapClick = mapMapClick
+    Align = Client
+    Cursor = crCross
+    ClipChildren = True
+    Size.Width = 640.000000000000000000
+    Size.Height = 417.000000000000000000
+    Size.PlatformDefault = False
+    object Ani: TAniIndicator
+      Anchors = [akTop, akRight]
+      Position.X = 580.000000000000000000
+      Position.Y = 4.000000000000000000
+      Size.Width = 57.000000000000000000
+      Size.Height = 57.000000000000000000
+      Size.PlatformDefault = False
+      Visible = False
+    end
+  end
+  object Label2: TLabel
+    Align = Top
+    StyledSettings = []
+    Margins.Top = 4.000000000000000000
+    Margins.Bottom = 4.000000000000000000
+    Position.Y = 4.000000000000000000
+    Size.Width = 640.000000000000000000
+    Size.Height = 23.000000000000000000
+    Size.PlatformDefault = False
+    TextSettings.Font.Size = 14.000000000000000000
+    TextSettings.Font.StyleExt = {00070000000000000004000000}
+    TextSettings.HorzAlign = Center
+    Text = 'Tap to search 500 meters around the point'
+  end
+  object Info: TLabel
+    Align = Bottom
+    StyledSettings = [Family, Style]
+    Margins.Top = 4.000000000000000000
+    Margins.Bottom = 4.000000000000000000
+    Position.Y = 452.000000000000000000
+    Size.Width = 640.000000000000000000
+    Size.Height = 24.000000000000000000
+    Size.PlatformDefault = False
+    TextSettings.Font.Size = 16.000000000000000000
+    TextSettings.FontColor = claDarkred
+    TextSettings.HorzAlign = Center
+  end
+end

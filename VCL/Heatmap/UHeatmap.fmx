@@ -1,0 +1,73 @@
+object Form17: TForm17
+  Left = 0
+  Top = 0
+  Caption = 'Heatmap Layer'
+  ClientHeight = 663
+  ClientWidth = 640
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  DesignerMasterStyle = 0
+  object map: TECNativeMap
+    Touch.InteractiveGestures = [Zoom, Rotate, DoubleTap]
+    HideShapesWhenZoom = False
+    HideShapesWhenWaitingTile = False
+    DblClickZoom = True
+    MouseWheelZoom = True
+    Latitude = 43.232951000000000000
+    Longitude = 0.078081999999994910
+    Reticle = False
+    ReticleColor = claBlack
+    ZoomScaleFactor = 0
+    DragRect = drNone
+    Draggable = True
+    Active = True
+    OnCompleteTiles = mapCompleteTiles
+    Align = Client
+    ClipChildren = True
+    Size.Width = 640.000000000000000000
+    Size.Height = 633.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object TrackBar1: TTrackBar
+    Align = Bottom
+    CanParentFocus = True
+    ControlType = Platform
+    Orientation = Horizontal
+    Margins.Left = 100.000000000000000000
+    Margins.Top = 5.000000000000000000
+    Margins.Right = 70.000000000000000000
+    Margins.Bottom = 5.000000000000000000
+    Position.X = 100.000000000000000000
+    Position.Y = 638.000000000000000000
+    Size.Width = 470.000000000000000000
+    Size.Height = 20.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    Value = 100.000000000000000000
+    OnChange = TrackBar1Change
+  end
+  object Label1: TLabel
+    Anchors = [akLeft, akBottom]
+    Position.X = 8.000000000000000000
+    Position.Y = 640.000000000000000000
+    Size.Width = 81.000000000000000000
+    Size.Height = 17.000000000000000000
+    Size.PlatformDefault = False
+    Text = 'Opacity'
+    TabOrder = 1
+  end
+  object DrawCircle: TCheckBox
+    Anchors = [akRight, akBottom]
+    IsChecked = True
+    Position.X = 576.000000000000000000
+    Position.Y = 640.000000000000000000
+    Size.Width = 96.000000000000000000
+    Size.Height = 19.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 3
+    Text = 'Circle'
+    OnChange = DrawCircleChange
+  end
+end

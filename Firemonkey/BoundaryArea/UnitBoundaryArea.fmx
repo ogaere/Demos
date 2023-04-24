@@ -1,0 +1,211 @@
+object Form12: TForm12
+  Left = 0
+  Top = 0
+  Caption = 'Form12'
+  ClientHeight = 480
+  ClientWidth = 912
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  DesignerMasterStyle = 0
+  object Panel1: TPanel
+    Align = Right
+    Position.X = 656.000000000000000000
+    Size.Width = 256.000000000000000000
+    Size.Height = 480.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    object Label3: TLabel
+      Align = Top
+      StyledSettings = [Family, FontColor]
+      Margins.Top = 7.000000000000000000
+      Margins.Bottom = 7.000000000000000000
+      Position.Y = 60.000000000000000000
+      Size.Width = 256.000000000000000000
+      Size.Height = 17.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.Size = 14.000000000000000000
+      TextSettings.Font.StyleExt = {00070000000000000004000000}
+      TextSettings.HorzAlign = Center
+      Text = 'Area Id'
+      TabOrder = 9
+    end
+    object Id: TLabel
+      Align = Top
+      Position.Y = 84.000000000000000000
+      Size.Width = 256.000000000000000000
+      Size.Height = 17.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.HorzAlign = Center
+      TabOrder = 10
+    end
+    object Label1: TLabel
+      Align = Top
+      StyledSettings = [Family, FontColor]
+      Margins.Top = 7.000000000000000000
+      Margins.Bottom = 7.000000000000000000
+      Position.Y = 156.000000000000000000
+      Size.Width = 256.000000000000000000
+      Size.Height = 17.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.Size = 14.000000000000000000
+      TextSettings.Font.StyleExt = {00070000000000000004000000}
+      TextSettings.HorzAlign = Center
+      Text = 'Tags'
+      TabOrder = 5
+    end
+    object Tags: TMemo
+      Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+      DataDetectorTypes = []
+      ReadOnly = True
+      Align = Client
+      Margins.Left = 4.000000000000000000
+      Margins.Top = 4.000000000000000000
+      Margins.Right = 4.000000000000000000
+      Margins.Bottom = 4.000000000000000000
+      Padding.Left = 4.000000000000000000
+      Padding.Top = 4.000000000000000000
+      Padding.Right = 4.000000000000000000
+      Padding.Bottom = 4.000000000000000000
+      Size.Width = 248.000000000000000000
+      Size.Height = 219.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 11
+      Viewport.Width = 244.000000000000000000
+      Viewport.Height = 215.000000000000000000
+    end
+    object Label2: TLabel
+      Align = Top
+      StyledSettings = [Family, FontColor]
+      Margins.Top = 7.000000000000000000
+      Margins.Bottom = 7.000000000000000000
+      Position.Y = 7.000000000000000000
+      Size.Width = 256.000000000000000000
+      Size.Height = 17.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.Size = 14.000000000000000000
+      TextSettings.Font.StyleExt = {00070000000000000004000000}
+      TextSettings.HorzAlign = Center
+      Text = 'Administrative Level'
+      TabOrder = 6
+    end
+    object AdminLevel: TComboBox
+      Align = Top
+      Items.Strings = (
+        'selected according to zoom'
+        '2  ( Country )'
+        '4  ( Region )'
+        '6'
+        '8 (Town)')
+      ItemIndex = 0
+      Margins.Left = 4.000000000000000000
+      Margins.Right = 4.000000000000000000
+      Position.X = 4.000000000000000000
+      Position.Y = 31.000000000000000000
+      Size.Width = 248.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 12
+    end
+    object KeepAllArea: TCheckBox
+      Align = Bottom
+      Margins.Left = 4.000000000000000000
+      Margins.Right = 4.000000000000000000
+      Margins.Bottom = 4.000000000000000000
+      Position.X = 4.000000000000000000
+      Position.Y = 457.000000000000000000
+      Size.Width = 248.000000000000000000
+      Size.Height = 19.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 13
+      Text = 'Keep all administrative areas'
+      OnChange = KeepAllAreaChange
+    end
+    object Label4: TLabel
+      Align = Top
+      StyledSettings = [Family, FontColor]
+      Margins.Top = 7.000000000000000000
+      Margins.Bottom = 7.000000000000000000
+      Position.Y = 108.000000000000000000
+      Size.Width = 256.000000000000000000
+      Size.Height = 17.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.Size = 14.000000000000000000
+      TextSettings.Font.StyleExt = {00070000000000000004000000}
+      TextSettings.HorzAlign = Center
+      Text = ' Surface Area'
+      TabOrder = 7
+    end
+    object surface: TLabel
+      Align = Top
+      Position.Y = 132.000000000000000000
+      Size.Width = 256.000000000000000000
+      Size.Height = 17.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.HorzAlign = Center
+      TabOrder = 8
+    end
+    object Rectangle1: TRectangle
+      Align = Bottom
+      Fill.Kind = None
+      Margins.Left = 4.000000000000000000
+      Margins.Top = 4.000000000000000000
+      Margins.Right = 4.000000000000000000
+      Margins.Bottom = 4.000000000000000000
+      Position.X = 4.000000000000000000
+      Position.Y = 411.000000000000000000
+      Size.Width = 248.000000000000000000
+      Size.Height = 42.000000000000000000
+      Size.PlatformDefault = False
+      Stroke.Kind = None
+      object faddr: TLabel
+        Align = Top
+        StyledSettings = [Family, FontColor]
+        Size.Width = 248.000000000000000000
+        Size.Height = 17.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.Font.Size = 14.000000000000000000
+        TextSettings.Font.StyleExt = {00070000000000000004000000}
+        TextSettings.HorzAlign = Center
+        Text = 'Address'
+        TabOrder = 0
+      end
+      object address: TEdit
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        Align = Bottom
+        TabOrder = 1
+        Position.Y = 20.000000000000000000
+        Size.Width = 248.000000000000000000
+        Size.Height = 22.000000000000000000
+        Size.PlatformDefault = False
+        OnKeyUp = addressKeyUp
+      end
+    end
+  end
+  object map: TECNativeMap
+    Touch.InteractiveGestures = [Zoom, Rotate, DoubleTap]
+    HideShapesWhenZoom = False
+    HideShapesWhenWaitingTile = False
+    DblClickZoom = True
+    MouseWheelZoom = True
+    latitude = 43.232951000000000000
+    longitude = 0.078081999999994910
+    Reticle = False
+    ReticleColor = claBlack
+    ZoomScaleFactor = 0
+    DragRect = drNone
+    Draggable = True
+    TwoOrMoreFingers = False
+    OnlyOneOpenInfoWindow = False
+    WaitingForDestruction = False
+    Active = True
+    OnMapClick = mapMapClick
+    OnShapeClick = mapShapeClick
+    Align = Client
+    ClipChildren = True
+    Size.Width = 656.000000000000000000
+    Size.Height = 480.000000000000000000
+    Size.PlatformDefault = False
+  end
+end

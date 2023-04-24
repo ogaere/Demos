@@ -1,0 +1,825 @@
+object Form2: TForm2
+  Left = 0
+  Top = 0
+  ClientHeight = 703
+  ClientWidth = 1090
+  StyleBook = StyleBook1
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  OnCloseQuery = FormCloseQuery
+  OnDestroy = FormDestroy
+  DesignerMasterStyle = 0
+  object Panel1: TPanel
+    Align = Right
+    Padding.Left = 4.000000000000000000
+    Padding.Top = 4.000000000000000000
+    Padding.Right = 4.000000000000000000
+    Padding.Bottom = 4.000000000000000000
+    Position.X = 762.000000000000000000
+    Size.Width = 328.000000000000000000
+    Size.Height = 703.000000000000000000
+    Size.PlatformDefault = False
+    StyleLookup = 'Panelstyle'
+    TabOrder = 0
+    object Rectangle1: TRectangle
+      Align = Bottom
+      Fill.Color = claDimgray
+      Padding.Left = 4.000000000000000000
+      Padding.Top = 4.000000000000000000
+      Padding.Right = 4.000000000000000000
+      Padding.Bottom = 4.000000000000000000
+      Position.X = 4.000000000000000000
+      Position.Y = 651.000000000000000000
+      Size.Width = 320.000000000000000000
+      Size.Height = 48.000000000000000000
+      Size.PlatformDefault = False
+      Stroke.Color = claDimgray
+      object OpenOSMFile: TButton
+        Align = Client
+        StyledSettings = [FontColor]
+        Margins.Right = 2.000000000000000000
+        Size.Width = 194.000000000000000000
+        Size.Height = 40.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+        Text = 'Open OSM / OLT File'
+        TextSettings.Font.Size = 18.000000000000000000
+        TextSettings.Font.StyleExt = {00070000000000000004000000}
+        OnClick = OpenOSMFileClick
+      end
+      object SaveOLT: TButton
+        Align = Right
+        StyledSettings = [FontColor]
+        Hint = 'save in .olt (compressed format owner TOSMFile)'
+        Position.X = 200.000000000000000000
+        Position.Y = 4.000000000000000000
+        Size.Width = 116.000000000000000000
+        Size.Height = 40.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 1
+        Text = 'Save OLT'
+        TextSettings.Font.Size = 18.000000000000000000
+        TextSettings.Font.StyleExt = {00070000000000000004000000}
+        ParentShowHint = False
+        ShowHint = True
+        OnClick = SaveOLTClick
+        object AniSave: TAniIndicator
+          Align = Center
+          Size.Width = 46.000000000000000000
+          Size.Height = 49.000000000000000000
+          Size.PlatformDefault = False
+        end
+      end
+    end
+    object InfosFile: TRectangle
+      Align = Client
+      Fill.Color = claDimgray
+      Padding.Left = 4.000000000000000000
+      Padding.Top = 4.000000000000000000
+      Padding.Right = 4.000000000000000000
+      Padding.Bottom = 4.000000000000000000
+      Size.Width = 320.000000000000000000
+      Size.Height = 575.000000000000000000
+      Size.PlatformDefault = False
+      Stroke.Color = claDimgray
+      object KeysLabel: TLabel
+        Align = Top
+        StyledSettings = [Family]
+        Padding.Top = 8.000000000000000000
+        Padding.Bottom = 4.000000000000000000
+        Margins.Top = 4.000000000000000000
+        Margins.Bottom = 4.000000000000000000
+        Position.X = 4.000000000000000000
+        Position.Y = 67.000000000000000000
+        Size.Width = 312.000000000000000000
+        Size.Height = 27.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.Font.Size = 15.000000000000000000
+        TextSettings.Font.StyleExt = {00070000000000000004000000}
+        TextSettings.FontColor = claWhite
+        Text = 'Keys'
+        ParentShowHint = False
+        ShowHint = False
+        object keys: TComboEdit
+          Tag = 1
+          Touch.InteractiveGestures = [LongTap, DoubleTap]
+          Align = FitRight
+          TabOrder = 0
+          ItemHeight = 19.000000000000000000
+          ItemIndex = -1
+          Position.X = 120.000000000000000000
+          Size.Width = 192.000000000000000000
+          Size.Height = 27.000000000000000000
+          Size.PlatformDefault = False
+          OnChange = keysChange
+        end
+        object KeyCount: TLabel
+          Align = FitLeft
+          StyledSettings = [Family]
+          Padding.Right = 100.000000000000000000
+          Margins.Left = 50.000000000000000000
+          Margins.Right = 16.000000000000000000
+          Position.X = 50.000000000000000000
+          Size.Width = 63.000000000000000000
+          Size.Height = 27.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.Font.Family = 'Courier New'
+          TextSettings.Font.Size = 14.000000000000000000
+          TextSettings.FontColor = claWhite
+          TextSettings.HorzAlign = Center
+          ParentShowHint = False
+          ShowHint = False
+        end
+      end
+      object valuesLabel: TLabel
+        Align = Top
+        StyledSettings = [Family]
+        Position.X = 4.000000000000000000
+        Position.Y = 98.000000000000000000
+        Size.Width = 312.000000000000000000
+        Size.Height = 27.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.Font.Size = 15.000000000000000000
+        TextSettings.Font.StyleExt = {00070000000000000004000000}
+        TextSettings.FontColor = claWhite
+        Text = 'Values'
+        ParentShowHint = False
+        ShowHint = False
+        object values: TComboEdit
+          Touch.InteractiveGestures = [LongTap, DoubleTap]
+          Align = FitRight
+          TabOrder = 0
+          ItemHeight = 19.000000000000000000
+          ItemIndex = -1
+          Position.X = 120.000000000000000000
+          Size.Width = 192.000000000000000000
+          Size.Height = 27.000000000000000000
+          Size.PlatformDefault = False
+        end
+        object ValueCount: TLabel
+          Align = FitLeft
+          StyledSettings = [Family]
+          Padding.Right = 100.000000000000000000
+          Margins.Left = 50.000000000000000000
+          Margins.Right = 16.000000000000000000
+          Position.X = 50.000000000000000000
+          Size.Width = 65.000000000000000000
+          Size.Height = 27.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.Font.Family = 'Courier New'
+          TextSettings.Font.Size = 14.000000000000000000
+          TextSettings.FontColor = claWhite
+          TextSettings.HorzAlign = Center
+          ParentShowHint = False
+          ShowHint = False
+        end
+      end
+      object NodeWayRelation: TLabel
+        Align = Top
+        StyledSettings = [Family]
+        Position.X = 4.000000000000000000
+        Position.Y = 4.000000000000000000
+        Size.Width = 312.000000000000000000
+        Size.Height = 24.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.Font.Family = 'Courier New'
+        TextSettings.Font.Size = 16.000000000000000000
+        TextSettings.FontColor = claWhite
+        TextSettings.HorzAlign = Trailing
+        TextSettings.VertAlign = Leading
+        ParentShowHint = False
+        ShowHint = False
+        object Node: TLabel
+          Align = Left
+          StyledSettings = [Family]
+          Margins.Right = 2.000000000000000000
+          Size.Width = 156.000000000000000000
+          Size.Height = 24.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.Font.Family = 'Courier New'
+          TextSettings.Font.Size = 16.000000000000000000
+          TextSettings.FontColor = claWhite
+          TextSettings.HorzAlign = Trailing
+          TextSettings.VertAlign = Leading
+          ParentShowHint = False
+          ShowHint = False
+          object NodeImage: TImage
+            MultiResBitmap.Height = 20
+            MultiResBitmap = <
+              item
+                Width = 20
+                Height = 20
+                PNG = {
+                  89504E470D0A1A0A0000000D49484452000000140000001408060000008D891D
+                  0D000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
+                  012C49444154384FE595BD4E844010C7070513306082C5995C4D49418DAF422E
+                  3E801FC5DD235CAF529B7B181E81900081428A3B31E71741960282B3BA854613
+                  5862A5BFCD14B3931DF6CF9F5D04001064593EC738ABAAEA08736E1445B92384
+                  5C62B8808D2E2CCB2A9224E9DAB6ED78A16BE85AD3345FE8A64055D52C8E6356
+                  1E4F18869DAEEBB7546E5914C5BE288A4CC0389AA6014DD35E7758FE6BFC9186
+                  5114BDC7107A4D999DCC605B6E018D84C9C10456372B56F9CA20537CDF87F5D3
+                  1AE6D77358B80BC8EE33088280557FA657B2808387419237CF1B800E607A38ED
+                  953CE8C3C6930482208061186CE63B5C0D87F09F4F0ABEBBC7344D593A1E6A1C
+                  FAF1B08B749EE71DDBB6BD274912D475CD1DB499E338659EE7CBCFBF8053BC7D
+                  B58FE7F1819B2AF0FABF2284B86F9E332AED6EABBE4A0000000049454E44AE42
+                  6082}
+                FileName = 'D:\20px-Osm_element_way.svg.png'
+              end>
+            Align = Left
+            Hint = 'Nodes'
+            Position.X = 16.000000000000000000
+            Size.Width = 20.000000000000000000
+            Size.Height = 24.000000000000000000
+            Size.PlatformDefault = False
+            ParentShowHint = False
+            ShowHint = True
+          end
+          object NodeCount: TLabel
+            Align = Client
+            StyledSettings = [Family]
+            Hint = 'Nodes'
+            HitTest = True
+            Margins.Left = 4.000000000000000000
+            Size.Width = 116.000000000000000000
+            Size.Height = 24.000000000000000000
+            Size.PlatformDefault = False
+            TextSettings.Font.Family = 'Courier New'
+            TextSettings.Font.Size = 16.000000000000000000
+            TextSettings.FontColor = claWhite
+            TextSettings.VertAlign = Leading
+            ParentShowHint = False
+            ShowHint = True
+          end
+          object NodeCheck: TCheckBox
+            Align = MostLeft
+            IsChecked = True
+            Size.Width = 16.000000000000000000
+            Size.Height = 24.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 2
+          end
+        end
+        object Way: TLabel
+          Align = Left
+          StyledSettings = [Family]
+          Margins.Right = 2.000000000000000000
+          Position.X = 158.000000000000000000
+          Size.Width = 156.000000000000000000
+          Size.Height = 24.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.Font.Family = 'Courier New'
+          TextSettings.Font.Size = 16.000000000000000000
+          TextSettings.FontColor = claWhite
+          TextSettings.HorzAlign = Trailing
+          TextSettings.VertAlign = Leading
+          ParentShowHint = False
+          ShowHint = False
+          object WayImage: TImage
+            MultiResBitmap.Height = 20
+            MultiResBitmap = <
+              item
+                Width = 20
+                Height = 20
+                PNG = {
+                  89504E470D0A1A0A0000000D49484452000000140000001408060000008D891D
+                  0D000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
+                  022949444154384F9595CD8E614114C78F410483048B8E85C4069188080B5B0B
+                  1B16DE802798E97E80DECD0BCCA4D716DEC05A226129111BDF22BE1242847083
+                  EBBBE654F5BD8691BEDDF79754A24EB9FFFB3FA7EAD455008042ABD53EE3F8B9
+                  DD6E9F702E1B9D4E37E179FE378E3740A117BFDFCF753A1D723E9F895CE833F4
+                  59AFD7BBA2A6C060300CDBEDB6B0FC39AD568B64B359723A9D84C83BCD669398
+                  CDE60175B83E1E8F42589A4C2643542A15C12C493C1E17A2EF500DAA254B3091
+                  4830313A140A05D9ED76C2CA3FC16FB4A85F01370C7C3E1FA0109B472211D068
+                  34ECF72D7487D71CC7E9311521F4C8643281F1780C168B05A6D329F4FB7DC094
+                  EF04B1A660341A37928297CB050683012C974BB0DBED4CF02344C10F53C6FA40
+                  A3D180CD66032E974B52EC963B87F97C1E72B91C84C361C023007ABD1E1C0E07
+                  489543447478DDE572B97C3D121823C5629160CAC21E7ECEC32E572A15F6160A
+                  B61074BB5D381C0E6C2E0BD1E162B1206EB79B390C0683A45AAD9252A944EAF5
+                  3A99CD660F9DF13FA2C3BB1A6210B02FC1E9748252A984FD7E0FF3F99C0DEADE
+                  643281D56AA5B5825EAF07A3D10842A110ABF1430DA5A0B54451427B9EBA4EA5
+                  5244AD56B36C62B118FB8FE85056EB51B0AE772D48C76AB592DF7A22E80CA2D1
+                  A83003080402AC0457E8F545AF1EB9140A05924EA7993B4AAD5663D717DD9417
+                  8FC7F30B17BFDB6C36E135F2180E87904C26D758E3D7DB4FC00FBC7D6FBC7F1D
+                  3C111C9EDD3F3CCFBFFD054C6EE278B9FA51A00000000049454E44AE426082}
+                FileName = 'D:\20px-Osm_element_way.svg.png'
+              end>
+            Align = Left
+            Hint = 'Ways'
+            Position.X = 16.000000000000000000
+            Size.Width = 20.000000000000000000
+            Size.Height = 24.000000000000000000
+            Size.PlatformDefault = False
+            ParentShowHint = False
+            ShowHint = True
+          end
+          object WayCount: TLabel
+            Align = Client
+            StyledSettings = [Family]
+            Hint = 'Ways'
+            HitTest = True
+            Margins.Left = 4.000000000000000000
+            Size.Width = 116.000000000000000000
+            Size.Height = 24.000000000000000000
+            Size.PlatformDefault = False
+            TextSettings.Font.Family = 'Courier New'
+            TextSettings.Font.Size = 16.000000000000000000
+            TextSettings.FontColor = claWhite
+            TextSettings.VertAlign = Leading
+            ParentShowHint = False
+            ShowHint = True
+          end
+          object WayCheck: TCheckBox
+            Align = MostLeft
+            IsChecked = True
+            Size.Width = 16.000000000000000000
+            Size.Height = 24.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 0
+          end
+        end
+      end
+      object search: TLabel
+        Align = Top
+        StyledSettings = [Family]
+        Padding.Top = 4.000000000000000000
+        Padding.Bottom = 4.000000000000000000
+        Position.X = 4.000000000000000000
+        Position.Y = 125.000000000000000000
+        Size.Width = 312.000000000000000000
+        Size.Height = 37.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.Font.Size = 16.000000000000000000
+        TextSettings.Font.StyleExt = {00070000000000000004000000}
+        TextSettings.FontColor = claWhite
+        TextSettings.VertAlign = Leading
+        ParentShowHint = False
+        ShowHint = False
+        object searchnodes: TButton
+          Align = Left
+          StyledSettings = [Family, Size, FontColor]
+          Position.Y = 4.000000000000000000
+          Size.Width = 130.000000000000000000
+          Size.Height = 29.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 0
+          Text = 'Search Nodes'
+          TextSettings.Font.StyleExt = {00070000000000000004000000}
+          OnClick = searchnodesClick
+        end
+        object searchway: TButton
+          Align = Right
+          StyledSettings = [Family, Size, FontColor]
+          Padding.Left = 2.000000000000000000
+          Padding.Right = 2.000000000000000000
+          Position.X = 136.000000000000000000
+          Position.Y = 4.000000000000000000
+          Size.Width = 130.000000000000000000
+          Size.Height = 29.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 1
+          Text = 'Search Ways'
+          TextSettings.Font.StyleExt = {00070000000000000004000000}
+          OnClick = searchwayClick
+        end
+        object ColorBox: TComboColorBox
+          Align = Right
+          Color = claTomato
+          Margins.Left = 4.000000000000000000
+          Position.X = 270.000000000000000000
+          Position.Y = 4.000000000000000000
+          Size.Width = 42.000000000000000000
+          Size.Height = 29.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 2
+        end
+      end
+      object SearchResult: TLabel
+        Align = Top
+        StyledSettings = [Family]
+        Margins.Bottom = 4.000000000000000000
+        Position.X = 4.000000000000000000
+        Position.Y = 190.000000000000000000
+        Size.Width = 312.000000000000000000
+        Size.Height = 24.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.Font.Size = 16.000000000000000000
+        TextSettings.Font.StyleExt = {00070000000000000004000000}
+        TextSettings.FontColor = claWhite
+        TextSettings.HorzAlign = Center
+        TextSettings.VertAlign = Leading
+        object SearchLabel: TLabel
+          Align = Left
+          StyledSettings = [Family]
+          Margins.Top = 4.000000000000000000
+          Margins.Right = 4.000000000000000000
+          Position.Y = 4.000000000000000000
+          Size.Width = 49.000000000000000000
+          Size.Height = 20.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.Font.StyleExt = {00070000000000000004000000}
+          TextSettings.FontColor = claWhite
+          TextSettings.HorzAlign = Center
+        end
+        object GroupItem: TComboBox
+          Align = Client
+          Margins.Right = 2.000000000000000000
+          Size.Width = 257.000000000000000000
+          Size.Height = 24.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 1
+          OnClosePopup = GroupItemChange
+        end
+      end
+      object GridProperty: TGrid
+        Align = Client
+        CanFocus = True
+        ClipChildren = True
+        Size.Width = 312.000000000000000000
+        Size.Height = 353.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 7
+        Options = [ColLines, RowLines, Tabs, Header, HeaderClick, AutoDisplacement]
+        OnGetValue = GridPropertyGetValue
+        Viewport.Width = 292.000000000000000000
+        Viewport.Height = 328.000000000000000000
+        object ColKeys: TColumn
+          Header = 'Key'
+          Size.Width = 113.000000000000000000
+        end
+        object ColValues: TColumn
+          Header = 'value'
+          Size.Width = 175.000000000000000000
+        end
+      end
+      object grouplabel: TLabel
+        Align = Top
+        StyledSettings = [Family]
+        Margins.Bottom = 4.000000000000000000
+        Position.X = 4.000000000000000000
+        Position.Y = 162.000000000000000000
+        Size.Width = 312.000000000000000000
+        Size.Height = 24.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.Font.Size = 16.000000000000000000
+        TextSettings.Font.StyleExt = {00070000000000000004000000}
+        TextSettings.FontColor = claWhite
+        TextSettings.HorzAlign = Center
+        TextSettings.VertAlign = Leading
+        object Groups: TComboBox
+          Align = Client
+          Margins.Right = 2.000000000000000000
+          Size.Width = 144.000000000000000000
+          Size.Height = 24.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 0
+          OnChange = GroupsChange
+        end
+        object GroupVisible: TButton
+          Align = Right
+          StyledSettings = [FontColor]
+          Margins.Left = 2.000000000000000000
+          Margins.Right = 2.000000000000000000
+          Position.X = 148.000000000000000000
+          Size.Width = 80.000000000000000000
+          Size.Height = 24.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 1
+          Text = 'Hide'
+          TextSettings.Font.StyleExt = {00070000000000000004000000}
+          OnClick = GroupVisibleClick
+        end
+        object GroupDelete: TButton
+          Align = Right
+          StyledSettings = [FontColor]
+          Margins.Left = 2.000000000000000000
+          Position.X = 232.000000000000000000
+          Size.Width = 80.000000000000000000
+          Size.Height = 24.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 2
+          Text = 'Delete'
+          TextSettings.Font.StyleExt = {00070000000000000004000000}
+          OnClick = GroupDeleteClick
+        end
+      end
+      object RelationsLabel: TLabel
+        Align = Top
+        StyledSettings = [Family]
+        Padding.Top = 8.000000000000000000
+        Padding.Bottom = 4.000000000000000000
+        Margins.Top = 4.000000000000000000
+        Margins.Bottom = 4.000000000000000000
+        Position.X = 4.000000000000000000
+        Position.Y = 32.000000000000000000
+        Size.Width = 312.000000000000000000
+        Size.Height = 27.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.Font.Size = 15.000000000000000000
+        TextSettings.Font.StyleExt = {00070000000000000004000000}
+        TextSettings.FontColor = claWhite
+        ParentShowHint = False
+        ShowHint = False
+        object Relations: TComboEdit
+          Tag = 1
+          Touch.InteractiveGestures = [LongTap, DoubleTap]
+          Align = FitRight
+          TabOrder = 0
+          ItemHeight = 19.000000000000000000
+          ItemIndex = -1
+          Position.X = 120.000000000000000000
+          Size.Width = 192.000000000000000000
+          Size.Height = 27.000000000000000000
+          Size.PlatformDefault = False
+          OnClosePopup = RelationsChange
+        end
+        object Relation: TLabel
+          Align = Center
+          StyledSettings = [Family]
+          Margins.Right = 2.000000000000000000
+          Size.Width = 118.000000000000000000
+          Size.Height = 23.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.Font.Family = 'Courier New'
+          TextSettings.Font.Size = 16.000000000000000000
+          TextSettings.FontColor = claWhite
+          TextSettings.HorzAlign = Trailing
+          TextSettings.VertAlign = Leading
+          ParentShowHint = False
+          ShowHint = False
+          object RelationImage: TImage
+            MultiResBitmap.Height = 20
+            MultiResBitmap = <
+              item
+                Width = 20
+                Height = 20
+                PNG = {
+                  89504E470D0A1A0A0000000D49484452000000140000001408060000008D891D
+                  0D000000017352474200AECE1CE90000000467414D410000B18F0BFC61050000
+                  02F449444154384F95554B4B5B5110FEA2313EEA035430822E44905A71A14236
+                  16174A5A14BAE9CE85BB40DCB48DD62AB8701710DC542C48F7FE02B742884697
+                  226954548CA63E6244D12618E37B3A733CB9E6362EEA0743EE7CF7DC3973E69B
+                  39B100B01416167E61FB7C79796967FFC5282A2A8AA552A9EF6C53E0409E9696
+                  96C4F6F636DDDFDFD34B21DFC8B7CDCDCD71490A2525257B5B5B5BFA35D1C3C3
+                  03EDEEEED2F5F5B566FE0F1B1B1B545E5EFE5B32BCB8BDBD55E4FCC23C757677
+                  92EB9B8BBA3F76D3E48F49C5FF8BA3A3236A6D6D259BCD46C3C3C38A931812CB
+                  0828E6FCE0A4B9BD39F2457DCA7ADDBDB4B8B848D168940E0E0E281289D0CECE
+                  0E0D0C0C1097CEB0FDFD7D23608E1455C0C7445D631D72ADB99A011CEF1CF0F9
+                  7D88C7E360C1C0F582C562417575B55E01141717A3B4B4547B8055FFA2A6A606
+                  D148547B8F0887C2E878D381FAFA7AE4E5E56916181C1C54C1575757E172B954
+                  C0BBBB3BF54E5AE6229148BCB25AAD98FE398DA5E0121CEF1D08FF0AE34FE40F
+                  46BE8EE0E6E60676BB1D5555552AC3E720013970D21450100804B0105840E3EB
+                  46343434A0A9A909676767E01A42D6C849CACACAD4DA4CA4039A54161C1E1ED2
+                  E6E626F1020A0683148BC5142FBE08B3BCBC4C6B6B6BC4C7A69E9E1E9A9D9D55
+                  EFB3544E43149346159C9C9CD0CACA0AF191952F48269334363666285C505040
+                  E7E7E7D92AA721C5CEC979A42B2B2B919F9F0F6E1BE50B78CC1497060F0078E4
+                  B4076405E44931020A6A6B6B717A7A0ACE4C33407F7F3FBABABA94485EAFD7D4
+                  462651B85E181F1F578A0E0D0D2911043C5698999951D9B9DD6E545454283E13
+                  CF8AD2D6D666D48677569CC0E3F118BCD3E9D4AC195935640EAC9EF6805028A4
+                  9F80F5F575FD64E69F456686A3A3A32A0B1E27F2FBFD8A13486B889ADCD43431
+                  31A15933D219AAEB4BAE9E34E426E19A6AEF09D21AC7C7C7DACB86F4A65C5FB9
+                  0CE2E978DBDEDE6E9379152144E9ABAB2B9309786D162FC6F729FAFAFA2E7843
+                  6FE65FC027EEC1A76BE305E08D12DC8B93A9546AEA2FAFC8FBB11F3CF1D00000
+                  000049454E44AE426082}
+                FileName = 'D:\20px-Osm_element_relation.svg.png'
+              end>
+            Align = Left
+            Hint = 'Relations'
+            Position.X = 16.000000000000000000
+            Size.Width = 20.000000000000000000
+            Size.Height = 23.000000000000000000
+            Size.PlatformDefault = False
+            ParentShowHint = False
+            ShowHint = True
+          end
+          object RelationCount: TLabel
+            Align = Client
+            StyledSettings = [Family]
+            Hint = 'Relations'
+            HitTest = True
+            Margins.Left = 4.000000000000000000
+            Size.Width = 78.000000000000000000
+            Size.Height = 23.000000000000000000
+            Size.PlatformDefault = False
+            TextSettings.Font.Family = 'Courier New'
+            TextSettings.Font.Size = 16.000000000000000000
+            TextSettings.FontColor = claWhite
+            TextSettings.VertAlign = Leading
+            ParentShowHint = False
+            ShowHint = True
+          end
+          object RelationCheck: TCheckBox
+            Align = MostLeft
+            Size.Width = 16.000000000000000000
+            Size.Height = 23.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 0
+          end
+        end
+      end
+    end
+    object filename: TLabel
+      Align = Top
+      StyledSettings = [Family]
+      Position.X = 4.000000000000000000
+      Position.Y = 4.000000000000000000
+      Size.Width = 320.000000000000000000
+      Size.Height = 29.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = 'labelstyle'
+      TextSettings.Font.Size = 18.000000000000000000
+      TextSettings.Font.StyleExt = {00070000000000000004000000}
+      TextSettings.FontColor = claWhite
+      TextSettings.HorzAlign = Center
+      ParentShowHint = False
+      ShowHint = False
+    end
+    object Rectangle3: TRectangle
+      Align = Bottom
+      Fill.Color = claDimgray
+      Padding.Left = 4.000000000000000000
+      Padding.Top = 4.000000000000000000
+      Padding.Right = 4.000000000000000000
+      Padding.Bottom = 4.000000000000000000
+      Position.X = 4.000000000000000000
+      Position.Y = 608.000000000000000000
+      Size.Width = 320.000000000000000000
+      Size.Height = 43.000000000000000000
+      Size.PlatformDefault = False
+      Stroke.Color = claDimgray
+      object BaseMap: TCheckBox
+        Align = VertCenter
+        StyledSettings = [Family, FontColor]
+        IsChecked = True
+        Position.X = 4.000000000000000000
+        Position.Y = 8.000000000000000000
+        Size.Width = 272.020416259765600000
+        Size.Height = 27.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+        Text = 'Show Basemap'
+        TextSettings.Font.Size = 14.000000000000000000
+        TextSettings.Font.StyleExt = {00060000000000000004000000}
+        OnChange = BaseMapChange
+      end
+      object ArcDial1: TArcDial
+        Align = FitRight
+        Hint = 'Rotation map'
+        Margins.Right = 4.000000000000000000
+        Position.X = 280.020416259765600000
+        ShowValue = True
+        Size.Width = 35.979583740234380000
+        Size.Height = 43.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 1
+        ParentShowHint = False
+        ShowHint = True
+        OnChange = ArcDial1Change
+        OnDblClick = ArcDial1DblClick
+      end
+    end
+  end
+  object StyleBook1: TStyleBook
+    Styles = <
+      item
+      end
+      item
+        Platform = 'Windows 7'
+        ResourcesBin = {
+          464D585F5354594C4520322E3501060A50616E656C7374796C6503B100005450
+          46300A5452656374616E676C6500095374796C654E616D65060A50616E656C73
+          74796C6505416C69676E070643656E7465720A46696C6C2E436F6C6F72070A63
+          6C6144696D677261790748697454657374080A53697A652E5769647468050000
+          0000000000A407400B53697A652E4865696768740500000000000000F0074014
+          53697A652E506C6174666F726D44656661756C74080C5374726F6B652E436F6C
+          6F7207097846463937393739370000}
+      end>
+    Left = 24
+    Top = 160
+  end
+  object Rectangle2: TRectangle
+    Align = Client
+    Fill.Kind = None
+    HitTest = False
+    Size.Width = 762.000000000000000000
+    Size.Height = 703.000000000000000000
+    Size.PlatformDefault = False
+    object map: TECNativeMap
+      Touch.InteractiveGestures = [Zoom, Rotate, DoubleTap]
+      HideShapesWhenZoom = False
+      HideShapesWhenWaitingTile = False
+      DblClickZoom = True
+      MouseWheelZoom = True
+      Latitude = 43.232951000000000000
+      Longitude = 0.078081999999994910
+      Reticle = False
+      ReticleColor = claBlack
+      ZoomScaleFactor = 0
+      DragRect = drNone
+      Draggable = True
+      Active = True
+      OnChangeMapZoom = mapChangeMapZoom
+      OnMapSelectRect = mapMapSelectRect
+      OnMapPaint = mapMapPaint
+      OnShapeClick = mapShapeClick
+      OnLoad = mapLoad
+      Align = Client
+      Size.Width = 762.000000000000000000
+      Size.Height = 703.000000000000000000
+      Size.PlatformDefault = False
+    end
+    object Ani: TAniIndicator
+      Position.X = 4.000000000000000000
+      Position.Y = 4.000000000000000000
+      Size.Width = 57.000000000000000000
+      Size.Height = 57.000000000000000000
+      Size.PlatformDefault = False
+    end
+    object ProgressCircle: TCircle
+      Position.X = 4.000000000000000000
+      Position.Y = 4.000000000000000000
+      Size.Width = 56.000000000000000000
+      Size.Height = 57.000000000000000000
+      Size.PlatformDefault = False
+      Stroke.Color = xFFBFBFBF
+      Visible = False
+      object ProgressInnerCircle: TCircle
+        Align = Client
+        Fill.Color = xFFBFBFBF
+        Margins.Left = 9.000000000000000000
+        Margins.Top = 9.000000000000000000
+        Margins.Right = 9.000000000000000000
+        Margins.Bottom = 9.000000000000000000
+        Size.Width = 38.000000000000000000
+        Size.Height = 39.000000000000000000
+        Size.PlatformDefault = False
+        Stroke.Color = xFFBFBFBF
+      end
+      object ProgressCircleArc: TArc
+        Align = Client
+        Margins.Left = 1.000000000000000000
+        Margins.Top = 1.000000000000000000
+        Margins.Right = 1.000000000000000000
+        Margins.Bottom = 1.000000000000000000
+        Size.Width = 54.000000000000000000
+        Size.Height = 55.000000000000000000
+        Size.PlatformDefault = False
+        Stroke.Color = claWhite
+        Stroke.Thickness = 7.000000000000000000
+        Stroke.Cap = Round
+        StartAngle = -90.000000000000000000
+        EndAngle = -90.000000000000000000
+      end
+      object ProgressCircleText: TText
+        Align = Client
+        Size.Width = 56.000000000000000000
+        Size.Height = 57.000000000000000000
+        Size.PlatformDefault = False
+        Text = '100%'
+        TextSettings.Font.StyleExt = {00070000000000000004000000}
+      end
+    end
+    object WaitInfo: TLabel
+      StyledSettings = []
+      Margins.Left = 65.000000000000000000
+      Margins.Top = 4.000000000000000000
+      Position.X = 65.000000000000000000
+      Position.Y = 4.000000000000000000
+      Size.Width = 697.000000000000000000
+      Size.Height = 57.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.Size = 16.000000000000000000
+      TextSettings.Font.StyleExt = {00070000000000000004000000}
+      TextSettings.FontColor = claDimgray
+      Text = 'WaitInfo'
+    end
+  end
+  object OpenDialogOSM: TOpenDialog
+    Filter = 'oms file|*.osm|oms lite (compress for TOMSFile )|*.olt'
+    Options = [ofHideReadOnly, ofFileMustExist, ofEnableSizing]
+    Left = 32
+    Top = 88
+  end
+  object timing: TLabel
+    StyledSettings = [Family, Size, FontColor]
+    Position.X = 4.000000000000000000
+    Position.Y = 60.000000000000000000
+    Size.Width = 57.000000000000000000
+    Size.Height = 17.000000000000000000
+    Size.PlatformDefault = False
+    TextSettings.Font.StyleExt = {00060000000000000004000000}
+    TextSettings.HorzAlign = Center
+    Text = '12:12:12'
+  end
+  object Timer1: TTimer
+    Enabled = False
+    OnTimer = Timer1Timer
+    Left = 16
+    Top = 232
+  end
+  object OpenDialog1: TOpenDialog
+    Left = 528
+    Top = 336
+  end
+end

@@ -1,0 +1,71 @@
+object Form13: TForm13
+  Left = 0
+  Top = 0
+  Caption = 'Controlling TECNativeMap with the keyboard'
+  ClientHeight = 480
+  ClientWidth = 640
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  DesignerMasterStyle = 0
+  object Panel1: TPanel
+    Align = Client
+    Size.Width = 640.000000000000000000
+    Size.Height = 392.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    object map: TECNativeMap
+      Touch.InteractiveGestures = [Zoom, Rotate, DoubleTap]
+      FocusedShapeWhenClicking = True
+      FocusedShapeWhenHovering = False
+      HideShapesWhenZoom = False
+      HideShapesWhenWaitingTile = False
+      DblClickZoom = True
+      MouseWheelZoom = True
+      latitude = 43.232951000000000000
+      longitude = 0.078081999999994910
+      Reticle = False
+      ReticleColor = claBlack
+      ZoomScaleFactor = 0
+      NumericalZoom = 14.000000000000000000
+      DragRect = drNone
+      Draggable = True
+      FullZoomAfterGestureZoom = False
+      TwoOrMoreFingers = False
+      OnlyOneOpenInfoWindow = False
+      WaitingForDestruction = False
+      Active = True
+      NbrThreadTile = ttFour
+      Align = Client
+      OnKeyDown = mapKeyDown
+      ClipChildren = True
+      Size.Width = 640.000000000000000000
+      Size.Height = 392.000000000000000000
+      Size.PlatformDefault = False
+    end
+  end
+  object Memo1: TMemo
+    Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+    DataDetectorTypes = []
+    Lines.Strings = (
+      'Move the view with the arrow keys'
+      'Zoom in / out with + and -'
+      'Progressive zoom CTRL + and CTRL -'
+      'Rotate left PageUP'
+      'Rotate right PageDOWN')
+    ReadOnly = True
+    TextSettings.HorzAlign = Center
+    Align = Bottom
+    CanFocus = False
+    Padding.Left = 7.000000000000000000
+    Padding.Right = 7.000000000000000000
+    Position.Y = 392.000000000000000000
+    Size.Width = 640.000000000000000000
+    Size.Height = 88.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
+    Viewport.Width = 636.000000000000000000
+    Viewport.Height = 84.000000000000000000
+  end
+end

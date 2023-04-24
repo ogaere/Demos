@@ -1,0 +1,199 @@
+object Form11: TForm11
+  Left = 0
+  Top = 270
+  Caption = 'Form11'
+  ClientHeight = 640
+  ClientWidth = 987
+  Position = DesktopCenter
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  Top = 270
+  DesignerMasterStyle = 0
+  object map: TECNativeMap
+    Touch.InteractiveGestures = [Zoom, Rotate, DoubleTap]
+    HideShapesWhenZoom = False
+    HideShapesWhenWaitingTile = False
+    DblClickZoom = True
+    MouseWheelZoom = True
+    Latitude = 43.232951000000000000
+    Longitude = 0.078081999999994910
+    Reticle = False
+    ReticleColor = claBlack
+    Zoom = 15
+    ZoomScaleFactor = 0
+    DragRect = drNone
+    Draggable = True
+    Active = True
+    Align = Client
+    ClipChildren = True
+    Size.Width = 867.000000000000000000
+    Size.Height = 640.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Panel1: TPanel
+    Align = Right
+    Position.X = 867.000000000000000000
+    Size.Width = 120.000000000000000000
+    Size.Height = 640.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
+    object Check_Polygone: TCheckBox
+      Align = Top
+      Margins.Left = 7.000000000000000000
+      Margins.Top = 10.000000000000000000
+      Position.X = 7.000000000000000000
+      Position.Y = 106.000000000000000000
+      Size.Width = 113.000000000000000000
+      Size.Height = 19.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 3
+      Text = 'Polygone'
+      OnChange = Check_PolygoneChange
+    end
+    object Chekc_redline: TCheckBox
+      Tag = 1
+      Align = Top
+      Margins.Left = 7.000000000000000000
+      Position.X = 7.000000000000000000
+      Position.Y = 125.000000000000000000
+      Size.Width = 113.000000000000000000
+      Size.Height = 19.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 4
+      Text = 'Red line'
+      OnChange = Check_PolygoneChange
+    end
+    object Check_greenline: TCheckBox
+      Tag = 2
+      Align = Top
+      Margins.Left = 7.000000000000000000
+      Position.X = 7.000000000000000000
+      Position.Y = 144.000000000000000000
+      Size.Width = 113.000000000000000000
+      Size.Height = 19.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 5
+      Text = 'Green line'
+      OnChange = Check_PolygoneChange
+    end
+    object Label1: TLabel
+      Align = Top
+      StyledSettings = [Family, FontColor]
+      Margins.Top = 7.000000000000000000
+      Position.Y = 79.000000000000000000
+      TextSettings.Font.Size = 14.000000000000000000
+      TextSettings.Font.StyleExt = {00070000000000000004000000}
+      TextSettings.HorzAlign = Center
+      Text = 'Guide layers'
+      TabOrder = 8
+    end
+    object usemeters: TCheckBox
+      Align = Top
+      Margins.Left = 7.000000000000000000
+      Margins.Top = 10.000000000000000000
+      Position.X = 7.000000000000000000
+      Position.Y = 197.000000000000000000
+      Size.Width = 113.000000000000000000
+      Size.Height = 19.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 9
+      Text = 'Use meters'
+      OnChange = usemetersChange
+    end
+    object Label2: TLabel
+      Align = Top
+      StyledSettings = [Family, FontColor]
+      Margins.Top = 7.000000000000000000
+      Position.Y = 170.000000000000000000
+      TextSettings.Font.Size = 14.000000000000000000
+      TextSettings.Font.StyleExt = {00070000000000000004000000}
+      TextSettings.HorzAlign = Center
+      Text = 'Snap distance'
+      TabOrder = 6
+    end
+    object Rectangle1: TRectangle
+      Align = Top
+      Fill.Kind = None
+      Margins.Top = 10.000000000000000000
+      Position.Y = 226.000000000000000000
+      Size.Width = 120.000000000000000000
+      Size.Height = 50.000000000000000000
+      Size.PlatformDefault = False
+      Stroke.Kind = None
+      object d_unit: TLabel
+        Align = Top
+        Margins.Left = 70.000000000000000000
+        Position.X = 70.000000000000000000
+        Size.Width = 50.000000000000000000
+        Size.Height = 17.000000000000000000
+        Size.PlatformDefault = False
+        Text = 'pixels'
+        TabOrder = 0
+      end
+      object snapdistance: TNumberBox
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        TabOrder = 1
+        Cursor = crIBeam
+        DecimalDigits = 0
+        Max = 2000.000000000000000000
+        Position.X = 7.000000000000000000
+        Size.Width = 45.000000000000000000
+        Size.Height = 22.000000000000000000
+        Size.PlatformDefault = False
+        OnChange = snapdistanceChange
+      end
+    end
+    object Label3: TLabel
+      Align = Top
+      StyledSettings = [Family, FontColor]
+      Margins.Top = 7.000000000000000000
+      Position.Y = 7.000000000000000000
+      TextSettings.Font.Size = 14.000000000000000000
+      TextSettings.Font.StyleExt = {00070000000000000004000000}
+      TextSettings.HorzAlign = Center
+      Text = 'Snap Markers'
+      TabOrder = 7
+    end
+    object Check_marker: TCheckBox
+      Align = Top
+      Margins.Left = 7.000000000000000000
+      Margins.Top = 10.000000000000000000
+      Position.X = 7.000000000000000000
+      Position.Y = 34.000000000000000000
+      Size.Width = 113.000000000000000000
+      Size.Height = 19.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 0
+      Text = 'Red Marker'
+      OnChange = Check_markerChange
+    end
+    object Check_Star: TCheckBox
+      Tag = 1
+      Align = Top
+      Margins.Left = 7.000000000000000000
+      Position.X = 7.000000000000000000
+      Position.Y = 53.000000000000000000
+      Size.Width = 113.000000000000000000
+      Size.Height = 19.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 1
+      Text = 'Green start'
+      OnChange = Check_markerChange
+    end
+    object chk_targetline: TCheckBox
+      Align = Top
+      Margins.Left = 7.000000000000000000
+      Margins.Top = 10.000000000000000000
+      Position.X = 7.000000000000000000
+      Position.Y = 286.000000000000000000
+      Size.Width = 113.000000000000000000
+      Size.Height = 19.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 2
+      Text = 'TargetLine'
+      OnChange = chk_targetlineChange
+    end
+  end
+end

@@ -1,0 +1,323 @@
+object FormOverPass: TFormOverPass
+  Left = 0
+  Top = 0
+  Caption = 'OverPass API'
+  ClientHeight = 463
+  ClientWidth = 956
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  OnCloseQuery = FormCloseQuery
+  DesignerMasterStyle = 0
+  object pLeft: TPanel
+    Align = Left
+    Padding.Top = 20.000000000000000000
+    Size.Width = 297.000000000000000000
+    Size.Height = 463.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    object lbl1: TLabel
+      Align = Bottom
+      StyledSettings = [Family, Size, FontColor]
+      Position.Y = 409.000000000000000000
+      Size.Width = 297.000000000000000000
+      Size.Height = 33.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.StyleExt = {00070000000000000004000000}
+      TextSettings.HorzAlign = Center
+      Text = 'Query'
+      TabOrder = 0
+      object btnExecQuery: TButton
+        Align = Client
+        StyledSettings = [Family, Size, FontColor]
+        Margins.Left = 4.000000000000000000
+        Margins.Top = 4.000000000000000000
+        Margins.Right = 4.000000000000000000
+        Size.Width = 289.000000000000000000
+        Size.Height = 29.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+        Text = 'Execute query'
+        TextSettings.Font.StyleExt = {00070000000000000004000000}
+        OnClick = btnExecQueryClick
+      end
+    end
+    object query: TMemo
+      Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+      DataDetectorTypes = []
+      Align = Client
+      Margins.Left = 4.000000000000000000
+      Margins.Top = 4.000000000000000000
+      Margins.Right = 4.000000000000000000
+      Margins.Bottom = 4.000000000000000000
+      Size.Width = 289.000000000000000000
+      Size.Height = 261.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 2
+      Viewport.Width = 285.000000000000000000
+      Viewport.Height = 257.000000000000000000
+    end
+    object lbl_count_query: TLabel
+      Align = Bottom
+      StyledSettings = [Family, Size, FontColor]
+      Margins.Bottom = 4.000000000000000000
+      Position.Y = 442.000000000000000000
+      Size.Width = 297.000000000000000000
+      Size.Height = 17.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.StyleExt = {00070000000000000004000000}
+      TextSettings.HorzAlign = Center
+      TabOrder = 1
+    end
+    object Panel2: TPanel
+      Align = Top
+      Position.Y = 20.000000000000000000
+      Size.Width = 297.000000000000000000
+      Size.Height = 120.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 3
+      object btRestaurants: TButton
+        Align = Bottom
+        Margins.Left = 4.000000000000000000
+        Margins.Top = 4.000000000000000000
+        Margins.Right = 4.000000000000000000
+        Margins.Bottom = 4.000000000000000000
+        Position.X = 4.000000000000000000
+        Position.Y = 87.000000000000000000
+        Size.Width = 289.000000000000000000
+        Size.Height = 29.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 1
+        Text = 'Restaurants'
+        OnClick = btRestaurantsClick
+      end
+      object btStreets: TButton
+        Align = Bottom
+        Margins.Left = 4.000000000000000000
+        Margins.Top = 4.000000000000000000
+        Margins.Right = 4.000000000000000000
+        Margins.Bottom = 4.000000000000000000
+        Position.X = 4.000000000000000000
+        Position.Y = 50.000000000000000000
+        Size.Width = 289.000000000000000000
+        Size.Height = 29.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+        Text = 'Streets'
+        OnClick = btStreetsClick
+      end
+      object Rectangle1: TRectangle
+        Align = Bottom
+        Margins.Left = 4.000000000000000000
+        Margins.Top = 4.000000000000000000
+        Margins.Right = 4.000000000000000000
+        Margins.Bottom = 4.000000000000000000
+        Position.X = 4.000000000000000000
+        Position.Y = -31.000000000000000000
+        Size.Width = 289.000000000000000000
+        Size.Height = 73.000000000000000000
+        Size.PlatformDefault = False
+        Stroke.Thickness = 0.000000000000000000
+        object edKey: TEdit
+          Touch.InteractiveGestures = [LongTap, DoubleTap]
+          TabOrder = 1
+          Text = 'amenity'
+          Position.X = 41.000000000000000000
+          Position.Y = 20.000000000000000000
+          Size.Width = 56.000000000000000000
+          Size.Height = 22.000000000000000000
+          Size.PlatformDefault = False
+        end
+        object btTAg: TButton
+          Position.X = 214.000000000000000000
+          Position.Y = 20.000000000000000000
+          Size.Width = 71.000000000000000000
+          Size.Height = 22.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 2
+          Text = 'find Tag'
+          OnClick = btTAgClick
+        end
+        object Label1: TLabel
+          Position.X = 8.000000000000000000
+          Position.Y = 24.000000000000000000
+          Size.Width = 25.000000000000000000
+          Size.Height = 17.000000000000000000
+          Size.PlatformDefault = False
+          Text = 'Key:'
+          TabOrder = 4
+        end
+        object Label2: TLabel
+          Position.X = 105.000000000000000000
+          Position.Y = 24.000000000000000000
+          Size.Width = 39.000000000000000000
+          Size.Height = 17.000000000000000000
+          Size.PlatformDefault = False
+          Text = 'Value:'
+          TabOrder = 3
+        end
+        object edValue: TEdit
+          Touch.InteractiveGestures = [LongTap, DoubleTap]
+          TabOrder = 0
+          Text = 'fuel'
+          Position.X = 152.000000000000000000
+          Position.Y = 20.000000000000000000
+          Size.Width = 54.000000000000000000
+          Size.Height = 22.000000000000000000
+          Size.PlatformDefault = False
+        end
+        object ckIsoChrone: TCheckBox
+          Position.X = 8.000000000000000000
+          Position.Y = 50.000000000000000000
+          Size.Width = 249.000000000000000000
+          Size.Height = 19.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 5
+          Text = 'within 10 minutes walking distance'
+        end
+      end
+    end
+  end
+  object spl1: TSplitter
+    Align = Left
+    Cursor = crHSplit
+    MinSize = 20.000000000000000000
+    Position.X = 297.000000000000000000
+    Size.Width = 9.000000000000000000
+    Size.Height = 463.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object pright: TPanel
+    Align = Client
+    Size.Width = 650.000000000000000000
+    Size.Height = 463.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 2
+    object tabmapdata: TTabControl
+      Align = Client
+      Margins.Left = 4.000000000000000000
+      Margins.Top = 4.000000000000000000
+      Margins.Right = 4.000000000000000000
+      Margins.Bottom = 4.000000000000000000
+      Size.Width = 642.000000000000000000
+      Size.Height = 455.000000000000000000
+      Size.PlatformDefault = False
+      TabIndex = 0
+      TabOrder = 0
+      TabPosition = PlatformDefault
+      Sizes = (
+        642s
+        429s
+        642s
+        429s)
+      object tmap: TTabItem
+        CustomIcon = <
+          item
+          end>
+        IsSelected = True
+        Size.Width = 44.000000000000000000
+        Size.Height = 26.000000000000000000
+        Size.PlatformDefault = False
+        StyleLookup = ''
+        TabOrder = 0
+        Text = 'Map'
+        ExplicitSize.cx = 44.000000000000000000
+        ExplicitSize.cy = 26.000000000000000000
+        object map: TECNativeMap
+          Touch.InteractiveGestures = [Zoom, Rotate, DoubleTap]
+          FocusedShapeWhenClicking = True
+          FocusedShapeWhenHovering = False
+          HideShapesWhenZoom = False
+          HideShapesWhenWaitingTile = False
+          DblClickZoom = True
+          MouseWheelZoom = True
+          latitude = 43.232951000000000000
+          longitude = 0.078081999999994910
+          Reticle = False
+          ReticleColor = claBlack
+          Zoom = 17
+          ZoomScaleFactor = 0
+          NumericalZoom = 17.000000000000000000
+          DragRect = drManualSelect
+          Draggable = True
+          FullZoomAfterGestureZoom = False
+          TwoOrMoreFingers = False
+          TileServer = tsOsmFr
+          OnlyOneOpenInfoWindow = False
+          WaitingForDestruction = False
+          Active = True
+          NbrThreadTile = ttFour
+          OnMapSelectRect = mapMapSelectRect
+          OnShapeClick = mapShapeClick
+          Align = Client
+          ClipChildren = True
+          Size.Width = 642.000000000000000000
+          Size.Height = 397.000000000000000000
+          Size.PlatformDefault = False
+          object LayerAniIndicator: TAniIndicator
+            Anchors = [akTop, akRight]
+            Position.X = 584.000000000000000000
+            Position.Y = 8.000000000000000000
+            Size.Width = 66.000000000000000000
+            Size.Height = 49.000000000000000000
+            Size.PlatformDefault = False
+          end
+        end
+        object Panel1: TPanel
+          Align = Bottom
+          Position.Y = 397.000000000000000000
+          Size.Width = 642.000000000000000000
+          Size.Height = 32.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 1
+          object lbl2: TLabel
+            Align = FitRight
+            StyledSettings = [Family, Size, FontColor]
+            Position.X = 295.999938964843800000
+            Size.Width = 346.000061035156300000
+            Size.Height = 32.000000000000000000
+            Size.PlatformDefault = False
+            TextSettings.Font.StyleExt = {00070000000000000004000000}
+            TextSettings.HorzAlign = Center
+            TextSettings.WordWrap = False
+            Text = 'right click + drag to select a zone and import OSM data'
+            TabOrder = 0
+          end
+          object ClearMap: TButton
+            Position.X = 7.000000000000000000
+            Position.Y = 4.000000000000000000
+            TabOrder = 2
+            Text = 'Clear Map'
+            OnClick = ClearMapClick
+          end
+        end
+      end
+      object tdata: TTabItem
+        CustomIcon = <
+          item
+          end>
+        IsSelected = False
+        Size.Width = 45.000000000000000000
+        Size.Height = 26.000000000000000000
+        Size.PlatformDefault = False
+        StyleLookup = ''
+        TabOrder = 0
+        Text = 'Data'
+        ExplicitSize.cx = 45.000000000000000000
+        ExplicitSize.cy = 26.000000000000000000
+        object mmomdata: TMemo
+          Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+          DataDetectorTypes = []
+          Align = Client
+          Size.Width = 642.000000000000000000
+          Size.Height = 429.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 0
+          Viewport.Width = 638.000000000000000000
+          Viewport.Height = 425.000000000000000000
+        end
+      end
+    end
+  end
+end
