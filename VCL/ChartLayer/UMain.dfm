@@ -71,9 +71,5 @@ object FormChartLayer: TFormChartLayer
     NbrThreadTile = ttFour
     Align = alClient
     TabOrder = 1
-    ExplicitLeft = 88
-    ExplicitTop = 144
-    ExplicitWidth = 256
-    ExplicitHeight = 256
   end
 end

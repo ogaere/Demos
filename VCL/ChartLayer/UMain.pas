@@ -32,6 +32,7 @@ type
 
   public
     { Déclarations publiques }
+    TotalLayer : integer;
   end;
 
 var
@@ -43,21 +44,37 @@ implementation
 
 const
   // from https://colorbrewer2.org
-  palette : array[0..7] of string = ('#7fc97f','#beaed4','#fdc086','#ffff99','#386cb0','#f0027f','#bf5b17','#666666');
+  palettes : array [0..2]of array [0..7] of string = (
+    ('#7fc97f','#beaed4','#fdc086','#ffff99','#386cb0','#f0027f','#bf5b17','#666666'),
+    ('#d53e4f','#f46d43','#fdae61','#fee08b','#e6f598','#abdda4','#66c2a5','#3288bd'),
+    ('#66c2a5','#fc8d62','#8da0cb','#e78ac3','#a6d854','#ffd92f','#e5c494','#b3b3b3')
+
+    );
 
 // change default hint legend
 procedure doOnValideHint(const Sender: TECChartItem; const index: integer;
   const percent, value: double; var hint: string);
 begin
+
+  // a positive index indicates a data line
+  if index>-1 then
+
   hint := Sender.Layer.Fields[index].Legend + ' : ' + doubletostrdigit(percent,
-    1) + ' % (' + doubletostr(value) + ')';
+    1) + ' % (' + doubletostr(value) + ')'
+
+  else // -1 indicates that the legend is complete, you can enrich it
+
+  Hint := '<h3><center>'+sender.Layer.Caption+'</center></h3>'+
+           hint+
+           '<h4><center>Chart n°'+inttostr(sender.Shape.IndexOf)+'</center></h4>';
+
 end;
 
 // create random layer
 procedure TFormChartLayer.addLayerClick(Sender: TObject);
 var
   Lat, Lng: double;
-  x, y, i, delta_lat, delta_lng: integer;
+  x, y, i,id_pal, delta_lat, delta_lng: integer;
 
   s: string;
 
@@ -67,10 +84,12 @@ var
 
   begin
 
-    Randomize;
+  Randomize;
 
-   // random chart type
-  case random(5) of
+
+
+  // cycle chart type
+  case tag of
     0:
       begin
         FChartType := ctPie;
@@ -99,19 +118,35 @@ var
 
   end;
 
+
+  tag := tag + 1;
+  if tag>4 then tag := 0;
+
+
+  // create layer
   FChartLayer := map.ChartLayers.Add(s + ' ' + timeTosTr(time));
+
+  inc(TotalLayer);
+  FChartLayer.Caption := 'Title Chart Layer ' + inttostr(TotalLayer);
+
 
   // adapt the graph legend
   FChartLayer.OnValidHint := doOnValideHint;
 
   // create random datas
 
+  // select palette
+  id_pal := random(3);
+
+  // between 4 and 8 lines of data
   for i := 0 to 3 + random(5) do
-    FChartLayer.AddField('Data ' + chr(i + ord('A')), StrToColor(palette[i]));
+    FChartLayer.AddField('Data ' + chr(i + ord('A')), StrToColor(palettes[id_pal][i]));
 
 
   FChartLayer.ChartType := FChartType;
 
+  // labels will be displayed for zoom 3 and more
+  FChartLayer.Labels.MinZoom := 3;
 
   if FChartLayer.ChartType < ctVerticalStackedBar then
   begin
@@ -119,7 +154,7 @@ var
     FChartLayer.MaxChartSize := 50;
     FChartLayer.Labels.Align := laCenter;
   end
-  else
+  else // stacked bar
   begin
     // max bar size 100
     FChartLayer.MaxChartSize := 100;
@@ -129,9 +164,8 @@ var
   FChartLayer.MinChartSize := 16;
 
   // distribute 4 * 4 graphs on the visible surface of the map
-  delta_lat := round(((map.NorthEastLatitude - map.SouthWestLatitude) * 1000));
-  delta_lng := round(((map.NorthEastLongitude - map.SouthWestlongitude)
-    * 1000));
+  delta_lat := round(((map.NorthEastLatitude  - map.SouthWestLatitude)  * 1000));
+  delta_lng := round(((map.NorthEastLongitude - map.SouthWestlongitude) * 1000));
 
   for y := 0 to 3 do
   begin
@@ -139,9 +173,10 @@ var
     for x := 0 to 3 do
     begin
 
-      Lat := map.SouthWestLatitude + (random(delta_lat) / 1000);
+      Lat := map.SouthWestLatitude  + (random(delta_lat) / 1000);
       Lng := map.SouthWestlongitude + (random(delta_lng) / 1000);
 
+      // create chart
       chart := FChartLayer.Add(Lat, Lng);
 
       // add ramdom value
@@ -154,10 +189,12 @@ var
 
   // generate the elements on the map
   FChartLayer.Update;
+
   // zoom it
   FChartLayer.fitBounds;
 
   layers.ItemIndex := layers.Items.Count - 1;
+  Delete.Enabled   := true;
 
 
 end;
@@ -165,22 +202,32 @@ end;
 // click on chart
 procedure TFormChartLayer.doOnClick(Sender: TObject; const item: TECShape);
 begin
-caption := TECchartLayer(Sender).Name + ' : ' + item['total'] ;
+caption := 'Click Left - '+TECchartLayer(Sender).Name +
+           ' : Chart n°'+inttostr(item.IndexOf)+' Total =' + item['total'] ;
 // if needed you can access TECChartItem with TECChartItem(item.item)
 end;
 
 // right click on chart
 procedure TFormChartLayer.doOnRightClick(Sender: TObject; const item: TECShape);
 begin
-   caption := TECchartLayer(Sender).Name + ' : ' + item['total'] + ' (Right)';
+   caption := 'Click Right - '+TECchartLayer(Sender).Name +
+           ' : Chart n°'+inttostr(item.IndexOf)+' Total =' + item['total'] ;
 end;
 
 
 procedure TFormChartLayer.FormCreate(Sender: TObject);
 begin
+
   map.ChartLayers.OnChange := doOnChangeLayers;
   map.ChartLayers.OnClick := doOnClick;
   map.ChartLayers.OnRightClick := doOnRightClick;
+
+  // The size of the diagrams will also be adapted according to the zoom
+  map.ScaleMarkerToZoom := true;
+
+  tag        := 0;
+  TotalLayer := 0;
+
 end;
 
 // event triggered after add or delete TECBubbleLayer
