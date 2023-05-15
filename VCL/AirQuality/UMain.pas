@@ -64,25 +64,18 @@ begin
   MJson.Lines.Text := Json;
   MJSon.Color      := clwhite;
   MJSon.Font.Color := clBlack;
+
 end;
 
 // Triggered after a click on a station when data is available
 procedure TFormAirQuality.doOnclick(const sender : TAirQualityCity);
  var i:integer;
-     level:string;
+
 begin
   // all data in json format are available in sender.Json
 
-  case sender.level of
-    aqlGood: level := 'Good';
-    aqlModerate: level := 'Moderate';
-    aqlUnhealthySensitive: level := 'Unhealthy for Sensitive Groups';
-    aqlUnhealthy: level := 'Unhealthy';
-    aqlVeryUnhealthy: level := 'Very unhealthy';
-    aqlHazardous: level := 'Hazardous';
-  end;
 
-  MJSon.text := #13#10+Level+#13#10#13#10;
+  MJSon.text := #13#10+ map.AirQuality.Legend[sender.Level]+#13#10#13#10;
 
   MJSon.Lines.Add(Sender.Name);
 
@@ -99,6 +92,7 @@ begin
    MJSon.Lines.Add(DateTimeToStr(sender.Time));
 
    MJSon.Color := sender.LevelColor;
+   MJSon.Lines.Add(inttostr(sender.LevelColor)) ;
    MJSon.Font.Color :=  GetContrastingColor(sender.LevelColor);
 end;
 
@@ -110,6 +104,7 @@ begin
  map.AirQuality.OnClick := doOnclick;
  map.AirQuality.OnRequest := doOnRequest;
  map.AirQuality.visible := true;
+ map.HintInfoWindow.FontSize := 12;
 end;
 
 
