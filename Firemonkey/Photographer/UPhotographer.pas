@@ -21,7 +21,7 @@ type
   end;
 
 
-  TForm2 = class(TForm)
+  TFormPhoto = class(TForm)
     Panel1: TPanel;
     launchdrones: TButton;
     Image: TImage;
@@ -58,7 +58,7 @@ type
   end;
 
 var
-  Form2: TForm2;
+  FormPhoto: TFormPhoto;
 
 implementation
 
@@ -106,7 +106,7 @@ end;
 
 
 
-procedure TForm2.FormCreate(Sender: TObject);
+procedure TFormPhoto.FormCreate(Sender: TObject);
 var c:TColor;
 begin
 
@@ -123,29 +123,31 @@ begin
  map.Reticle := true;
  map.ReticleColor :=  $FFFFFFFF;
 
- map.LocalCache := ExtractfilePath(ParamStr(0))+'cache';
+ map.LocalCache := TPath.Combine(TPath.GetSharedDocumentsPath, 'ecnativemap-cache');
 
  // default Distance between photos (in km)
  FDistancePhoto := (Distance.Value / 1000) ;
  // size photos
  map.ScreenShots.Width := 320;
  map.ScreenShots.Height:= 240;
+ // do not capture elements only tiles
+ map.ScreenShots.ShowShapes := false;
  // fired when "photo" is taken
  map.ScreenShots.OnScreenShot := doScreenshot;
 end;
 
-procedure TForm2.FormDestroy(Sender: TObject);
+procedure TFormPhoto.FormDestroy(Sender: TObject);
 begin
  Free_Drones;
  FDronesList.Free;
 end;
 
-procedure TForm2.UpdateInfos;
+procedure TFormPhoto.UpdateInfos;
 begin
   TotalPhotos.Text := 'Total photos : '+inttostr(FTotalPhotos);
 end;
 
-function  TForm2.Get_Drone_Info(const name:string):TDroneInfo;
+function  TFormPhoto.Get_Drone_Info(const name:string):TDroneInfo;
 var i:integer;
 begin
 
@@ -162,7 +164,7 @@ begin
 
 end;
 
-procedure TForm2.Free_Drones;
+procedure TFormPhoto.Free_Drones;
 var i:integer;
 begin
 
@@ -187,14 +189,14 @@ begin
 end;
 
 
-procedure TForm2.distanceChange(Sender: TObject);
+procedure TFormPhoto.distanceChange(Sender: TObject);
 begin
  FDistancePhoto := (Distance.Value / 1000) ;
 end;
 
 
 
-procedure TForm2.Launch_Drones;
+procedure TFormPhoto.Launch_Drones;
 var Direction  : integer;
     animD      : TECAnimationMoveToDirection;
     Drone      : TECShapeMarker;
@@ -294,7 +296,7 @@ end;
 
 
 // fired when a drone move
-procedure TForm2.doOnMoveDrone(sender : TObject;const Item : TECShape; var cancel:boolean);
+procedure TFormPhoto.doOnMoveDrone(sender : TObject;const Item : TECShape; var cancel:boolean);
 var shape:TECShape;
     DroneInfo : TDroneInfo;
 begin
@@ -332,7 +334,7 @@ end;
 
 
 // view the associated image
-procedure TForm2.doPhotoClick(sender: TObject; const item: TECShape);
+procedure TFormPhoto.doPhotoClick(sender: TObject; const item: TECShape);
 begin
 
  image.Bitmap           := TBitmap(item.item);
@@ -342,7 +344,7 @@ begin
 
 
 // here the screenshot is taken
-procedure TForm2.doScreenShot(const name:string;const Screenshot:TBitmap);
+procedure TFormPhoto.doScreenShot(const name:string;const Screenshot:TBitmap);
 var bmp   : TBitmap;
     drone : TDroneInfo;
     id    : integer;
@@ -389,7 +391,7 @@ begin
 
 end;
 
-procedure TForm2.launchdronesClick(Sender: TObject);
+procedure TFormPhoto.launchdronesClick(Sender: TObject);
 begin
  Launch_Drones;
 end;
