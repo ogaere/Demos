@@ -445,7 +445,7 @@ begin
   // use XAnchor and YAnchor to shift your marker to adjust the exact location point
   // here we want it to be at the bottom of the pin.
   // default XAnchor & YAnchor are in the center of the shape
-  FPosition.YAnchor  := 24;
+  FPosition.YAnchor  := 32;
 
   FPosition.color := claBrown;
   FPosition.HoverColor := GetHighlightColorBy(FPosition.color, 32);// unit uecMapUtil
@@ -506,12 +506,8 @@ begin
 
   // default markers style
 
-  map.Styles.addRule('.marker {width:24;height:24;scale:1}');
+  map.Styles.addRule('.marker {width:32;height:32;scale:1}');
 
-  // default markers style for Position group
-  map.Styles.addRule('#.marker {scale:2}');
-  // rule for gps marker
-  map.Styles.addRule('#.marker.gps:true {scale:1}');
 
   // styling trackline
   map.Styles.addRule
@@ -523,7 +519,8 @@ begin
 
   // for GPS marker Styleicon depends on the zoom
     // flat for zoom 1 to 16; direction for zoom 17 to 21
-  map.Styles.addRule('#.marker.GPS:true {styleicon:1-16=Flat,17-21=direction}');
+  map.Styles.addRule('.marker {if:gps=true;width:16;height:16;styleicon:1-16=Flat,17-21=direction}');
+
 
   // style according to the mode of tracing
   // define colors variables
@@ -779,8 +776,8 @@ begin
 
     anim.Timing := 50;
 
-    anim.MaxSize := 50;
-    anim.StartSize := 32;
+    anim.MaxSize   := FGPSPosition.Width*5;
+    anim.StartSize := FGPSPosition.width;
 
     anim.StartOpacity := 50;
 
