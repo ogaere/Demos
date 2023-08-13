@@ -17,6 +17,7 @@ type
     itinerary: TListBox;
     engine: TComboBox;
     Clear: TButton;
+    DistanceTime: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure itineraryClick(Sender: TObject);
     procedure AddRouteClick(Sender: TObject);
@@ -104,6 +105,8 @@ var
 begin
   Map.Routing.itinerary.route := route;
 
+  DistanceTime.caption := ' Distance : '+DoubleToStrDigit(route.Distance, 2) + ' km'+ '   Time : '+SecondeToTimeStr(route.duration);
+
   itinerary.Items.Clear;
 
   itinerary.Items.BeginUpdate;
@@ -175,6 +178,8 @@ begin
 
   // move map for show segment
   Map.Routing.itinerary.ShowSegment(index);
+
+  selected_segment.Opacity := 75;
 
   // you can also change color of selected_segment here
 

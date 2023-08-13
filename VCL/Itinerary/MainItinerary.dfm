@@ -7,11 +7,26 @@ object ItineraryForm: TItineraryForm
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -12
+  Font.Height = -13
   Font.Name = 'Segoe UI'
   Font.Style = []
   OnCreate = FormCreate
-  TextHeight = 15
+  TextHeight = 17
+  object DistanceTime: TLabel
+    AlignWithMargins = True
+    Left = 3
+    Top = 289
+    Width = 661
+    Height = 17
+    Align = alBottom
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'Segoe UI'
+    Font.Style = []
+    ParentFont = False
+    ExplicitLeft = -2
+  end
   object menu: TPanel
     AlignWithMargins = True
     Left = 3
@@ -25,7 +40,7 @@ object ItineraryForm: TItineraryForm
       Left = 3
       Top = 6
       Width = 147
-      Height = 23
+      Height = 25
       TabOrder = 1
       TextHint = 'From'
     end
@@ -33,7 +48,7 @@ object ItineraryForm: TItineraryForm
       Left = 156
       Top = 6
       Width = 147
-      Height = 23
+      Height = 25
       TabOrder = 2
       TextHint = 'To'
     end
@@ -50,7 +65,7 @@ object ItineraryForm: TItineraryForm
       Left = 309
       Top = 6
       Width = 71
-      Height = 23
+      Height = 25
       Style = csDropDownList
       ItemIndex = 2
       TabOrder = 3
@@ -65,7 +80,7 @@ object ItineraryForm: TItineraryForm
       Left = 386
       Top = 6
       Width = 106
-      Height = 23
+      Height = 25
       Style = csDropDownList
       ItemIndex = 0
       TabOrder = 4
@@ -97,13 +112,14 @@ object ItineraryForm: TItineraryForm
     ItemHeight = 15
     TabOrder = 1
     OnClick = itineraryClick
+    ExplicitLeft = -2
   end
   object map: TECNativeMap
     AlignWithMargins = True
     Left = 3
     Top = 45
     Width = 661
-    Height = 261
+    Height = 238
     HideShapesWhenZoom = False
     HideShapesWhenWaitingTile = False
     DblClickZoom = True
@@ -123,5 +139,7 @@ object ItineraryForm: TItineraryForm
     Align = alClient
     TabOrder = 2
     TabStop = True
+    ExplicitLeft = -2
+    ExplicitHeight = 220
   end
 end
