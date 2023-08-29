@@ -1,0 +1,191 @@
+object Form18: TForm18
+  Left = 0
+  Top = 0
+  Caption = 'Color filters'
+  ClientHeight = 480
+  ClientWidth = 640
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  DesignerMasterStyle = 0
+  object Panel2: TPanel
+    Align = Right
+    Position.X = 440.000000000000000000
+    Size.Width = 200.000000000000000000
+    Size.Height = 480.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 2
+    object NewColor: TColorComboBox
+      DropDownKind = Custom
+      Color = claNull
+      DisableFocusEffect = False
+      ItemIndex = 147
+      Position.X = 8.000000000000000000
+      Position.Y = 249.000000000000000000
+      Size.Width = 177.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 0
+      OnChange = NewColorChange
+    end
+    object SelectColor: TRectangle
+      Fill.Color = claBrown
+      Position.X = 8.000000000000000000
+      Position.Y = 193.000000000000000000
+      Size.Width = 177.000000000000000000
+      Size.Height = 18.000000000000000000
+      Size.PlatformDefault = False
+    end
+    object label1: TLabel
+      StyledSettings = [Family, Style, FontColor]
+      Position.X = 8.000000000000000000
+      Position.Y = 224.000000000000000000
+      Size.Width = 105.000000000000000000
+      Size.Height = 17.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'Select new color'
+      TabOrder = 4
+    end
+    object Label2: TLabel
+      StyledSettings = [Family, Style, FontColor]
+      Position.X = 8.000000000000000000
+      Position.Y = 168.000000000000000000
+      Size.Width = 192.000000000000000000
+      Size.Height = 17.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'click on the map to choose a color'
+      TabOrder = 5
+    end
+    object GroupBox1: TGroupBox
+      Position.X = 7.000000000000000000
+      Position.Y = 8.000000000000000000
+      Size.Width = 185.000000000000000000
+      Size.Height = 145.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'Filter'
+      TabOrder = 6
+      object RadioButton1: TRadioButton
+        Position.X = 7.000000000000000000
+        Position.Y = 16.000000000000000000
+        Size.Width = 60.000000000000000000
+        Size.Height = 19.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 43
+        Text = 'Grey'
+        OnClick = RadioButton3Click
+      end
+      object RadioButton2: TRadioButton
+        Tag = 1
+        Position.X = 7.000000000000000000
+        Position.Y = 35.000000000000000000
+        Size.Width = 60.000000000000000000
+        Size.Height = 19.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 40
+        Text = 'Sepia'
+        OnClick = RadioButton3Click
+      end
+      object RadioButton3: TRadioButton
+        Tag = 2
+        Position.X = 7.000000000000000000
+        Position.Y = 55.000000000000000000
+        Size.Width = 60.000000000000000000
+        Size.Height = 19.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 42
+        Text = 'Invert'
+        OnClick = RadioButton3Click
+      end
+      object RadioButton4: TRadioButton
+        Tag = 3
+        Position.X = 7.000000000000000000
+        Position.Y = 74.000000000000000000
+        Size.Width = 60.000000000000000000
+        Size.Height = 19.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 39
+        Text = 'Light'
+        OnClick = RadioButton3Click
+      end
+      object RadioButton5: TRadioButton
+        Tag = 4
+        Position.X = 7.000000000000000000
+        Position.Y = 94.000000000000000000
+        Size.Width = 60.000000000000000000
+        Size.Height = 19.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 41
+        Text = 'Dark'
+        OnClick = RadioButton3Click
+      end
+      object RadioButton6: TRadioButton
+        Tag = 5
+        Position.X = 7.000000000000000000
+        Position.Y = 114.000000000000000000
+        Size.Width = 60.000000000000000000
+        Size.Height = 19.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 38
+        Text = 'None'
+        OnClick = RadioButton3Click
+      end
+      object Dark: TSpinBox
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        TabOrder = 20
+        Cursor = crIBeam
+        Max = 255.000000000000000000
+        Value = 255.000000000000000000
+        Increment = 10.000000000000000000
+        Position.X = 75.000000000000000000
+        Position.Y = 96.000000000000000000
+        Size.Width = 69.000000000000000000
+        Size.Height = 22.000000000000000000
+        Size.PlatformDefault = False
+        OnChange = DarkChange
+      end
+      object light: TSpinBox
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        TabOrder = 44
+        Cursor = crIBeam
+        Max = 255.000000000000000000
+        Value = 255.000000000000000000
+        Increment = 10.000000000000000000
+        Position.X = 75.000000000000000000
+        Position.Y = 70.000000000000000000
+        Size.Width = 69.000000000000000000
+        Size.Height = 22.000000000000000000
+        Size.PlatformDefault = False
+        OnChange = lightChange
+      end
+    end
+  end
+  object map: TECNativeMap
+    Touch.InteractiveGestures = [Zoom, Rotate, DoubleTap]
+    HideShapesWhenZoom = False
+    HideShapesWhenWaitingTile = False
+    DblClickZoom = True
+    MouseWheelZoom = True
+    latitude = 43.232951000000000000
+    longitude = 0.078081999999994910
+    Reticle = False
+    ReticleColor = claBlack
+    ZoomScaleFactor = 0
+    NumericalZoom = 14.000000000000000000
+    DragRect = drNone
+    Draggable = True
+    FullZoomAfterGestureZoom = False
+    TwoOrMoreFingers = False
+    OnlyOneOpenInfoWindow = False
+    WaitingForDestruction = False
+    Active = True
+    NbrThreadTile = ttFour
+    OnMapClick = mapMapClick
+    Align = Client
+    TabOrder = 0
+    ClipChildren = True
+    Size.Width = 440.000000000000000000
+    Size.Height = 480.000000000000000000
+    Size.PlatformDefault = False
+  end
+end
