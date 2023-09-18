@@ -47,8 +47,8 @@ procedure TFormGoogle.FormCreate(Sender: TObject);
 begin
 
  // see https://developers.google.com/maps/documentation/tile/cloud-setup?hl=en
- if map.GoogleKey='' then
-  map.GoogleKey :=  InputBox('Google API key', 'Your Key', '');
+ if map.Google.Key='' then
+  map.Google.Key :=  InputBox('Google API key', 'Your Key', '');
 
   map.TileServer := tsGoogle;
   map.TileServerInfo.MapStyle := 'roadmap';
@@ -58,20 +58,20 @@ end;
 // new styles
 procedure TFormGoogle.jsonChange(Sender: TObject);
 begin
-  map.GoogleStyles := json.Text;
+  map.Google.Styles := json.Text;
 end;
 
 // default styles
 procedure TFormGoogle.ClearStylesClick(Sender: TObject);
 begin
- map.GoogleStyles := '';
+ map.Google.Styles := '';
 end;
 
 
 procedure TFormGoogle.langueChange(Sender: TObject);
 begin
  if langue.ItemIndex>-1 then
-  map.GoogleLang := langue.Items[langue.ItemIndex];
+  map.Google.Lang := langue.Items[langue.ItemIndex];
 end;
 
 procedure TFormGoogle.LinkStylesClick(Sender: TObject);
