@@ -12,33 +12,6 @@ object FormGoogle: TFormGoogle
   Font.Style = []
   OnCreate = FormCreate
   TextHeight = 15
-  object map: TECNativeMap
-    Left = 0
-    Top = 0
-    Width = 496
-    Height = 479
-    HideShapesWhenZoom = False
-    HideShapesWhenWaitingTile = False
-    DblClickZoom = True
-    MouseWheelZoom = True
-    latitude = 43.232951000000000000
-    longitude = 0.078081999999994910
-    Reticle = False
-    ReticleColor = clBlack
-    ZoomScaleFactor = 0
-    NumericalZoom = 14.000000000000000000
-    DragRect = drNone
-    Draggable = True
-    OnlyOneOpenInfoWindow = False
-    WaitingForDestruction = False
-    Active = True
-    NbrThreadTile = ttFour
-    Align = alClient
-    TabOrder = 0
-    ExplicitLeft = 32
-    ExplicitTop = 8
-    ExplicitWidth = 416
-  end
   object Panel1: TPanel
     Left = 496
     Top = 0
@@ -50,7 +23,7 @@ object FormGoogle: TFormGoogle
     Padding.Top = 7
     Padding.Right = 7
     Padding.Bottom = 7
-    TabOrder = 1
+    TabOrder = 0
     object Label1: TLabel
       Left = 7
       Top = 55
@@ -59,9 +32,7 @@ object FormGoogle: TFormGoogle
       Align = alTop
       Alignment = taCenter
       Caption = 'Langue'
-      ExplicitLeft = 6
-      ExplicitTop = 52
-      ExplicitWidth = 171
+      ExplicitWidth = 39
     end
     object Label3: TLabel
       Left = 7
@@ -71,9 +42,7 @@ object FormGoogle: TFormGoogle
       Align = alTop
       Alignment = taCenter
       Caption = 'Map type'
-      ExplicitLeft = 6
-      ExplicitTop = 4
-      ExplicitWidth = 171
+      ExplicitWidth = 50
     end
     object maptype: TComboBox
       AlignWithMargins = True
@@ -92,9 +61,6 @@ object FormGoogle: TFormGoogle
         'roadmap'
         'terrain'
         'satellite')
-      ExplicitLeft = 9
-      ExplicitTop = 8
-      ExplicitWidth = 165
     end
     object langue: TComboBox
       AlignWithMargins = True
@@ -110,8 +76,6 @@ object FormGoogle: TFormGoogle
       Items.Strings = (
         'en-US'
         'fr-FR')
-      ExplicitTop = 29
-      ExplicitWidth = 165
     end
     object traffic: TCheckBox
       AlignWithMargins = True
@@ -123,9 +87,6 @@ object FormGoogle: TFormGoogle
       Caption = 'Traffic'
       TabOrder = 2
       OnClick = trafficClick
-      ExplicitLeft = 48
-      ExplicitTop = 168
-      ExplicitWidth = 97
     end
     object GStyles: TGroupBox
       AlignWithMargins = True
@@ -140,10 +101,6 @@ object FormGoogle: TFormGoogle
       Padding.Right = 3
       Padding.Bottom = 3
       TabOrder = 3
-      ExplicitLeft = 24
-      ExplicitTop = 176
-      ExplicitWidth = 185
-      ExplicitHeight = 105
       object LinkStyles: TLabel
         AlignWithMargins = True
         Left = 8
@@ -160,8 +117,6 @@ object FormGoogle: TFormGoogle
         Font.Style = []
         ParentFont = False
         OnClick = LinkStylesClick
-        ExplicitLeft = 5
-        ExplicitTop = 320
         ExplicitWidth = 183
       end
       object json: TMemo
@@ -184,10 +139,36 @@ object FormGoogle: TFormGoogle
         Caption = 'Clear'
         TabOrder = 1
         OnClick = ClearStylesClick
-        ExplicitLeft = 96
-        ExplicitTop = 8
-        ExplicitWidth = 75
       end
     end
+  end
+  object map: TECNativeMap
+    Left = 0
+    Top = 0
+    Width = 496
+    Height = 479
+    HideShapesWhenZoom = False
+    HideShapesWhenWaitingTile = False
+    DblClickZoom = True
+    MouseWheelZoom = True
+    latitude = 43.232951000000000000
+    longitude = 0.078081999999994910
+    Reticle = False
+    ReticleColor = clBlack
+    ZoomScaleFactor = 0
+    NumericalZoom = 14.000000000000000000
+    DragRect = drNone
+    Draggable = True
+    OnlyOneOpenInfoWindow = False
+    WaitingForDestruction = False
+    Active = True
+    NbrThreadTile = ttFour
+    OnMapClick = mapMapClick
+    Align = alClient
+    TabOrder = 1
+    ExplicitLeft = 176
+    ExplicitTop = 128
+    ExplicitWidth = 256
+    ExplicitHeight = 256
   end
 end

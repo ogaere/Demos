@@ -9,7 +9,6 @@ uses
 
 type
   TFormGoogle = class(TForm)
-    map: TECNativeMap;
     Panel1: TPanel;
     Label1: TLabel;
     maptype: TComboBox;
@@ -20,6 +19,7 @@ type
     json: TMemo;
     LinkStyles: TLabel;
     ClearStyles: TButton;
+    map: TECNativeMap;
 
     procedure FormCreate(Sender: TObject);
     procedure jsonChange(Sender: TObject);
@@ -28,9 +28,10 @@ type
     procedure trafficClick(Sender: TObject);
     procedure LinkStylesClick(Sender: TObject);
     procedure ClearStylesClick(Sender: TObject);
+    procedure mapMapClick(sender: TObject; const Lat, Lng: Double);
   private
     { Déclarations privées }
-
+    FStreetViewWidth,FStreetViewHeight : integer;
   public
     { Déclarations publiques }
   end;
@@ -43,16 +44,24 @@ implementation
 {$R *.dfm}
 
 
+
+
 procedure TFormGoogle.FormCreate(Sender: TObject);
 begin
 
- // see https://developers.google.com/maps/documentation/tile/cloud-setup?hl=en
- if map.Google.Key='' then
-  map.Google.Key :=  InputBox('Google API key', 'Your Key', '');
+ if map.Google.ApiKey='' then
+  map.Google.ApiKey :=  InputBox('Google API key', 'Your Key', '');
 
   map.TileServer := tsGoogle;
   map.TileServerInfo.MapStyle := 'roadmap';
+
+  FStreetViewWidth := 320;
+  FStreetViewHeight:= 200;
+
+  map.InfowindowDescription.Width := FStreetViewWidth+10;
 end;
+
+
 
 
 // new styles
@@ -77,6 +86,11 @@ end;
 procedure TFormGoogle.LinkStylesClick(Sender: TObject);
 begin
    ShellAPI.ShellExecute(0, 'Open', PChar(Linkstyles.caption),'', nil, SW_SHOWNORMAL);
+end;
+
+procedure TFormGoogle.mapMapClick(sender: TObject; const Lat, Lng: Double);
+begin
+  map.ShowInfoWindow(lat,lng,'<img src="'+map.Google.StreetView(lat,lng,FStreetViewWidth,FStreetViewHeight)+'" width='+inttostr(FStreetViewWidth)+' height='+inttostr(FStreetViewHeight)+'>');
 end;
 
 procedure TFormGoogle.maptypeChange(Sender: TObject);
