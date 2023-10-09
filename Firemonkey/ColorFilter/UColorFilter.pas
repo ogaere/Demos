@@ -108,8 +108,8 @@ begin
   0 : map.ColorFilter.Filter := fcGrey;
   1 : map.ColorFilter.Filter := fcSepia;
   2 : map.ColorFilter.Filter := fcInvert;
-  3 : map.ColorFilter.Filter := fcLight;
-  4 : map.ColorFilter.Filter := fcDark;
+  3 : map.Light := true;
+  4 : map.Dark  := true;
   5 : begin
        map.ColorFilter.Filter := fcNone;
        map.ColorFilter.Colors.Clear;
