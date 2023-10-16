@@ -71,6 +71,9 @@ begin
  map.WMSLayers.OnBeginQuery    := doBeginQuery;
  map.WMSLayers.OnEndQuery      := doEndQuery;
  map.WMSLayers.OnGraphicLegend := doGraphicLegend;
+ // connect WFS events
+ map.WFSLayers.OnBeginQuery    := doBeginQuery;
+ map.WFSLayers.OnEndQuery      := doEndQuery;
 end;
 
 
