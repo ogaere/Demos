@@ -1,14 +1,14 @@
-program cartoTrack;
+program CartoTrack;
 
 uses
   System.StartUpCopy,
   FMX.Forms,
-  UCartoTrack in 'UCartoTrack.pas' {Form16};
+  UCartoTracks in 'UCartoTracks.pas' {Form2};
 
 {$R *.res}
 
 begin
   Application.Initialize;
-  Application.CreateForm(TForm3, Form3);
+  Application.CreateForm(TForm2, Form2);
   Application.Run;
 end.

@@ -163,6 +163,16 @@ object FormWMS_WFS: TFormWMS_WFS
         TabOrder = 0
         OnClick = ckOilGasClick
       end
+      object ckUs: TCheckBox
+        AlignWithMargins = True
+        Left = 5
+        Top = 43
+        Width = 180
+        Height = 17
+        Caption = 'U.S., Core Based Statistical Areas'
+        TabOrder = 1
+        OnClick = ckUsClick
+      end
     end
   end
   object pn_events: TPanel

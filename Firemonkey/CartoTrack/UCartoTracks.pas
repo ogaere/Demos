@@ -1,59 +1,38 @@
-unit UCartoTrack;
+unit UCartoTracks;
 
 interface
 
 uses
-  System.SysUtils, System.Types, System.UITypes, System.Classes,
-  System.Variants,
-  FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs,
-  FMX.uecNativeScaleMap, FMX.uecMapUtil,
-  FMX.StdCtrls, FMX.Objects, FMX.Layouts,
+  System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
+  FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs, System.Sensors,
+  System.Sensors.Components, FMX.StdCtrls, FMX.Edit, FMX.Layouts, FMX.ListBox,
+  FMX.Objects, FMX.Controls.Presentation,System.IOUtils,
+  System.UIConsts, System.Permissions,FMX.DialogService, FMX.Ani,FMX.Platform,
+
   // TECNativeMap units
   FMX.uecNativeMapControl,
   FMX.uecNativeShape,
+  FMX.uecNativeScaleMap,
+  FMX.uecMapUtil,
   FMX.uecgeoLocalise,
   FMX.uecGraphics,
-  FMX.uecMapillary,
+  FMX.uecMapillary
   // -------------------
-  System.IOUtils,
-{$IFDEF ANDROID}
-  Androidapi.Jni.Os,
-  Androidapi.Jni.javatypes,
-  Androidapi.Helpers,
-{$ENDIF}
-  System.UIConsts,
-  FMX.Controls.Presentation, System.Permissions, FMX.ListBox, FMX.Memo.Types,
-  FMX.ScrollBox, FMX.Memo, System.Sensors, System.Sensors.Components,
-  FMX.Platform, FMX.Edit, FMX.ComboEdit,FMX.surfaces,FMX.DialogService, FMX.Ani;
+
+  ;
 
 type
-  TForm3 = class(TForm)
+  TForm2 = class(TForm)
+    laParent: TLayout;
     Panel1: TPanel;
     map: TECNativeMap;
+    cbGuidance: TComboBox;
     LaBottom: TLayout;
-    ScaleLegend: TLabel;
-    scaleline: TLine;
-    lbZoom: TLabel;
-    cbLayers: TComboBox;
-    laTop: TLayout;
-    LocationSensor: TLocationSensor;
-    btLocation: TCircle;
-    laButtons: TLayout;
-    btLayers: TCircle;
-    ptLayers: FMX.Objects.TPath;
-    ptLocation: FMX.Objects.TPath;
-    btCompass: TCircle;
-    ptCompass: FMX.Objects.TPath;
     RecTracking: TRectangle;
     Tracking: TLabel;
-    recAddress: TRectangle;
-    lbAddress: TListBox;
-    edAddress: TEdit;
-    tmAddress: TTimer;
-    ptAddress: FMX.Objects.TPath;
-    ptCancel: FMX.Objects.TPath;
-    btEdit: TCircle;
-    ptEdit: FMX.Objects.TPath;
+    ScaleLegend: TLabel;
+    lbZoom: TLabel;
+    scaleline: TLine;
     laEdit: TLayout;
     btAddPoint: TCircle;
     ptAddPoint: FMX.Objects.TPath;
@@ -61,9 +40,16 @@ type
     ptValidLine: FMX.Objects.TPath;
     btCancelPoint: TCircle;
     ptCancelPoint: FMX.Objects.TPath;
-    cbGuidance: TComboBox;
+    laTop: TLayout;
+    cbLayers: TComboBox;
+    recAddress: TRectangle;
+    lbAddress: TListBox;
+    edAddress: TEdit;
+    tmAddress: TTimer;
+    ptAddress: FMX.Objects.TPath;
     laTopLeft: TLayout;
-    laParent: TLayout;
+    btCompass: TCircle;
+    ptCompass: FMX.Objects.TPath;
     ptDirect: FMX.Objects.TPath;
     ptFoot: FMX.Objects.TPath;
     ptBike: FMX.Objects.TPath;
@@ -75,15 +61,9 @@ type
     ptValidProp: FMX.Objects.TPath;
     btCancelProp: TCircle;
     ptCancelProp: FMX.Objects.TPath;
+    lbDistance: TLabel;
     btDelete: TCircle;
     ptDelete: FMX.Objects.TPath;
-    lbDistance: TLabel;
-    btMappilary: TCircle;
-    ptMappilary: FMX.Objects.TPath;
-    aniMappilary: TAniIndicator;
-    btPOI: TCircle;
-    ptPOI: FMX.Objects.TPath;
-    AniPOI: TAniIndicator;
     LaAmenity: TLayout;
     recAmenity: TRectangle;
     btParking: TCircle;
@@ -92,20 +72,38 @@ type
     ptHotel: FMX.Objects.TPath;
     btRestaurant: TCircle;
     ptRestaurant: FMX.Objects.TPath;
+    Label1: TLabel;
     btCancelAmenity: TCircle;
     ptCancelamenity: FMX.Objects.TPath;
     btValidAmenity: TCircle;
     ptValidamenity: FMX.Objects.TPath;
-    Label1: TLabel;
     ptCafe: FMX.Objects.TPath;
     ptBar: FMX.Objects.TPath;
+    ptTarget: FMX.Objects.TPath;
+    laButtons: TLayout;
+    btLocation: TCircle;
+    ptLocation: FMX.Objects.TPath;
+    btLayers: TCircle;
+    ptLayers: FMX.Objects.TPath;
+    btEdit: TCircle;
+    ptEdit: FMX.Objects.TPath;
+    ptCancel: FMX.Objects.TPath;
+    btMappilary: TCircle;
+    ptMappilary: FMX.Objects.TPath;
+    aniMappilary: TAniIndicator;
+    btPOI: TCircle;
+    ptPOI: FMX.Objects.TPath;
+    AniPOI: TAniIndicator;
     laZoom: TLayout;
     btZoomIn: TCircle;
     ptZoomIn: FMX.Objects.TPath;
     BtZoomOut: TCircle;
     ptZoomOut: FMX.Objects.TPath;
     tmZoom: TTimer;
-    ptTarget: FMX.Objects.TPath;
+    LocationSensor: TLocationSensor;
+    ImageControl1: TImageControl;
+    Rectangle1: TRectangle;
+    laDEBUG: TLayout;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure mapChangeMapZoom(Sender: TObject);
@@ -148,18 +146,12 @@ type
     procedure BtZoomOutMouseUp(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Single);
     procedure btZoomInMouseLeave(Sender: TObject);
-
+    procedure mapLongPress(Sender: TObject);
+    procedure mapMapLongClick(sender: TObject; const Lat, Lng: Double);
 
   private
     { Déclarations privées }
-    FECNativeScaleMap: TECNativeScaleMap;
-
-    FDirectPath, FWorkLine: TECShapeLine;
-    FEditStartLine: boolean;
-
-    FEditLineLastPoint: TLatLng;
-
-    FEditLineGroup, FPositionGroup: TECShapes;
+   FECNativeScaleMap: TECNativeScaleMap;
 
     FGPSPosition, FPosition: TECShapeMarker;
     FAnimPos: TECShapePOI;
@@ -188,11 +180,6 @@ type
       var cancel: boolean);
     procedure doShapeDragEnd(Sender: TObject);
 
-    procedure doDrawCross(Sender: TObject; const canvas: TECCanvas);
-
-    procedure doOnChangeRoute(Sender: TECShapeLine; const params: string);
-    procedure doOnErrorRoute(Sender: TObject;
-      const dataroute: TECThreadDataRoute);
 
      procedure doBeforeDraw(const canvas: TECCanvas; var Rect: TRect;
       Item: TECShape);
@@ -204,7 +191,7 @@ type
     procedure doMappilaryClick(Layer: TECMapillaryLayer;
   Item: TECShape; MappilarySequence: TMapillarySequence; PhotoIndex: integer);
 
-    procedure doClickAmenity(Sender: TECShape);
+    procedure doClickAmenity(Sender:TObject; const Item: TECShape);
     procedure doSearchAmenity(sender : TObject);
     procedure doEndSearchAmenity(sender : TObject);
 
@@ -212,8 +199,6 @@ type
 
 
     procedure setSystemTheme;
-
-    procedure setEdition(const value: boolean);
 
     procedure EditProprietes(sender : TECShape);
 
@@ -228,19 +213,32 @@ type
     procedure doBeginRequest(sender: TObject);
     procedure doEndRequest(sender: TObject);
 
+    procedure doOnLocationPermission(Sender: TObject; const APermissions: TClassicStringDynArray; const AGrantResults: TClassicPermissionStatusDynArray);
+    procedure doOnStoragePermission(Sender: TObject; const APermissions: TClassicStringDynArray; const AGrantResults: TClassicPermissionStatusDynArray);
+
+    procedure  doOnReady(const Ready:boolean);
+    procedure  doOnActivate(const Activate:boolean);
+    procedure  doOnError(Sender: TObject);
+
   public
     { Déclarations publiques }
   end;
 
 var
-  Form3: TForm3;
+  Form2: TForm2;
 
 implementation
 
 {$R *.fmx}
 
-  // all Icon made from http://www.onlinewebfonts.com/icon
+ // all Icon made from http://www.onlinewebfonts.com/icon
 const
+ {$IFDEF ANDROID}
+  PermissionReadExternalStorage = 'android.permission.READ_EXTERNAL_STORAGE';
+  PermissionWriteExternalStorage = 'android.permission.WRITE_EXTERNAL_STORAGE';
+  PermissionAccessFineLocation = 'android.permission.ACCESS_FINE_LOCATION';
+ {$ENDIF}
+
   CLICK_FOR_TRACKING = 'Click to start recording your positions';
   CLICK_FOR_SAVE_TRACKING = 'Click to save your track';
 
@@ -263,19 +261,7 @@ begin
 end;
 
 
-procedure TForm3.FormCreate(Sender: TObject);
-var i:integer;
-    selector:string;
-begin
-
-{$IFDEF ANDROID}
-
-  // android permissions management
-
-  PermissionsService.RequestPermissions
-    ([JStringToString(TJManifest_permission.JavaClass.ACCESS_FINE_LOCATION)],
-    procedure(const APermissions: TArray<string>;
-      const AGrantResults: TArray<TPermissionStatus>)
+procedure TForm2.doOnLocationPermission(Sender: TObject; const APermissions: TClassicStringDynArray; const AGrantResults: TClassicPermissionStatusDynArray) ;
     begin
       if (Length(AGrantResults) = 1) and
         (AGrantResults[0] = TPermissionStatus.Granted) then
@@ -283,29 +269,60 @@ begin
         LocationSensor.Active := True
       else
       begin
-        ShowMessage('Location permission not granted');
+        TDialogService.ShowMessage('Location permission not granted');
       end;
-    end);
+    end;
 
-  PermissionsService.RequestPermissions
-    ([JStringToString(TJManifest_permission.JavaClass.READ_EXTERNAL_STORAGE),
-    JStringToString(TJManifest_permission.JavaClass.WRITE_EXTERNAL_STORAGE)],
-    procedure(const APermissions: TArray<string>;
-      const AGrantResults: TArray<TPermissionStatus>)
-    begin
-      if (Length(AGrantResults) = 2) and
+
+procedure TForm2.doOnStoragePermission(Sender: TObject; const APermissions: TClassicStringDynArray; const AGrantResults: TClassicPermissionStatusDynArray);
+begin
+  if (Length(AGrantResults) = 2) and
         (AGrantResults[0] = TPermissionStatus.Granted) and
         (AGrantResults[1] = TPermissionStatus.Granted) then
         map.LocalCache := TPath.Combine(TPath.GetSharedDocumentsPath, 'cartoTrack')
       else
       begin
+        TDialogService.ShowMessage('Storage permission not granted');
         map.LocalCache := '';
       end;
-    end);
+
+end;
+
+
+
+
+procedure TForm2.FormCreate(Sender: TObject);
+var i:integer;
+    selector:string;
+begin
+{$IFDEF ANDROID}
+
+  // android permissions management
+
+  PermissionsService.RequestPermissions([PermissionAccessFineLocation],doOnLocationPermission);
+
+  PermissionsService.RequestPermissions
+    ([PermissionReadExternalStorage,
+    PermissionWriteExternalStorage],
+    doOnStoragePermission);
+
+    //map.LocalCache := TPath.Combine(TPath.getpublicpath(*getlibrarypath(*GetSharedDocumentsPath*), 'cartoTrack');
+
+
 {$ELSE}
-  map.LocalCache := TPath.Combine(ExtractfilePath(ParamStr(0)), 'cartoTrack');
+  map.LocalCache := TPath.Combine(TPath.GetSharedDocumentsPath, 'ecnativemap-cache1');
 {$ENDIF}
 
+
+  //map.DirectPaintToForm := false;
+
+ // map.LocalCache := '';
+
+ // map.NbrThreadTile := ttFour;
+
+ map.MaxTimeForDrawMoving := 200;
+
+ //map.HideShapesWhenZoom := true;
 
   FECNativeScaleMap := TECNativeScaleMap.Create;
   FECNativeScaleMap.OnChange := doNotifyScale;
@@ -313,7 +330,7 @@ begin
   FECNativeScaleMap.map := map;
   FECNativeScaleMap.Visible := false;
 
-  cbLayers.ItemIndex := 2;
+  cbLayers.ItemIndex := 0;
 
   map.OverSizeForRotation := True;
 
@@ -325,33 +342,42 @@ begin
   map.Shapes.Serialize := false;
 
   // amenity search layer
-  map.XapiLayer.Shapes.Serialize := false;
-  // return a maximum of 100 items
-  map.XapiLayer.MaxItem := 100;
-  map.XapiLayer.Shapes.Markers.Labels.LabelType := ltHint;
-  map.XapiLayer.Shapes.Markers.Labels.Visible := true;
-  map.XapiLayer.Shapes.Markers.Labels.Rotation:= lsrHideRotation;
-  map.XapiLayer.Shapes.Markers.Labels.Margin := 12;
-  // draw circle in background
-  map.XapiLayer.Shapes.Markers.OnBeforeDraw := doBeforeDraw;
-  map.XapiLayer.OnClick       := doClickAmenity;
 
-  // end of search
-  map.XapiLayer.OnChange      := doEndSearchAmenity;
+  map.OverPassApi.Layer.Group.Markers.Labels.LabelType := ltHint;
+  map.OverPassApi.Layer.Group.Markers.Labels.Visible := true;
+  map.OverPassApi.Layer.Group.Markers.Labels.Rotation:= lsrHideRotation;
+  map.OverPassApi.Layer.Group.Markers.Labels.Margin := 12;
+
   // start of search
-  map.XapiLayer.OnStartSearch := doSearchAmenity;
+  map.OverPassApi.Layer.OnBeginQuery := doSearchAmenity;
+  // end of search
+  map.OverPassApi.Layer.OnEndQuery   := doEndSearchAmenity;
+  map.OverPassApi.Layer.OnClick      := doClickAmenity;
+
+  // draw circle in background
+  map.OverPassApi.Layer.Group.Markers.OnBeforeDraw := doBeforeDraw;
+
 
 
 
 
   // load the data into the map
 
-   map.LoadFromFile( TPath.Combine(map.localcache,'map.txt') );
+  // map.LoadFromFile( TPath.Combine(map.localcache,'map.txt') );
+   map.SSL := true;
+   map.OnlyLocal := false;
+
+   map.UseLowZoom := true;
+
+  // map.tileserver := tsosm;
+
 
    // reconnect attributes that are not saveable
      case map.TileServer of
 
-       tsIgn : begin
+
+
+      (* tsIgn : begin
                 if map.TileServerInfo.MapStyle = '' then
                   cbLayers.ItemIndex := 0
                 else
@@ -359,11 +385,17 @@ begin
                   cbLayers.ItemIndex := 1
                 else
                   cbLayers.ItemIndex := 2;
-       end;
+       end;*)
 
-    tsHotOsm : cbLayers.ItemIndex := 3;
+    (*tsHotOsm*)tsOSM : begin
+                cbLayers.ItemIndex := 0;
+                 map.TileServerInfo.MapStyle :='';
+    end;
 
-    tsArcGisWorldImagery : cbLayers.ItemIndex := 4;
+    tsArcGisWorldImagery : begin
+     cbLayers.ItemIndex := 1;
+      map.TileServerInfo.MapStyle := '';
+    end;
 
    end;
 
@@ -389,6 +421,7 @@ begin
   FGPSPosition.HoverColor := claDeepSkyBlue;
   FGPSPosition.BorderColor := claWhite;
 
+
   // ZIndex is used to indicate the display order of the elements
   // the highest ZIndex is displayed last and is therefore above the others
   // Groups also have a ZIndex,
@@ -413,7 +446,7 @@ begin
   // use XAnchor and YAnchor to shift your marker to adjust the exact location point
   // here we want it to be at the bottom of the pin.
   // default XAnchor & YAnchor are in the center of the shape
-  FPosition.YAnchor  := 24;
+  FPosition.YAnchor  := 32;
 
   FPosition.color := claBrown;
   FPosition.HoverColor := GetHighlightColorBy(FPosition.color, 32);// unit uecMapUtil
@@ -459,15 +492,7 @@ begin
 
   FAnimPos.FillOpacity := 50;
 
-  // map.shapes is the default group,
-  FPositionGroup := map.Shapes;
-  // the group data will not be saved when the map is saved
-  FPositionGroup.Serialize := false;
 
-  // Group containing lines in edit mode
-  FEditLineGroup := map['_EditLine_'];
-  // don't save
-  FEditLineGroup.Serialize := false;
 
   map.TimeLongClick := 750;
   map.OnLongPress := doLongPress;
@@ -478,16 +503,15 @@ begin
   // default lines style
 
      // border thickness = 2 ; line thickness  = 6 ;  scale = 1
-  map.Styles.addRule('.line {bsize:2;weigth:6;scale:1}');
+  map.Styles.addRule('.line {bsize:2;weigth:6;scale:1;visible:true}');
 
   // default markers style
 
-  map.Styles.addRule('.marker {width:24;height:24;scale:1}');
+  map.Styles.addRule('.marker {width:32;height:32;scale:1}');
 
-  // default markers style for Position group
-  map.Styles.addRule('#.marker {scale:2}');
+
   // rule for gps marker
-  map.Styles.addRule('#.marker.gps:true {scale:1}');
+ // map.Styles.addRule('.marker.gps:true {width:8;height:8;scale:1}');
 
   // styling trackline
   map.Styles.addRule
@@ -499,7 +523,7 @@ begin
 
   // for GPS marker Styleicon depends on the zoom
     // flat for zoom 1 to 16; direction for zoom 17 to 21
-  map.Styles.addRule('#.marker.GPS:true {styleicon:1-16=Flat,17-21=direction}');
+  map.Styles.addRule('.marker {if:gps=true;width:16;height:16;styleicon:1-16=Flat,17-21=direction}');
 
   // style according to the mode of tracing
   // define colors variables
@@ -537,15 +561,19 @@ begin
   map.Styles.addRule
     (':selected,:hover { if:guidance=3 ;scale:1.3;color:light(@car);bcolor:light(@car);hbcolor:light(@car)');
   map.Styles.addRule
-    (':selected,:hover { if:guidance=4 ;scale:1.3;color:light(@gps);bcolor:light(@gps);hbcolor:light(@gps)');
+    (':selected, :hover { if:guidance=4 ;scale:1.3;color:light(@gps);bcolor:light(@gps);hbcolor:light(@gps)');
+
 
  // amenity
 
- Selector := '#' + map.XapiLayer.Shapes.Name ;  // group
+ Selector := '#' + map.OverPassApi.Layer.Group.Name;
  map.Styles.addRule(Selector+'.marker {styleicon:svg;}'); // markers use svg image
 
  // graphic for propriety tourims = hotel
  map.styles.addRule(Selector + '.marker.tourism:hotel {graphic:'+ptHotel.Data.data+';color:@hotel;hbcolor:light(@hotel)}');
+
+ map.styles.addRule(Selector+'.polygone.amenity:parking {color:@parking;fcolor:light(@parking)}');
+
 
  Selector := Selector + '.marker.amenity';
  map.styles.addRule(Selector + ':restaurant {graphic:'+ptRestaurant.Data.data+';color:@food;hbcolor:light(@food)}');
@@ -562,14 +590,7 @@ begin
 
   // btCompass.Visible := map.RotationAngle <> 0;
 
-  map.Routing.Engine(reOpenStreetMap);
 
-  // OnChangeRoute is triggered and not OnAddRoute
-  // because we will provide a line during the request,
-  // so it will not be created but modified
-  map.Routing.OnChangeRoute := doOnChangeRoute;
-
-  map.Routing.OnErrorRoute := doOnErrorRoute;
 
   // hack  to bypass the bug that prevents the OnKeyDown event for TEdit on android
   edAddress.ReturnKeyType := TReturnKeyType.Go;
@@ -586,8 +607,6 @@ begin
 {$ENDIF}
   // end of hack
 
-  setEdition(false);
-
 
   // -------------  mappilary layer --------------------------------------------
   FECMappilaryLayer := TECMapillaryLayer.Create(map, 'Mapillary');
@@ -599,21 +618,29 @@ begin
   //----------------------------------------------------------------------------
 
 
+  // Route Manager
+  map.DrawPath.OnReady    := doOnReady;
+  map.DrawPath.OnActivate := doOnActivate;
+  map.DrawPath.OnError    := doOnError;
+  // we assign a value to trigger onActivate
+  // which will update the buttons that manage the DrawPath actions
+  map.DrawPath.Activate   := false;
+  // ---------------------------------------------------------------------------
+
   // use the dark or light theme
   setSystemTheme;
 
 
-
-
+ 
 end;
 
-procedure TForm3.FormDestroy(Sender: TObject);
+procedure TForm2.FormDestroy(Sender: TObject);
 begin
   FECNativeScaleMap.Free;
   FECMappilaryLayer.Free;
 end;
 
-procedure TForm3.FormSaveState(Sender: TObject);
+procedure TForm2.FormSaveState(Sender: TObject);
 begin
  // save data in file
 
@@ -635,7 +662,7 @@ begin
 
 
 // ======  Adjust the colors according to the light or dark themes ============
-procedure TForm3.setSystemTheme;
+procedure TForm2.setSystemTheme;
 // browse the list of elements and assign the theme colors
 procedure set_colors(aFmxObj: TFmxObject);
 begin
@@ -702,8 +729,9 @@ end;
 // ============ Tracking =======================================================
 
 // center the map on the GPS position
-procedure TForm3.btLocationClick(Sender: TObject);
+procedure TForm2.btLocationClick(Sender: TObject);
 begin
+
   map.setCenter(FGPSPosition.latitude, FGPSPosition.longitude);
 
   // Description will be displayed because FGPSPosition.Group.Markers.Labels.visible = true
@@ -716,12 +744,13 @@ begin
   TECAnimationCustom(FGPSPosition.Animation).OnExecute := doHideGPSPositionInfo;
 
   CancelAddressSearch;
+
 end;
 
 
 
 // event fired by FGPSPosition.TECAnimationCustom after 3s
-procedure TForm3.doHideGPSPositionInfo(Sender: TECShape);
+procedure TForm2.doHideGPSPositionInfo(Sender: TECShape);
 begin
   FGPSPosition.Description := '';
 
@@ -736,7 +765,7 @@ begin
 end;
 
 // event triggered when a new position is detected by the GPS
-procedure TForm3.LocationSensorLocationChanged(Sender: TObject;
+procedure TForm2.LocationSensorLocationChanged(Sender: TObject;
 const OldLocation, NewLocation: TLocationCoord2D);
 var
   anim: TECAnimationFadePoi;
@@ -753,8 +782,8 @@ begin
 
     anim.Timing := 50;
 
-    anim.MaxSize := 50;
-    anim.StartSize := 32;
+    anim.MaxSize := FGPSPosition.Width*5;
+    anim.StartSize := FGPSPosition.width;
 
     anim.StartOpacity := 50;
 
@@ -772,7 +801,7 @@ begin
 end;
 
 // event triggered by clicking on the GPS marker
-procedure TForm3.doClickGPSPosition(Sender: TObject; const Item: TECShape);
+procedure TForm2.doClickGPSPosition(Sender: TObject; const Item: TECShape);
 var
   g: TECShapes;
   line: TECShapeLine;
@@ -850,7 +879,7 @@ begin
 
 end;
 
-procedure TForm3.CancelTracking;
+procedure TForm2.CancelTracking;
 begin
   FGPSPosition.TrackLine := nil;
   RecTracking.Visible := false;
@@ -860,7 +889,7 @@ begin
 end;
 
 // event triggered when the GPS marker is moved
-procedure TForm3.doMoveGPSPosition(Sender: TObject; const Item: TECShape;
+procedure TForm2.doMoveGPSPosition(Sender: TObject; const Item: TECShape;
 var cancel: boolean);
 begin
 
@@ -872,53 +901,55 @@ end;
 // -----------------------------------------------------------------------------
 
 // event activated when the map moves to the background or foreground
-procedure TForm3.mapChangeMapActive(Sender: TObject);
+procedure TForm2.mapChangeMapActive(Sender: TObject);
 begin
   if map.Active then
     map.setCenter(FGPSPosition.latitude, FGPSPosition.longitude);
 end;
 
 // event triggered when the map displays a new position
-procedure TForm3.mapChangeMapBounds(Sender: TObject);
+procedure TForm2.mapChangeMapBounds(Sender: TObject);
 begin
 
-  CancelAddressSearch;
+   CancelAddressSearch;
 
   // add 180° because the svg has the head down
   ptCompass.RotationAngle := map.RotationAngle + 180;
 
   // btCompass.Visible := map.RotationAngle <> 0;
 
-  // draw line if Edit mode
-  if (laEdit.Visible) and assigned(FWorkLine) and (not FEditStartLine) then
-  begin
-
-    FWorkLine.SetPath([FEditLineLastPoint.Lat, FEditLineLastPoint.Lng,
-      map.latitude, map.longitude])
-
-  end;
 
 end;
 
 // event triggered when the zoom changes
-procedure TForm3.mapChangeMapZoom(Sender: TObject);
+procedure TForm2.mapChangeMapZoom(Sender: TObject);
 begin
   lbZoom.Text := doubleToStrDigit(map.NumericalZoom,1);
 end;
 
+procedure TForm2.mapLongPress(Sender: TObject);
+begin
+
+
+end;
+
 // event triggered by a click on the map
-procedure TForm3.mapMapClick(Sender: TObject; const Lat, Lng: Double);
+procedure TForm2.mapMapClick(Sender: TObject; const Lat, Lng: Double);
 begin
   CancelAddressSearch;
 end;
 
 
 
+procedure TForm2.mapMapLongClick(sender: TObject; const Lat, Lng: Double);
+begin
+end;
 
 // event triggered by a long press on the map
 // sender is either the map or a TECShape element
-procedure TForm3.doLongPress(Sender: TObject);
+procedure TForm2.doLongPress(Sender: TObject);
 begin
+
 
  // ignore long press on a shape
  if sender<>map then
@@ -931,7 +962,7 @@ begin
 end;
 
 // event triggered by a click on an shape
-procedure TForm3.mapShapeClick(sender: TObject; const item: TECShape);
+procedure TForm2.mapShapeClick(sender: TObject; const item: TECShape);
 begin
 
  if (laEdit.Visible) then
@@ -941,6 +972,9 @@ begin
  if laAmenity.Visible then
   btCancelAmenityClick(nil);
 
+  if not assigned(item) then exit;
+
+
  // Control that the element has a guidance property
  if item.PropertyValue['guidance']<>'' then
    EditProprietes(item);
@@ -948,7 +982,7 @@ begin
 end;
 
 // event OnshapeDrag triggered during the entire move
-procedure TForm3.doShapeDrag(Sender: TObject; const Item: TECShape;
+procedure TForm2.doShapeDrag(Sender: TObject; const Item: TECShape;
 var cancel: boolean);
 begin
   // at the start of the move the description is deleted
@@ -958,7 +992,7 @@ end;
 
 // at the end of the move OnDragEnd is called
 // update the description with the new address
-procedure TForm3.doShapeDragEnd(Sender: TObject);
+procedure TForm2.doShapeDragEnd(Sender: TObject);
 begin
   if Sender is TECShapeMarker then
     // for a better readability of the label we insert line breaks
@@ -967,19 +1001,21 @@ begin
 end;
 
 // cancel the rotation of the map
-procedure TForm3.btCompassClick(Sender: TObject);
+procedure TForm2.btCompassClick(Sender: TObject);
 begin
+
   map.AnimRotationAngleTo(0);
 
   CancelAddressSearch;
+
 end;
 
-procedure TForm3.CloseLayers;
+procedure TForm2.CloseLayers;
 begin
    if FECMappilaryLayer.Visible then
     btMappilaryClick(nil);
 
- map.XapiLayer.Visible := false;
+ map.OverPassApi.Layer.Visible := false;
  aniPOI.Visible := false;
  aniPOI.Enabled := false;
 
@@ -987,50 +1023,15 @@ end;
 
 
 
-// =================== Edition Mode ============================================
+// =================== Route Edition ===========================================
 
-procedure TForm3.setEdition(const value: boolean);
-begin
-  if value then
-  begin
-
-    FPositionGroup.Visible := false;
-
-    FWorkLine := FEditLineGroup.AddLine;
-
-    // set the Dash property to true to use the dash style defined above
-    FWorkLine.PropertyValue['dash'] := 'true';
-
-    FEditStartLine := True;
-    CancelTracking;
-    ptCancel.Visible := True;
-    ptEdit.Visible := false;
-    btValidLine.Enabled := false;
-    laEdit.Visible := True;
-    map.OnShapesPaint := doDrawCross;
-  end
-  else
-  begin
-    FPositionGroup.Visible := True;
-    laEdit.Visible := false;
-    ptCancel.Visible := false;
-    ptEdit.Visible := True;
-    // recAddress.Visible     := true;
-    FWorkLine := nil;
-    FDirectPath := nil;
-    map.OnShapesPaint := nil;
-    FEditLineGroup.Clear;
-  end;
-end;
 
 // activate route editing
-procedure TForm3.btEditClick(Sender: TObject);
+procedure TForm2.btEditClick(Sender: TObject);
 begin
 
 
   CloseLayers;
-
-
 
   if FGPSPosition.isTrackLineActive then
     CancelTracking
@@ -1041,146 +1042,64 @@ begin
     if ptEdit.Visible then
       cbGuidance.dropDown
     else
-      setEdition(false);
+      map.DrawPath.Activate := false;
+
   end;
 end;
 
-procedure TForm3.GuidanceSelection(Sender: TObject);
+procedure TForm2.GuidanceSelection(Sender: TObject);
 begin
 
   case cbGuidance.ItemIndex of
-    0:
-      FDirectPath := FEditLineGroup.AddLine;
-    1:
-      map.Routing.RouteType := rtPedestrian;
-    2:
-      map.Routing.RouteType := rtBicycle;
+    0: map.DrawPath.PathType := dptStraight;
+
+    1: map.DrawPath.PathType := dptPedestrian;
+
+    2: map.DrawPath.PathType := dptBicycle;
   else
-    map.Routing.RouteType := rtCar;
+   map.DrawPath.PathType := dptCar;
 
   end;
 
-  setEdition(ptEdit.Visible = True);
+  map.DrawPath.Activate := true;
+
 end;
 
-procedure TForm3.btAddPointClick(Sender: TObject);
-var
-  Lat, Lng: Double;
-  FuturLine: TECShapeLine;
+procedure TForm2.btAddPointClick(Sender: TObject);
 begin
-
-  if FEditStartLine then
-  begin
-    FEditLineLastPoint.Lat := map.latitude;
-    FEditLineLastPoint.Lng := map.longitude;
-
-    if assigned(FDirectPath) then
-      FDirectPath.Add(FEditLineLastPoint.Lat, FEditLineLastPoint.Lng);
-
-
-    FEditStartLine := false;
-  end
-  else
-  begin
-
-    Lat := FEditLineLastPoint.Lat;
-    Lng := FEditLineLastPoint.Lng;
-    FEditLineLastPoint.Lat := map.latitude;
-    FEditLineLastPoint.Lng := map.longitude;
-
-    if assigned(FDirectPath) then
-    begin
-      FDirectPath.Add(map.latitude, map.longitude);
-      btValidLine.Enabled := true;
-    end
-    else
-    begin
-      // while waiting for the calculation of the route, we draw a direct line
-      FuturLine := FEditLineGroup.AddLine([Lat, Lng, map.latitude,
-        map.longitude]);
-      // we mark the line to avoid its destruction while a thread computes the path
-      FuturLine.PropertyValue['waiting'] := 'true';
-      // idem for validation and cancellation
-      btValidLine.Enabled := false;
-      btEdit.Enabled := false;
-      // the calculation is done in a thread, FuturLine will be updated to contain the route
-      map.Routing.Request([Lat, Lng, map.latitude, map.longitude], '',
-        FuturLine);
-    end;
-
-
-  end;
-
+  map.DrawPath.AddPoint;
 end;
 
-// event triggered if the route calculation is validated
-procedure TForm3.doOnChangeRoute(Sender: TECShapeLine; const params: string);
-begin
-  FWorkLine.Clear;
-  // now we can destroy this line, we cancel the mark
-  Sender.PropertyValue['waiting'] := '';
-  // now we can validate or cancel this line;
-  btValidLine.Enabled := True;
-  btEdit.Enabled := True;
-
-end;
-
-// event triggered if the route calculation is not validated
-procedure TForm3.doOnErrorRoute(Sender: TObject;
-const dataroute: TECThreadDataRoute);
-begin
-  FWorkLine.Clear;
-  btValidLine.Enabled := True;
-  btEdit.Enabled := True;
-  btCancelPointClick(nil);
-  ShowMessage('Routing Error !');
-end;
 
 // Validation of the route, it is definitively registered
-
-
-procedure TForm3.btValidLineClick(Sender: TObject);
+procedure TForm2.btValidLineClick(Sender: TObject);
 var
   g: TECShapes;
   line: TECShapeLine;
-  i: integer;
 begin
-  // create un group with unique name
+   // create un group with unique name
   g := map[Crc32Str(DateTimeToStr(now))];
+  line := g.AddLine;
+  // Copy the edited route in its final version
+  map.DrawPath.GetPath(line);
 
   // draw a background for our marker
   g.markers.OnBeforeDraw := doBeforeDraw;
   // display the labels of the markers in this group
   setMarkersLabels(g);
 
-  if assigned(FDirectPath) then
-  begin
-    line := g.AddLine;
-    line.Add(FDirectPath);
-  end
 
-  else
-  begin
-    // Merge all segments into one line
-    line := g.AddLine;
-
-    for i := 1 to FEditLineGroup.Lines.count - 1 do
-      line.Add(FEditLineGroup.Lines[i]);
-
-  end;
-
+  // Apply a style to the road according to the type of circulation
   setStyleLine(line, inttostr(cbGuidance.ItemIndex));
 
 
-
-  setEdition(false);
 
 end;
 
 
 
 // display the labels of the markers in this group
-procedure TForm3.setMarkersLabels(const G:TECShapes);
+procedure TForm2.setMarkersLabels(const G:TECShapes);
 begin
   // the Description property of the marker is used as label text
   G.Markers.Labels.LabelType := ltDescription;
@@ -1192,86 +1111,44 @@ end;
 
 
 // delete last segment
-
-
-procedure TForm3.btCancelPointClick(Sender: TObject);
-var
-  line: TECShapeLine;
-  pt: TECPointLine;
+procedure TForm2.btCancelPointClick(Sender: TObject);
 begin
+  map.DrawPath.Undo;
+end;
 
-  if FEditLineGroup.Lines.count = 1 then
-  begin
-    FEditStartLine := True;
-    btValidLine.Enabled   := false;
-    FWorkLine.Clear;
-  end
-  else
-  begin
+// Activation / deactivation of route tracing
+procedure  TForm2.doOnActivate(const Activate:boolean);
+begin
+  laEdit.Visible := Activate;
 
-    if assigned(FDirectPath) then
-    begin
-      if FDirectPath.count > 0 then
-      begin
-        FDirectPath.Delete(FDirectPath.count - 1);
+  ptCancel.Visible := Activate;
+  ptEdit.Visible   := not Activate;
+end;
 
-        if FDirectPath.count > 0 then
-        begin
-          pt := FDirectPath.Path[FDirectPath.count - 1];
+// This event occurs before and after the calculation of the route in a thread,
+// while the segment is being calculated you can neither validate the route
+// nor cancel the last segment
+procedure  TForm2.doOnReady(const Ready:boolean);
+begin
+ btValidLine.Enabled    := Ready and map.DrawPath.isUndo;
+ btCancelPoint.Enabled  := Ready and map.DrawPath.isUndo;
+end;
 
-          FEditLineLastPoint.Lat := pt.latitude;
-          FEditLineLastPoint.Lng := pt.longitude;
-
-          FWorkLine.SetPath([FEditLineLastPoint.Lat, FEditLineLastPoint.Lng,
-            map.latitude, map.longitude]);
-        end
-        else
-        begin
-          FEditStartLine := True;
-          FWorkLine.Clear;
-        end;
-
-        btValidLine.Enabled := FDirectPath.count > 1;
-
-      end;
-    end
-
-    else
-    begin
-
-      line := FEditLineGroup.Lines[FEditLineGroup.Lines.count - 1];
-
-      // do not destroy a line that is being calculated!
-      if line.PropertyValue['waiting'] <> '' then
-        exit;
-
-      pt := line.Path[0];
-
-      FEditLineLastPoint.Lat := pt.latitude;
-      FEditLineLastPoint.Lng := pt.longitude;
-
-      line.Remove;
-
-      btValidLine.Enabled   := FEditLineGroup.Lines.count>1;
-
-      if FEditLineGroup.Lines.count > 0 then
-        FWorkLine.SetPath([FEditLineLastPoint.Lat, FEditLineLastPoint.Lng,
-          map.latitude, map.longitude]);
-
-    end;
-
-  end;
-
+// event triggered if the route calculation is not validated
+procedure TForm2.doOnError(Sender: TObject);
+begin
+  ShowMessage('Routing Error !');
 end;
 
 
-
-
 // Stylize the elements (line & marker ) according to the type of track
-procedure TForm3.setStyleLine(const line: TECShapeLine; const guidance: string);
+procedure TForm2.setStyleLine(const line: TECShapeLine; const guidance: string);
 var
   mrk: TECShapeMarker;
 begin
+
+
+
 
   // the style will be determined according to this group property
    line.group['guidance'] := guidance;
@@ -1307,7 +1184,7 @@ end;
 
 
 
-procedure TForm3.EditProprietes(sender : TECShape);
+procedure TForm2.EditProprietes(sender : TECShape);
 begin
   if (sender.Group.Markers.Count>0) and (sender.Group.Lines[0].count>0) then
   begin
@@ -1321,7 +1198,8 @@ begin
   end;
 end;
 
-procedure TForm3.btValidPropClick(Sender: TObject);
+
+procedure TForm2.btValidPropClick(Sender: TObject);
 begin
  TECshapeMarker(edDescription.TagObject).Description    := edDescription.Text;
  TECshapeMarker(edDescription.TagObject).Group.Selected := false;
@@ -1331,7 +1209,7 @@ end;
 
 
 
-procedure TForm3.btCancelPropClick(Sender: TObject);
+procedure TForm2.btCancelPropClick(Sender: TObject);
 begin
  TECshapeMarker(edDescription.TagObject).Group.Selected := false;
  laProprietes.Visible := false;
@@ -1339,7 +1217,7 @@ begin
 end;
 
 
-procedure TForm3.btDeleteClick(Sender: TObject);
+procedure TForm2.btDeleteClick(Sender: TObject);
 begin
 
  TDialogService.MessageDialog(('Are you sure you want to delete this route'),
@@ -1358,7 +1236,7 @@ end;
 
 
 // draw a circle in the background for markers that indicate the start of a route
-procedure TForm3.doBeforeDraw(const canvas: TECCanvas; var Rect: TRect;
+procedure TForm2.doBeforeDraw(const canvas: TECCanvas; var Rect: TRect;
 Item: TECShape);
 begin
   canvas.FillOpacity := 90;
@@ -1382,40 +1260,7 @@ begin
 
 end;
 
-// draw a svg target in the center of the map
-// OnShapesPaint is fired after shapes are drawn
-// use OnMapPaint to draw under the elements
-procedure TForm3.doDrawCross(Sender: TObject; const canvas: TECCanvas);
-var
-  x, y, angle: integer;
-begin
 
-  // convert center position to local X,Y
-  map.FromLatLngToXY(map.Center, x, y);
-
-  angle := canvas.angle;
-
-  // compensate for the rotation of the map.
-  canvas.angle := round(360 - map.RotationAngle);
-
-  canvas.PenWidth(1);
-
-  canvas.Pen.color := TextColor;
-  canvas.brush.color := BackgroundColor;
-
-  // center svg on x,y
-  canvas.Left := x - 24;
-  canvas.Right := x + 24;
-  canvas.Top := y - 24;
-  canvas.Bottom := y + 24;
-
-  canvas.CenterRotation := Point(x, y);
-
-  canvas.DrawData(ptTarget.data);
-
-  canvas.angle := angle;
-
-end;
 
 // ------------------------------------------------------------------------------
 
@@ -1423,23 +1268,25 @@ end;
 
 // ============= select tiles server ===========================================
 
-procedure TForm3.btLayersClick(Sender: TObject);
+procedure TForm2.btLayersClick(Sender: TObject);
 begin
   cbLayers.dropDown;
   CancelAddressSearch;
 end;
 
-procedure TForm3.cbLayersClick(Sender: TObject);
+procedure TForm2.cbLayersClick(Sender: TObject);
 begin
 
 
   map.RemoveAllOverlayTiles;
 
+  map.TileServerInfo.MapStyle := '';
+
   case cbLayers.ItemIndex of
-    0:
+   (* 0:
       begin
         map.TileServer := tsIgn;
-        map.TileServerInfo.MapStyle := '';
+
         map.MaxZoom := map.TileServerInfo.MaxZoom;
       end;
     1:
@@ -1453,23 +1300,27 @@ begin
         map.TileServer := tsIgn;
         map.TileServerInfo.MapStyle := 'SCAN';
         map.MaxZoom := map.TileServerInfo.MaxZoom;
-        map.IgnKey := 'ob7nq7gdfz74qiy9x8rg4iyi';
-      end;
-    3:
+         map.IgnKey :=   '5ck5xxrc5s1gienx7ne6q6ea';
+      end; *)
+
+
+
+    0:
       begin
-        map.TileServer := tsHotOsm;
+        map.TileServer := tsOSM;//tsHotOsm;
       end;
-    4:
+    1:
       begin
         map.TileServer := tsArcGisWorldImagery;
         // add overlay tiles for places
         map.AddOverlayTiles(GetArcGisPlacesTile, 'World_Places_Tile');
       end;
+
   end;
 
 end;
 
-procedure TForm3.GetArcGisPlacesTile(var TileFilename: string;
+procedure TForm2.GetArcGisPlacesTile(var TileFilename: string;
 const x, y, z: integer);
 begin
   TileFilename :=
@@ -1479,7 +1330,7 @@ end;
 
 // ------------------------------------------------------------------------------
 
-procedure TForm3.doNotifyScale(Sender: TObject);
+procedure TForm2.doNotifyScale(Sender: TObject);
 begin
 
   if assigned(Sender) and (Sender is TECNativeScaleMap) then
@@ -1493,7 +1344,7 @@ end;
 
 // ============= search for the geographical position of an address ============
 
-procedure TForm3.edAddressChangeTracking(Sender: TObject);
+procedure TForm2.edAddressChangeTracking(Sender: TObject);
 begin
 
   if (gettickcount - fTimeKeyPress > tmAddress.interval) then
@@ -1505,13 +1356,13 @@ begin
 
 end;
 
-procedure TForm3.edAddressEnter(Sender: TObject);
+procedure TForm2.edAddressEnter(Sender: TObject);
 begin
   laTop.height := 300;
   lbAddress.Visible := True;
 end;
 
-procedure TForm3.edAddressExit(Sender: TObject);
+procedure TForm2.edAddressExit(Sender: TObject);
 begin
   lbAddress.Visible := false;
   lbAddress.Items.Text := '';
@@ -1520,7 +1371,7 @@ begin
   map.GeoLocalise.SearchResults.Clear;
 end;
 
-procedure TForm3.edAddressKeyDown(Sender: TObject; var Key: Word;
+procedure TForm2.edAddressKeyDown(Sender: TObject; var Key: Word;
 var KeyChar: Char; Shift: TShiftState);
 begin
 
@@ -1530,7 +1381,7 @@ begin
 
 end;
 
-procedure TForm3.tmAddressTimer(Sender: TObject);
+procedure TForm2.tmAddressTimer(Sender: TObject);
 var
   i: integer;
 begin
@@ -1539,7 +1390,7 @@ begin
   if Length(edAddress.Text) < 3 then
     exit;
 
-  if map.GeoLocalise.OpenStreetMapSearch(edAddress.Text) > 0 then
+  if map.GeoLocalise.OpenStreetMapSearch(edAddress.Text,map.onlylocal) > 0 then
   begin
 
     lbAddress.Items.BeginUpdate;
@@ -1561,13 +1412,13 @@ end;
 
 
 
-procedure TForm3.lbAddressItemClick(const Sender: TCustomListBox;
+procedure TForm2.lbAddressItemClick(const Sender: TCustomListBox;
 const Item: TListBoxItem);
 begin
   GotoAddress(Item.Index);
 end;
 
-procedure TForm3.GotoAddress(const Index: integer);
+procedure TForm2.GotoAddress(const Index: integer);
 var
   geoResult: TECGeoResult;
 begin
@@ -1588,7 +1439,7 @@ begin
   CancelAddressSearch;
 end;
 
-procedure TForm3.CancelAddressSearch;
+procedure TForm2.CancelAddressSearch;
 begin
 
   if not lbAddress.Visible then
@@ -1607,7 +1458,7 @@ end;
 
 // ==================== Mappilary ==============================================
 
-procedure TForm3.btMappilaryClick(Sender: TObject);
+procedure TForm2.btMappilaryClick(Sender: TObject);
 begin
 
  switch(btMappilary);
@@ -1623,27 +1474,27 @@ end;
 
 
 // display the photograph of the place in an infowindow
-procedure TForm3.doMappilaryClick(Layer: TECMapillaryLayer;
+procedure TForm2.doMappilaryClick(Layer: TECMapillaryLayer;
   Item: TECShape; MappilarySequence: TMapillarySequence; PhotoIndex: integer);
 begin
 
 
   FECMappilaryLayer.OpenWindow(MappilarySequence.images[PhotoIndex].Lat,
                                MappilarySequence.images[PhotoIndex].Lng,
-                               '<img width="256" height="256" src="' + MappilarySequence.images[photoindex].Url256 + '">'
-                               ,256);
+                               '<img src="' + MappilarySequence.images[photoindex].Url256 + '">'
+                               );
 
 end;
 
 // start mappilary request
-procedure TForm3.doBeginRequest(sender: TObject);
+procedure TForm2.doBeginRequest(sender: TObject);
 begin
   aniMappilary.Visible := true;
   aniMappilary.Enabled := true;
 end;
 
 // end mappilary request
-procedure TForm3.doEndRequest(sender: TObject);
+procedure TForm2.doEndRequest(sender: TObject);
 begin
   aniMappilary.Visible := false;
   aniMappilary.Enabled := false;
@@ -1655,7 +1506,7 @@ end;
 
 // ====================== POI restaurant - parking - hotel =====================
 
-procedure TForm3.btParkingClick(Sender: TObject);
+procedure TForm2.btParkingClick(Sender: TObject);
 var bt:TCircle;
 begin
  bt := TCircle(sender);
@@ -1674,21 +1525,23 @@ begin
 
 end;
 
-procedure TForm3.btPOIClick(Sender: TObject);
+procedure TForm2.btPOIClick(Sender: TObject);
 begin
- if not map.XapiLayer.Visible then
+
+if not map.OverPassApi.Layer.visible then
+
   switch(btPOI);
 
  laAmenity.Visible := not laAmenity.Visible;
  btEdit.Enabled    := not laAmenity.Visible;
 end;
 
-procedure TForm3.btCancelAmenityClick(Sender: TObject);
+procedure TForm2.btCancelAmenityClick(Sender: TObject);
 begin
  switch(btPOI);
  laAmenity.Visible := false;
  btEdit.Enabled    := not laAmenity.Visible;
- map.XapiLayer.Visible := false;
+ map.OverPassApi.Layer.Visible := false;
  aniPOI.Visible := false;
  aniPOI.Enabled := false;
 end;
@@ -1696,7 +1549,7 @@ end;
 
 
 // launch a POI search using the XAPI layer
-procedure TForm3.btValidAmenityClick(Sender: TObject);
+procedure TForm2.btValidAmenityClick(Sender: TObject);
 var amenity:string;
 begin
 
@@ -1706,39 +1559,38 @@ begin
  amenity := '';
 
  if (bthotel.Tag=1) then
-  amenity := 'tourism=hotel';
+ begin
+  map.OverPassApi.Layer.visible := true;
+  map.OverPassApi.Layer.Tag('tourism','hotel');
+ end;
 
  if (btrestaurant.Tag=1) then
  begin
-   amenity := amenity+'amenity=restaurant|cafe|bar';
+   map.OverPassApi.Layer.visible := true;
+   map.OverPassApi.Layer.Amenity(['restaurant','cafe','bar']);
  end;
 
  if (btparking.Tag=1) then
  begin
-   amenity  := amenity+'amenity=parking';
+   map.OverPassApi.Layer.visible := true;
+   map.OverPassApi.Layer.Amenity('parking');
  end;
 
 
- map.XapiLayer.Visible := amenity<>'';
-
- if map.XapiLayer.Visible then
- begin
-  map.XapiLayer.Search := amenity;
- end
 
 
 end;
 
 
 // start xapi request
-procedure TForm3.doSearchAmenity(sender : TObject);
+procedure TForm2.doSearchAmenity(sender : TObject);
 begin
  aniPOI.Visible := true;
  aniPOI.Enabled := true;
 end;
 
 // end xapi request
-procedure TForm3.doEndSearchAmenity(sender : TObject);
+procedure TForm2.doEndSearchAmenity(sender : TObject);
 begin
  aniPOI.Visible := false;
  aniPOI.Enabled := false;
@@ -1746,7 +1598,7 @@ end;
 
 
 // Display the properties of the clicked element
-procedure TForm3.doClickAmenity(Sender: TECShape);
+procedure TForm2.doClickAmenity(sender:TObject; const Item: TECShape);
 var s:string;
     Key, Value: string;
 begin
@@ -1754,14 +1606,13 @@ begin
   s := '';
 
   // Browse the property list
-  if Sender.PropertiesFindFirst(Key, Value) then
+  if Item.PropertiesFindFirst(Key, Value) then
   begin
     repeat
 
       // ignore this one
-      if (Key = 'ecshape')or(Key = 'id') then
+      if (Key = 'id') then
         continue;
-
 
 
       if length(Key) < 9 then
@@ -1772,13 +1623,14 @@ begin
       s := s + '<b>' + Key + '</b>: ' + Value + '<br>';
 
     // continue as long as it has properties
-    until Sender.PropertiesFindNext(Key, Value);
+    until Item.PropertiesFindNext(Key, Value);
   end;
 
   if s='' then exit;
 
   // Display the list of properties in a 250px wide InfoWindow
-  map.XapiLayer.OpenWindow(Sender.Latitude,Sender.Longitude,s,250);
+  map.OverPassApi.Layer.OpenWindow(item.Latitude,item.Longitude,s,250);
+
 
 end;
 
@@ -1792,7 +1644,7 @@ end;
 
 // activate the timer when the button is pressed
 // a progressive zoom will then be automatically performed
-procedure TForm3.btZoomInMouseDown(Sender: TObject; Button: TMouseButton;
+procedure TForm2.btZoomInMouseDown(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: Single);
 begin
  // save the button pressed to react on it.
@@ -1806,7 +1658,7 @@ begin
 end;
 
 // cancel progressive zoom
-procedure TForm3.btZoomInMouseLeave(Sender: TObject);
+procedure TForm2.btZoomInMouseLeave(Sender: TObject);
 begin
  tmZoom.Enabled   := false;
  // if necessary reactivate the layer mappilary
@@ -1814,7 +1666,7 @@ begin
 end;
 
 // cancel progressive zoom
-procedure TForm3.BtZoomOutMouseUp(Sender: TObject; Button: TMouseButton;
+procedure TForm2.BtZoomOutMouseUp(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: Single);
 begin
  tmZoom.Enabled   := false;
@@ -1826,12 +1678,16 @@ end;
 
 // Progressive zoom in or out
 // Allows to go beyond the maximum zoom managed by the tile server
-procedure TForm3.tmZoomTimer(Sender: TObject);
+procedure TForm2.tmZoomTimer(Sender: TObject);
 begin
 
+
   if (tmZoom.TagObject = btZoomIn) then
+  begin
    // map.ZoomScaleFactorAround(map.center,map.ZoomScaleFactor + 10)
+  // if map.ZoomScaleFactor<989 then
    map.ZoomScaleFactor := map.ZoomScaleFactor + 10
+  end
   else
    map.ZoomScaleFactor := map.ZoomScaleFactor - 10;
   // map.ZoomScaleFactorAround(map.center,map.ZoomScaleFactor - 10);
@@ -1840,5 +1696,6 @@ begin
 end;
 
 //------------------------------------------------------------------------------
+
 
 end.

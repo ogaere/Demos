@@ -26,6 +26,7 @@ type
     btClearWMSLayers: TButton;
     GroupBox1: TGroupBox;
     ckOilGas: TCheckBox;
+    ckUs: TCheckBox;
     procedure rbOSMClick(Sender: TObject);
     procedure rbTopoWMSClick(Sender: TObject);
     procedure ckOverlayWMSClick(Sender: TObject);
@@ -39,19 +40,22 @@ type
     procedure btClearWMSLayersClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure ckOilGasClick(Sender: TObject);
+    procedure ckUsClick(Sender: TObject);
+
   private
     { Déclarations privées }
     FOverlayWMS : TECOverlayTileLayer;
     WMS_Layer_Radar,
     WMS_Layer_Cadastre : TECNativeWMS ;
 
-    WFS_Layer_OilGas : TECNativeWFS;
+    WFS_Layer_OilGas,
+    WFS_Layer_Us : TECNativeWFS;
 
     procedure doShapeClick(sender: TObject; const item: TECShape);
 
     procedure doBeginQuery(sender : TObject);
     procedure doEndQuery(sender : TObject);
-    procedure doGraphicLegend(sender : TObject);
+
   public
     { Déclarations publiques }
   end;
@@ -67,13 +71,10 @@ implementation
 
 procedure TFormWMS_WFS.FormCreate(Sender: TObject);
 begin
- // connect WMS events
- map.WMSLayers.OnBeginQuery    := doBeginQuery;
- map.WMSLayers.OnEndQuery      := doEndQuery;
- map.WMSLayers.OnGraphicLegend := doGraphicLegend;
  // connect WFS events
  map.WFSLayers.OnBeginQuery    := doBeginQuery;
  map.WFSLayers.OnEndQuery      := doEndQuery;
+
 end;
 
 
@@ -124,14 +125,19 @@ begin
   map.address := 'deutschland';
   map.Zoom    := 6;
 
+
   if not assigned(WMS_Layer_Radar) then
     WMS_Layer_Radar := map.WMSLayers.Add('https://maps.dwd.de/geoserver/ows',  // url service
                                          'dwd:Niederschlagsradar', // layer
                                          'RADAR' // TECNativeMap group name
                                          );
 
-  WMS_Layer_Radar.Version := '1.1.1';
-  WMS_Layer_Radar.ZIndex := 20;
+  WMS_Layer_Radar.Version  := '1.1.1';
+  WMS_Layer_Radar.ZIndex   := 20;
+  WMS_Layer_Radar.opacity  := 85;
+
+  //WMS_Layer_radar.ShowWhenComplete := false;
+
 
   ckLegendClick(ckLegend);
 
@@ -190,6 +196,7 @@ begin
                                              );
 
   WMS_Layer_Cadastre.ZIndex := 10;
+  WMS_Layer_Cadastre.Clickable := true;
 
 
  end ;
@@ -250,7 +257,67 @@ begin
 
   end;
 
+   WFS_Layer_oilGas.AutoRefresh := false;
+
+   WFS_Layer_OilGas.GetFeature;
+
   WFS_Layer_OilGas.Visible := ckOilGas.Checked;
+end;
+
+
+procedure TFormWMS_WFS.ckUsClick(Sender: TObject);
+begin
+ if ckUs.Checked then
+ begin
+
+   if not assigned(WFS_Layer_Us) then
+   begin
+    WFS_Layer_Us := map.WFSLayers.Add(
+                       'https://geoserver.geoplatform.gov/geoserver/ngda/ows',  // url service
+                       'ngda:473c080c_8686_41d6_b1ee_6945e5c924f3' // layer
+                       ,'US-STATICAL-AREA' // TECNativeMap group name
+                       );
+
+    // respond to a click on a layer element
+    WFS_Layer_Us.OnShapeClick  := doShapeClick;
+
+    // default values for polygones
+    map.Styles.addRule('#US-STATICAL-AREA.polygone {weight:1;color:black;}');
+    // when a polygon is hovered over with the mouse, the outline thickness is 3 pixels
+    // the fill color is red
+    map.Styles.addRule('#US-STATICAL-AREA.polygone:hover {weight:3;hcolor:red;}');
+    // polygons with an 'lsad' property value of 'M1' are greyed out
+    map.Styles.addRule('#US-STATICAL-AREA.polygone.lsad:M1 {fcolor:gray;hbcolor:light(gray)}');
+    // polygons with an 'lsad' property value of 'M2' are blue
+    map.Styles.addRule('#US-STATICAL-AREA.polygone.lsad:M2 {fcolor:blue;hbcolor:light(blue)}');
+    
+    WFS_Layer_Us.MaxFeature := 10000;
+
+    // Limit queries to the area bounded by the North-East and South-West corners
+    // NELat = 50 , NELng = -63
+    // SWLat = 31 , SWLng = -121
+    // To accept requests for the whole world (default) :  WFS_Layer_Us.BoundingBox;
+    WFS_Layer_Us.BoundingBox(50,-63,31,-121)  ;
+
+    // No query if zoom > 10
+    WFS_Layer_Us.MaxZoom := 10;
+
+    // Round off the search area on the corners of the tiles,
+    // this will allow caching and limit requests to the server.
+    WFS_Layer_Us.RoundBoxToTiles := true;
+
+    // Each time the map is moved, the new zone is queried (taking into account the various limits).
+    WFS_Layer_Us.AutoRefresh := true;
+
+   end;
+
+
+   map.Zoom := 8;
+   map.address := 'Chicago, us';
+
+  end;
+
+  WFS_Layer_Us.Visible := ckUs.Checked;
 end;
 
 
@@ -297,23 +364,15 @@ end;
 
 
 
-// --------------   Events   WMS & WFS Layers
+
+// --------------   Events   WFS Layers
 procedure TFormWMS_WFS.doBeginQuery(sender : TObject);
-var WMSLayer : TECNativeWMS;
-    WFSLayer : TECNativeWFS;
+var  WFSLayer : TECNativeWFS;
 begin
 
  if events.lines.count>50 then
   events.lines.clear;
 
- if sender is TECNativeWMS then
- begin
-
-   WMSLayer := sender as TECNativeWMS;
-  if assigned(WMSLayer) then
-   events.lines.Add('BEGIN QUERY : '+WMSLayer.Name) ;
- end
- else
  if sender is TECNativeWFS then
  begin
 
@@ -325,18 +384,9 @@ begin
 end;
 
 procedure TFormWMS_WFS.doEndQuery(sender : TObject);
-var WMSLayer : TECNativeWMS;
-    WFSLayer : TECNativeWFS;
+var  WFSLayer : TECNativeWFS;
 begin
 
- if sender is TECNativeWMS then
- begin
-   WMSLayer := sender as TECNativeWMS;
-
-   if assigned(WMSLayer) then
-     events.lines.Add('END QUERY : '+WMSLayer.Name);
- end
- else
  if sender is TECNativeWFS then
  begin
 
@@ -349,16 +399,7 @@ begin
 
 end;
 
-procedure TFormWMS_WFS.doGraphicLegend(sender : TObject);
-var WMSLayer : TECNativeWMS;
-begin
 
- WMSLayer := sender as TECNativeWMS;
-
- if assigned(WMSLayer) then
-  events.lines.Add('GRAPHIC LEGEND OK : '+WMSLayer.Name);
-
-end;
 
 
 
