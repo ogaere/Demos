@@ -2,7 +2,7 @@ object FormWMS_WFS: TFormWMS_WFS
   Left = 0
   Top = 0
   Caption = 'Demo WMS - WFS for TECNativeMap '#169' ESCOT-SEP Christophe'
-  ClientHeight = 441
+  ClientHeight = 473
   ClientWidth = 701
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -17,7 +17,7 @@ object FormWMS_WFS: TFormWMS_WFS
     Left = 496
     Top = 0
     Width = 205
-    Height = 328
+    Height = 360
     Align = alRight
     BevelOuter = bvNone
     TabOrder = 0
@@ -65,16 +65,28 @@ object FormWMS_WFS: TFormWMS_WFS
       Left = 3
       Top = 114
       Width = 199
-      Height = 135
+      Height = 178
       Align = alTop
       Caption = 'WMS Layers'
       TabOrder = 1
+      ExplicitLeft = 6
+      object Time: TLabel
+        AlignWithMargins = True
+        Left = 22
+        Top = 97
+        Width = 172
+        Height = 15
+        Margins.Left = 20
+        Margins.Top = 0
+        Align = alTop
+        ExplicitWidth = 3
+      end
       object pnLegend: TPanel
         AlignWithMargins = True
         Left = 5
         Top = 43
         Width = 189
-        Height = 28
+        Height = 51
         Align = alTop
         BevelOuter = bvNone
         Enabled = False
@@ -108,6 +120,15 @@ object FormWMS_WFS: TFormWMS_WFS
             'LeftCenter'
             'RightCenter')
         end
+        object ckTime: TCheckBox
+          Left = 8
+          Top = 29
+          Width = 97
+          Height = 17
+          Caption = 'Last hour'
+          TabOrder = 2
+          OnClick = ckTimeClick
+        end
       end
       object ckRadar: TCheckBox
         AlignWithMargins = True
@@ -123,30 +144,34 @@ object FormWMS_WFS: TFormWMS_WFS
       object ckCadastre: TCheckBox
         AlignWithMargins = True
         Left = 5
-        Top = 77
+        Top = 118
         Width = 189
         Height = 17
         Align = alTop
         Caption = 'Cadastre (Rennes France)'
         TabOrder = 2
         OnClick = ckCadastreClick
+        ExplicitLeft = 3
+        ExplicitTop = 116
       end
       object btClearWMSLayers: TButton
         AlignWithMargins = True
         Left = 5
-        Top = 100
+        Top = 141
         Width = 189
         Height = 25
         Align = alTop
         Caption = 'Clear WMS Layers'
         TabOrder = 3
         OnClick = btClearWMSLayersClick
+        ExplicitLeft = 3
+        ExplicitTop = 139
       end
     end
     object GroupBox1: TGroupBox
       AlignWithMargins = True
       Left = 3
-      Top = 255
+      Top = 298
       Width = 199
       Height = 105
       Align = alTop
@@ -177,7 +202,7 @@ object FormWMS_WFS: TFormWMS_WFS
   end
   object pn_events: TPanel
     Left = 0
-    Top = 328
+    Top = 360
     Width = 701
     Height = 113
     Align = alBottom
@@ -199,7 +224,7 @@ object FormWMS_WFS: TFormWMS_WFS
     Left = 0
     Top = 0
     Width = 496
-    Height = 328
+    Height = 360
     HideShapesWhenZoom = False
     HideShapesWhenWaitingTile = False
     DblClickZoom = True
