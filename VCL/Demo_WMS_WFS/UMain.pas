@@ -7,7 +7,7 @@ uses
   System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uecNativeMapControl, Vcl.StdCtrls,
   Vcl.ExtCtrls,
-  uecNativeShape, uecmaputil, dateutils;
+  uecNativeShape, uecmaputil, dateutils, Vcl.ComCtrls;
 
 type
   TFormWMS_WFS = class(TForm)
@@ -31,6 +31,13 @@ type
     ckUs: TCheckBox;
     ckTime: TCheckBox;
     Time: TLabel;
+    barTime: TPanel;
+    TimeLoading: TProgressBar;
+    StartTime: TButton;
+    PrevTime: TButton;
+    PauseTime: TButton;
+    EndTime: TButton;
+    NextTime: TButton;
     procedure rbOSMClick(Sender: TObject);
     procedure rbTopoWMSClick(Sender: TObject);
     procedure ckOverlayWMSClick(Sender: TObject);
@@ -45,6 +52,11 @@ type
     procedure ckOilGasClick(Sender: TObject);
     procedure ckUsClick(Sender: TObject);
     procedure ckTimeClick(Sender: TObject);
+    procedure StartTimeClick(Sender: TObject);
+    procedure PrevTimeClick(Sender: TObject);
+    procedure PauseTimeClick(Sender: TObject);
+    procedure NextTimeClick(Sender: TObject);
+    procedure EndTimeClick(Sender: TObject);
 
   private
     { Déclarations privées }
@@ -62,6 +74,8 @@ type
     procedure doOnFeatureInfo(Sender: TObject);
     procedure doOnEnabled(Sender: TObject);
     procedure doOnChangeTimeDimension(Sender: TObject);
+    procedure doOnEnabledTimeDimension(Sender: TObject);
+    procedure doOnLoadingTimeDimension(Sender: TObject);
 
     procedure doOnWFSCapabilities(Sender: TObject);
     procedure doOnWFSDescribeFeatureType(Sender: TObject);
@@ -84,7 +98,9 @@ begin
   map.WMSLayers.OnCapabilities := doOnCapabilities;
   map.WMSLayers.OnFeatureInfo := doOnFeatureInfo;
   map.WMSLayers.OnEnabled := doOnEnabled;
-  map.WMSLayers.OnChangeTimeDimension := doOnChangeTimeDimension;
+  map.WMSLayers.OnChangeTimeDimension  := doOnChangeTimeDimension;
+  map.WMSLayers.OnLoadingTimeDimension := doOnLoadingTimeDimension;
+  map.WMSLayers.OnEnabledTimeDimension := doOnEnabledTimeDimension;
 
   // connect WFS events
   map.WFSLayers.OnBeginQuery := doBeginQuery;
@@ -94,6 +110,7 @@ begin
   map.WFSLayers.OnEnabled := doOnWFSEnabled;
 
 end;
+
 
 
 
@@ -114,6 +131,8 @@ begin
   map.CopyrightTile := 'Topographic WMS - by terrestris';
   map.Zoom := 7;
 end;
+
+
 
 procedure TFormWMS_WFS.ckOverlayWMSClick(Sender: TObject);
 begin
@@ -157,7 +176,7 @@ begin
     // so its ZIndex must be greater than
     WMS_Layer_Radar.ZIndex := 20;
 
-    WMS_Layer_Radar.opacity := 85;
+    WMS_Layer_Radar.opacity := 0.5;
 
 
     ckLegendClick(ckLegend);
@@ -170,7 +189,10 @@ begin
     // period 5 minutes
     WMS_Layer_Radar.TimeDimension.PeriodMillisecondes := 5 * 60 * 1000;
 
-    WMS_Layer_Radar.TimeDimension.TransitionMillisecondes := 500;
+    WMS_Layer_Radar.TimeDimension.TransitionMillisecondes := 1000;
+
+    // loop
+    WMS_Layer_Radar.TimeDimension.Loop := true;
 
   end;
 
@@ -182,6 +204,7 @@ end;
 procedure TFormWMS_WFS.ckTimeClick(Sender: TObject);
 begin
   WMS_Layer_Radar.EnabledTimeDimension := ckTime.Checked;
+  BarTime.Visible := ckTime.Checked;
 end;
 
 // hide / show WMS legend
@@ -220,6 +243,39 @@ begin
   end;
 end;
 
+procedure TFormWMS_WFS.StartTimeClick(Sender: TObject);
+begin
+  WMS_Layer_Radar.StartTimeDimension;
+end;
+
+procedure TFormWMS_WFS.PauseTimeClick(Sender: TObject);
+begin
+  WMS_Layer_Radar.PauseTimeDimension := not WMS_Layer_Radar.PauseTimeDimension;
+  if WMS_Layer_Radar.PauseTimeDimension then
+    PauseTime.caption := 'Run'
+  else
+    PauseTime.Caption := 'Pause';
+
+end;
+
+procedure TFormWMS_WFS.PrevTimeClick(Sender: TObject);
+begin
+  WMS_Layer_Radar.PrevTimeDimension;
+end;
+
+procedure TFormWMS_WFS.NextTimeClick(Sender: TObject);
+begin
+  WMS_Layer_Radar.NextTimeDimension;
+end;
+
+
+procedure TFormWMS_WFS.EndTimeClick(Sender: TObject);
+begin
+  WMS_Layer_Radar.EndTimeDimension;
+end;
+
+
+
 procedure TFormWMS_WFS.ckCadastreClick(Sender: TObject);
 begin
 
@@ -228,15 +284,22 @@ begin
     map.address := 'Rennes, France';
     map.Zoom := 18;
 
-    if not assigned(WMS_Layer_Cadastre) then
-      WMS_Layer_Cadastre := map.WMSLayers.Add
-        ('https://geobretagne.fr/geoserver/cadastre/wms', // url service
-        'CP.CadastralParcel', // layer
-        'CADASTRE' // TECNativeMap group name
-        );
 
+    if not assigned(WMS_Layer_Cadastre) then
+      WMS_Layer_Cadastre := map.WMSLayers.Add(
+         'https://public.sig.rennesmetropole.fr/geoserver/ows',
+        'ref_cad:batiment',
+         'CADASTRE');
+
+
+    WMS_Layer_Cadastre.Version := '1.1.1';
     WMS_Layer_Cadastre.ZIndex := 10;
     WMS_Layer_Cadastre.Clickable := true;
+    WMS_Layer_Cadastre.Opacity := 0.7;
+    WMS_Layer_Cadastre.Legend := true;
+
+
+
 
   end;
 
@@ -249,6 +312,7 @@ begin
 
   ckCadastre.Checked := false;
   ckRadar.Checked := false;
+  ckTime.Checked  := false;
 
   // delete layers
   map.WMSLayers.Clear;
@@ -408,6 +472,8 @@ begin
 end;
 
 
+
+
 // -------------- Events WMS Layers
 
 // OnEnabled is triggered when the visible area of the map moves in or out of the layers.
@@ -423,12 +489,52 @@ begin
     WMSLayer := Sender as TECNativeWMS;
     if assigned(WMSLayer) then
     begin
-      events.lines.Add(WMSLayer.Name + ' ENABLED :' +
-        BoolTostr(WMSLayer.Enabled));
+      events.lines.Add(WMSLayer.Name + ' ENABLED : ' +
+        BoolToStr(WMSLayer.Enabled));
     end;
   end
 
 end;
+
+// event triggered each time the TimeDimension enabled/disable
+procedure TFormWMS_WFS.doOnEnabledTimeDimension(Sender: TObject);
+var
+  WMSLayer: TECNativeWMS;
+begin
+
+  if Sender is TECNativeWMS then
+  begin
+
+    WMSLayer := Sender as TECNativeWMS;
+    if assigned(WMSLayer) then
+    begin
+     events.lines.Add(WMSLayer.Name + ' TIMEDIMENSION ENABLED : ' +
+        BoolToStr(WMSLayer.TimeDimension.Enabled));
+    end;
+
+
+  end
+
+end;
+
+
+// event triggered when TimeDimension tiles is loading
+procedure TFormWMS_WFS.doOnLoadingTimeDimension(Sender: TObject);
+var
+  WMSLayer: TECNativeWMS;
+begin
+  if Sender is TECNativeWMS then
+  begin
+
+    WMSLayer := Sender as TECNativeWMS;
+    if assigned(WMSLayer) then
+    begin
+     TimeLoading.Position := WMSLayer.LoadingPercentTimeDimension;
+     TimeLoading.Visible  := WMSLayer.LoadingPercentTimeDimension<100;
+    end;
+  end
+end;
+
 
 // event triggered each time the TimeDimension period changes
 procedure TFormWMS_WFS.doOnChangeTimeDimension(Sender: TObject);
@@ -478,12 +584,12 @@ begin
         doubletoStrDigit(WMSLayer.NELat, 6) + ' ' +
         doubletoStrDigit(WMSLayer.NELng, 6));
 
-      Poly := map.AddPolygone(SouthWest, NorthEast);
+      Poly := WMSLayer.shapes.AddPolygone(SouthWest, NorthEast);
       Poly.FillOpacity := 0;
       Poly.Color := GetHashColor(WMSLayer.Name);
       Poly.PenStyle := psDash;
+      // The polygon must not react to the mouse
       Poly.EnabledHover := false;
-      Poly.Clickable := false;
 
     end;
   end
@@ -557,12 +663,12 @@ begin
         doubletoStrDigit(WFSLayer.NELat, 6) + ' ' +
         doubletoStrDigit(WFSLayer.NELng, 6));
 
-      Poly := map.AddPolygone(SouthWest, NorthEast);
+      Poly := WFSLayer.shapes.AddPolygone(SouthWest, NorthEast);
       Poly.FillOpacity := 0;
       Poly.Color := GetHashColor(WFSLayer.Name);
       Poly.PenStyle := psDash;
+      // The polygon must not react to the mouse
       Poly.EnabledHover := false;
-      Poly.Clickable := false;
     end;
   end
 

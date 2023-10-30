@@ -2,7 +2,7 @@ object FormWMS_WFS: TFormWMS_WFS
   Left = 0
   Top = 0
   Caption = 'Demo WMS - WFS for TECNativeMap '#169' ESCOT-SEP Christophe'
-  ClientHeight = 473
+  ClientHeight = 553
   ClientWidth = 701
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -17,10 +17,11 @@ object FormWMS_WFS: TFormWMS_WFS
     Left = 496
     Top = 0
     Width = 205
-    Height = 360
+    Height = 440
     Align = alRight
     BevelOuter = bvNone
     TabOrder = 0
+    ExplicitHeight = 360
     object gbTiles: TGroupBox
       AlignWithMargins = True
       Left = 3
@@ -65,7 +66,7 @@ object FormWMS_WFS: TFormWMS_WFS
       Left = 3
       Top = 114
       Width = 199
-      Height = 178
+      Height = 218
       Align = alTop
       Caption = 'WMS Layers'
       TabOrder = 1
@@ -73,24 +74,26 @@ object FormWMS_WFS: TFormWMS_WFS
       object Time: TLabel
         AlignWithMargins = True
         Left = 22
-        Top = 97
+        Top = 151
         Width = 172
         Height = 15
         Margins.Left = 20
         Margins.Top = 0
         Align = alTop
-        ExplicitWidth = 3
+        ExplicitLeft = 20
+        ExplicitTop = 146
       end
       object pnLegend: TPanel
         AlignWithMargins = True
         Left = 5
-        Top = 43
+        Top = 97
         Width = 189
         Height = 51
         Align = alTop
         BevelOuter = bvNone
         Enabled = False
         TabOrder = 0
+        ExplicitTop = 43
         object ckLegend: TCheckBox
           Left = 8
           Top = 3
@@ -133,18 +136,19 @@ object FormWMS_WFS: TFormWMS_WFS
       object ckRadar: TCheckBox
         AlignWithMargins = True
         Left = 5
-        Top = 20
+        Top = 74
         Width = 189
         Height = 17
         Align = alTop
         Caption = 'Precipitation radar (Germany)'
         TabOrder = 1
         OnClick = ckRadarClick
+        ExplicitTop = 20
       end
       object ckCadastre: TCheckBox
         AlignWithMargins = True
         Left = 5
-        Top = 118
+        Top = 51
         Width = 189
         Height = 17
         Align = alTop
@@ -152,31 +156,108 @@ object FormWMS_WFS: TFormWMS_WFS
         TabOrder = 2
         OnClick = ckCadastreClick
         ExplicitLeft = 3
-        ExplicitTop = 116
+        ExplicitTop = 44
       end
       object btClearWMSLayers: TButton
         AlignWithMargins = True
         Left = 5
-        Top = 141
+        Top = 20
         Width = 189
         Height = 25
         Align = alTop
         Caption = 'Clear WMS Layers'
         TabOrder = 3
         OnClick = btClearWMSLayersClick
-        ExplicitLeft = 3
-        ExplicitTop = 139
+        ExplicitLeft = -3
+        ExplicitTop = 12
+      end
+      object barTime: TPanel
+        AlignWithMargins = True
+        Left = 5
+        Top = 172
+        Width = 189
+        Height = 25
+        Align = alTop
+        BevelOuter = bvNone
+        TabOrder = 4
+        Visible = False
+        object StartTime: TButton
+          Left = 0
+          Top = 0
+          Width = 32
+          Height = 25
+          Align = alLeft
+          Caption = '<<'
+          TabOrder = 0
+          OnClick = StartTimeClick
+        end
+        object PrevTime: TButton
+          Left = 32
+          Top = 0
+          Width = 32
+          Height = 25
+          Align = alLeft
+          Caption = '<'
+          TabOrder = 1
+          OnClick = PrevTimeClick
+        end
+        object PauseTime: TButton
+          Left = 64
+          Top = 0
+          Width = 62
+          Height = 25
+          Align = alLeft
+          Caption = 'Pause'
+          TabOrder = 2
+          OnClick = PauseTimeClick
+          ExplicitLeft = 51
+          ExplicitTop = 1
+          ExplicitHeight = 39
+        end
+        object EndTime: TButton
+          Left = 158
+          Top = 0
+          Width = 32
+          Height = 25
+          Align = alLeft
+          Caption = '>>'
+          TabOrder = 3
+          OnClick = EndTimeClick
+        end
+        object NextTime: TButton
+          Left = 126
+          Top = 0
+          Width = 32
+          Height = 25
+          Align = alLeft
+          Caption = '>'
+          TabOrder = 4
+          OnClick = NextTimeClick
+        end
+      end
+      object TimeLoading: TProgressBar
+        AlignWithMargins = True
+        Left = 5
+        Top = 203
+        Width = 189
+        Height = 10
+        Align = alTop
+        BarColor = clMoneyGreen
+        TabOrder = 5
+        Visible = False
+        ExplicitTop = 118
       end
     end
     object GroupBox1: TGroupBox
       AlignWithMargins = True
       Left = 3
-      Top = 298
+      Top = 338
       Width = 199
-      Height = 105
+      Height = 83
       Align = alTop
       Caption = 'WFS Layer'
       TabOrder = 2
+      ExplicitTop = 320
       object ckOilGas: TCheckBox
         AlignWithMargins = True
         Left = 5
@@ -202,12 +283,13 @@ object FormWMS_WFS: TFormWMS_WFS
   end
   object pn_events: TPanel
     Left = 0
-    Top = 360
+    Top = 440
     Width = 701
     Height = 113
     Align = alBottom
     BevelOuter = bvNone
     TabOrder = 1
+    ExplicitTop = 360
     object events: TMemo
       AlignWithMargins = True
       Left = 3
@@ -224,7 +306,7 @@ object FormWMS_WFS: TFormWMS_WFS
     Left = 0
     Top = 0
     Width = 496
-    Height = 360
+    Height = 440
     HideShapesWhenZoom = False
     HideShapesWhenWaitingTile = False
     DblClickZoom = True
@@ -243,5 +325,6 @@ object FormWMS_WFS: TFormWMS_WFS
     NbrThreadTile = ttFour
     Align = alClient
     TabOrder = 2
+    ExplicitHeight = 360
   end
 end
