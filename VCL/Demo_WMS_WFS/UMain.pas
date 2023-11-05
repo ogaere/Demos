@@ -98,7 +98,7 @@ begin
   map.WMSLayers.OnCapabilities := doOnCapabilities;
   map.WMSLayers.OnFeatureInfo := doOnFeatureInfo;
   map.WMSLayers.OnEnabled := doOnEnabled;
-  map.WMSLayers.OnChangeTimeDimension  := doOnChangeTimeDimension;
+  map.WMSLayers.OnChangeTimeDimension := doOnChangeTimeDimension;
   map.WMSLayers.OnLoadingTimeDimension := doOnLoadingTimeDimension;
   map.WMSLayers.OnEnabledTimeDimension := doOnEnabledTimeDimension;
 
@@ -132,16 +132,14 @@ begin
   map.Zoom := 7;
 end;
 
-
-
 procedure TFormWMS_WFS.ckOverlayWMSClick(Sender: TObject);
 begin
   if ckOverlayWMS.Checked then
-    // url to the WMS service
-    // you can stack several layers, separating them with a comma : 'SRTM30-Contour,,OSM-Overlay-WMS'
+  // url to the WMS service
+  // you can stack several layers, separating them with a comma : 'SRTM30-Contour,,OSM-Overlay-WMS'
   begin
     FOverlayWMS := map.AddOverlayTileServerWMS
-      ('https://ows.mundialis.de/services/service', 'OSM-Overlay-WMS') ;
+      ('https://ows.mundialis.de/services/service', 'OSM-Overlay-WMS');
     // lower zindex, first draw
     FOverlayWMS.ZIndex := 0;
   end
@@ -165,7 +163,8 @@ begin
     map.Zoom := 6;
 
     if not assigned(WMS_Layer_Radar) then
-      WMS_Layer_Radar := map.WMSLayers.Add('https://maps.dwd.de/geoserver/ows', // url service
+      WMS_Layer_Radar := map.WMSLayers.Add('https://maps.dwd.de/geoserver/ows',
+        // url service
         'dwd:Niederschlagsradar', // layer
         'RADAR' // TECNativeMap group name
         );
@@ -178,7 +177,6 @@ begin
 
     WMS_Layer_Radar.opacity := 0.5;
 
-
     ckLegendClick(ckLegend);
 
     // set Minute and seconde to 0
@@ -189,11 +187,22 @@ begin
     // period 5 minutes
     WMS_Layer_Radar.TimeDimension.PeriodMillisecondes := 5 * 60 * 1000;
 
-    WMS_Layer_Radar.TimeDimension.TransitionMillisecondes := 1000;
+    // You can also directly pass an array of TDateTime
+    // WMS_Layer_Radar.TimeDimension.AddTime([datetime1, datetime2,..,datetimex]);
+
+    WMS_Layer_Radar.TimeDimension.TransitionMillisecondes := 500;
 
     // loop
     WMS_Layer_Radar.TimeDimension.Loop := true;
 
+  end
+  else
+  begin
+    ckTime.Checked := false;
+    ckLegend.checked := false;
+    WMS_Layer_Radar.EnabledTimeDimension := false;
+    barTime.Visible := false;
+    TimeLoading.visible := false;
   end;
 
   WMS_Layer_Radar.Visible := ckRadar.Checked;
@@ -204,7 +213,10 @@ end;
 procedure TFormWMS_WFS.ckTimeClick(Sender: TObject);
 begin
   WMS_Layer_Radar.EnabledTimeDimension := ckTime.Checked;
-  BarTime.Visible := ckTime.Checked;
+  barTime.Visible := ckTime.Checked;
+
+  if not ckTime.Checked then
+   TimeLoading.visible := false;
 end;
 
 // hide / show WMS legend
@@ -254,7 +266,7 @@ begin
   if WMS_Layer_Radar.PauseTimeDimension then
     PauseTime.caption := 'Run'
   else
-    PauseTime.Caption := 'Pause';
+    PauseTime.caption := 'Pause';
 
 end;
 
@@ -268,13 +280,10 @@ begin
   WMS_Layer_Radar.NextTimeDimension;
 end;
 
-
 procedure TFormWMS_WFS.EndTimeClick(Sender: TObject);
 begin
   WMS_Layer_Radar.EndTimeDimension;
 end;
-
-
 
 procedure TFormWMS_WFS.ckCadastreClick(Sender: TObject);
 begin
@@ -284,22 +293,16 @@ begin
     map.address := 'Rennes, France';
     map.Zoom := 18;
 
-
     if not assigned(WMS_Layer_Cadastre) then
-      WMS_Layer_Cadastre := map.WMSLayers.Add(
-         'https://public.sig.rennesmetropole.fr/geoserver/ows',
-        'ref_cad:batiment',
-         'CADASTRE');
-
+      WMS_Layer_Cadastre := map.WMSLayers.Add
+        ('https://public.sig.rennesmetropole.fr/geoserver/ows',
+        'ref_cad:batiment', 'CADASTRE');
 
     WMS_Layer_Cadastre.Version := '1.1.1';
     WMS_Layer_Cadastre.ZIndex := 10;
     WMS_Layer_Cadastre.Clickable := true;
-    WMS_Layer_Cadastre.Opacity := 0.7;
+    WMS_Layer_Cadastre.opacity := 0.7;
     WMS_Layer_Cadastre.Legend := true;
-
-
-
 
   end;
 
@@ -312,7 +315,7 @@ begin
 
   ckCadastre.Checked := false;
   ckRadar.Checked := false;
-  ckTime.Checked  := false;
+  ckTime.Checked := false;
 
   // delete layers
   map.WMSLayers.Clear;
@@ -508,15 +511,13 @@ begin
     WMSLayer := Sender as TECNativeWMS;
     if assigned(WMSLayer) then
     begin
-     events.lines.Add(WMSLayer.Name + ' TIMEDIMENSION ENABLED : ' +
+      events.lines.Add(WMSLayer.Name + ' TIMEDIMENSION ENABLED : ' +
         BoolToStr(WMSLayer.TimeDimension.Enabled));
     end;
-
 
   end
 
 end;
-
 
 // event triggered when TimeDimension tiles is loading
 procedure TFormWMS_WFS.doOnLoadingTimeDimension(Sender: TObject);
@@ -529,12 +530,11 @@ begin
     WMSLayer := Sender as TECNativeWMS;
     if assigned(WMSLayer) then
     begin
-     TimeLoading.Position := WMSLayer.LoadingPercentTimeDimension;
-     TimeLoading.Visible  := WMSLayer.LoadingPercentTimeDimension<100;
+      TimeLoading.Position := WMSLayer.LoadingPercentTimeDimension;
+      TimeLoading.Visible := WMSLayer.LoadingPercentTimeDimension < 100;
     end;
   end
 end;
-
 
 // event triggered each time the TimeDimension period changes
 procedure TFormWMS_WFS.doOnChangeTimeDimension(Sender: TObject);
@@ -548,12 +548,11 @@ begin
     WMSLayer := Sender as TECNativeWMS;
     if assigned(WMSLayer) then
     begin
-     Time.Caption := WMSLayer.Time;
+      Time.caption := WMSLayer.Time;
     end;
   end
 
 end;
-
 
 // A GetCapabilities request is automatically made to the server,
 // when the data is available OnCapabilities is triggered
@@ -562,7 +561,7 @@ end;
 procedure TFormWMS_WFS.doOnCapabilities(Sender: TObject);
 var
   WMSLayer: TECNativeWMS;
-  Poly : TECShapePolygone; // unit uecNativeShape
+  Poly: TECShapePolygone; // unit uecNativeShape
   SouthWest, NorthEast: TLatLng;
 begin
 
@@ -573,11 +572,11 @@ begin
     if assigned(WMSLayer) then
     begin
       SouthWest.Lat := WMSLayer.SWLat;
-      SouthWest.Lng := WMSLayer.SWLng;
+      SouthWest.lng := WMSLayer.SWLng;
       NorthEast.Lat := WMSLayer.NELat;
-      NorthEast.Lng := WMSLayer.NELng;
+      NorthEast.lng := WMSLayer.NELng;
 
-     // show Bounding Box
+      // show Bounding Box
       events.lines.Add(WMSLayer.Name + ' BBOX :' +
         doubletoStrDigit(WMSLayer.SWLat, 6) + ' ' +
         doubletoStrDigit(WMSLayer.SWLng, 6) + ' ' +
@@ -632,7 +631,7 @@ begin
     if assigned(WFSLayer) then
     begin
       events.lines.Add(WFSLayer.Name + ' ENABLED :' +
-        BoolTostr(WFSLayer.Enabled));
+        BoolToStr(WFSLayer.Enabled));
     end;
   end
 
@@ -642,7 +641,7 @@ procedure TFormWMS_WFS.doOnWFSCapabilities(Sender: TObject);
 var
   WFSLayer: TECNativeWFS;
   SouthWest, NorthEast: TLatLng;
-  Poly : TECShapePolygone;
+  Poly: TECShapePolygone;
 begin
 
   if Sender is TECNativeWFS then
@@ -653,9 +652,9 @@ begin
     begin
 
       SouthWest.Lat := WFSLayer.SWLat;
-      SouthWest.Lng := WFSLayer.SWLng;
+      SouthWest.lng := WFSLayer.SWLng;
       NorthEast.Lat := WFSLayer.NELat;
-      NorthEast.Lng := WFSLayer.NELng;
+      NorthEast.lng := WFSLayer.NELng;
 
       events.lines.Add(WFSLayer.Name + ' BBOX :' +
         doubletoStrDigit(WFSLayer.SWLat, 6) + ' ' +
@@ -699,7 +698,6 @@ procedure TFormWMS_WFS.doBeginQuery(Sender: TObject);
 var
   WFSLayer: TECNativeWFS;
 begin
-
 
   if Sender is TECNativeWFS then
   begin
