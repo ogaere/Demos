@@ -10,15 +10,13 @@ object FormNativePoi: TFormNativePoi
   Font.Name = 'Tahoma'
   Font.Style = []
   Position = poMainFormCenter
-  OnClose = FormClose
   OnCreate = FormCreate
-  PixelsPerInch = 96
   TextHeight = 13
   object Panel1: TPanel
     Left = 654
     Top = 0
     Width = 185
-    Height = 547
+    Height = 520
     Align = alRight
     BevelOuter = bvNone
     Font.Charset = DEFAULT_CHARSET
@@ -28,6 +26,8 @@ object FormNativePoi: TFormNativePoi
     Font.Style = []
     ParentFont = False
     TabOrder = 0
+    ExplicitLeft = 660
+    ExplicitHeight = 547
     object Label1: TLabel
       Left = 9
       Top = 153
@@ -78,28 +78,13 @@ object FormNativePoi: TFormNativePoi
       ParentFont = False
       TabOrder = 1
     end
-    object infos: TPanel
-      Left = 0
-      Top = 506
-      Width = 185
-      Height = 41
-      Align = alBottom
-      BevelOuter = bvLowered
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = 4737279
-      Font.Height = -19
-      Font.Name = 'Tahoma'
-      Font.Style = [fsBold]
-      ParentFont = False
-      TabOrder = 2
-    end
     object fitbounds: TButton
       Left = 20
       Top = 122
       Width = 152
       Height = 25
       Caption = 'Show all'
-      TabOrder = 3
+      TabOrder = 2
       OnClick = fitboundsClick
     end
     object clustering: TCheckBox
@@ -108,7 +93,7 @@ object FormNativePoi: TFormNativePoi
       Width = 143
       Height = 17
       Caption = 'Enabled Clustering'
-      TabOrder = 4
+      TabOrder = 3
       OnClick = clusteringClick
     end
     object MoveDirection360: TButton
@@ -117,7 +102,7 @@ object FormNativePoi: TFormNativePoi
       Width = 152
       Height = 25
       Caption = 'Move Direction 360'
-      TabOrder = 5
+      TabOrder = 4
       OnClick = MoveDirection360Click
     end
     object cbClusterStyle: TComboBox
@@ -126,7 +111,7 @@ object FormNativePoi: TFormNativePoi
       Width = 145
       Height = 24
       Style = csDropDownList
-      TabOrder = 6
+      TabOrder = 5
       OnChange = cbClusterStyleChange
       Items.Strings = (
         'Ellipse'
@@ -135,21 +120,89 @@ object FormNativePoi: TFormNativePoi
         'Hexagon'
         'Diamond'
         'Triangle'
-        'Triangle Down')
+        'Triangle Down'
+        'Categories')
     end
+    object GroupBox1: TGroupBox
+      Left = 16
+      Top = 267
+      Width = 145
+      Height = 105
+      Caption = 'Sort Categories'
+      TabOrder = 6
+      object rbAscending: TRadioButton
+        AlignWithMargins = True
+        Left = 5
+        Top = 21
+        Width = 135
+        Height = 17
+        Align = alTop
+        Caption = 'Ascending'
+        Checked = True
+        TabOrder = 0
+        TabStop = True
+        OnClick = rbAscendingClick
+        ExplicitLeft = 16
+        ExplicitTop = 24
+        ExplicitWidth = 113
+      end
+      object rbDescending: TRadioButton
+        Tag = 1
+        AlignWithMargins = True
+        Left = 5
+        Top = 44
+        Width = 135
+        Height = 17
+        Align = alTop
+        Caption = 'Descending'
+        TabOrder = 1
+        OnClick = rbAscendingClick
+        ExplicitLeft = 29
+        ExplicitWidth = 113
+      end
+      object rbNone: TRadioButton
+        Tag = 2
+        AlignWithMargins = True
+        Left = 5
+        Top = 67
+        Width = 135
+        Height = 17
+        Align = alTop
+        Caption = 'None'
+        TabOrder = 2
+        OnClick = rbAscendingClick
+        ExplicitLeft = 29
+        ExplicitTop = 85
+        ExplicitWidth = 113
+      end
+    end
+  end
+  object infos: TPanel
+    Left = 0
+    Top = 520
+    Width = 839
+    Height = 27
+    Align = alBottom
+    BevelOuter = bvLowered
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = 4737279
+    Font.Height = -15
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabOrder = 1
   end
   object map: TECNativeMap
     Left = 0
     Top = 0
     Width = 654
-    Height = 547
-    FocusedShapeWhenClicking = True
+    Height = 520
     HideShapesWhenZoom = False
     HideShapesWhenWaitingTile = False
     DblClickZoom = True
     MouseWheelZoom = True
-    latitude = 43.232947274405240000
-    longitude = 0.078105926513671880
+    latitude = 43.232951000000000000
+    longitude = 0.078081999999994910
     Reticle = False
     ReticleColor = clBlack
     ZoomScaleFactor = 0
@@ -159,9 +212,11 @@ object FormNativePoi: TFormNativePoi
     OnlyOneOpenInfoWindow = False
     WaitingForDestruction = False
     Active = True
+    NbrThreadTile = ttFour
     OnShapeDragEnd = mapShapeDragEnd
     OnShapeClick = mapShapeClick
     OnShapeDblClick = mapShapeDblClick
     Align = alClient
+    TabOrder = 2
   end
 end
