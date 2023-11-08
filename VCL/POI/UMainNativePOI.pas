@@ -114,6 +114,11 @@ begin
    // The last category will be used to count non-referenced categories.
    // Here it's useless, but it's for documentation purposes.
    AddCategorie('Other', GetHashColor('Other'));
+
+   // you can also delete or clear categorie
+   // DeleteCategorie(2);
+   // DeleteCategorie('DirectionSign');
+   // ClearCategorie;
   end;
 
 
