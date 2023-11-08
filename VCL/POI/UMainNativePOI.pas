@@ -216,7 +216,7 @@ begin
 
       // use it for cluster categories
       // the element names are like poiXXX we just want XXX
-      P['shape'] := copy(psToStr(P.POIShape), 4, 50);
+      P['shape'] := copy(psToStr(P.POIShape), 4);
 
       P.Color := GetHashColor(lowercase(P['shape']));
 
@@ -374,7 +374,7 @@ begin
 
     // use it for cluster categories
     // the element names are like poiXXX we just want XXX
-    ShapePOI['shape'] := copy(psToStr(ShapePOI.POIShape), 4, 50);
+    ShapePOI['shape'] := copy(psToStr(ShapePOI.POIShape), 4);
 
     // set color in function of type
     ShapePOI.Color := GetHashColor(lowercase(ShapePOI['shape']));
