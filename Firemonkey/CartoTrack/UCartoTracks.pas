@@ -337,6 +337,9 @@ begin
   laProprietes.Visible := false;
   laAmenity.Visible    := false;
 
+  FDarkColor  := GetHighlightColorBy(claBlack,64);
+  FLightColor := GetShadowColorBy(claWhite,16);
+
 
   // the default group that contains the markers Position and GPSPosition is not saved
   map.Shapes.Serialize := false;
@@ -357,7 +360,27 @@ begin
   // draw circle in background
   map.OverPassApi.Layer.Group.Markers.OnBeforeDraw := doBeforeDraw;
 
+  // cluster
+  map.OverPassApi.Layer.Group.Clusterable := true;
+  // use by 'restaurant','cafe' and 'bar' using categorized clusters
+  map.OverPassApi.Layer.Group.ClusterManager.AddCategorie('Restaurant',StrToColor('#e34a33'));
+  map.OverPassApi.Layer.Group.ClusterManager.AddCategorie('Bar',StrToColor('#fc8d59'));
+  map.OverPassApi.Layer.Group.ClusterManager.AddCategorie('Cafe',StrToColor('#fdcc8a'));
+  map.OverPassApi.Layer.Group.ClusterManager.CategorieKey := 'amenity';
 
+  map.OverPassApi.Layer.Group.ClusterManager.FontSize := 12;
+  map.OverPassApi.Layer.Group.ClusterManager.Proportional := true;
+
+  // the size of clusters will vary between MinWithHeight and WidthHeight,
+  // and will be proportional to the number of elements they contain
+  map.OverPassApi.Layer.Group.ClusterManager.WidthHeight := 64;
+  map.OverPassApi.Layer.Group.ClusterManager.MinWidthHeight := 32;
+
+  map.OverPassApi.Layer.Group.ClusterManager.Opacity := 80;
+  map.OverPassApi.Layer.Group.HintColor := FLightColor;
+  map.OverPassApi.Layer.Group.ClusterManager.Color := FLightColor;
+  map.OverPassApi.Layer.Group.ClusterManager.TextColor := FDarkColor;
+  map.OverPassApi.Layer.Group.HintCenter:= false;
 
 
 
@@ -369,25 +392,13 @@ begin
 
    map.UseLowZoom := true;
 
-  // map.tileserver := tsosm;
+   map.tileserver := tsosm;
 
 
    // reconnect attributes that are not saveable
      case map.TileServer of
 
-
-
-      (* tsIgn : begin
-                if map.TileServerInfo.MapStyle = '' then
-                  cbLayers.ItemIndex := 0
-                else
-                if  map.TileServerInfo.MapStyle = 'IMAGERY' then
-                  cbLayers.ItemIndex := 1
-                else
-                  cbLayers.ItemIndex := 2;
-       end;*)
-
-    (*tsHotOsm*)tsOSM : begin
+     tsOSM : begin
                 cbLayers.ItemIndex := 0;
                  map.TileServerInfo.MapStyle :='';
     end;
@@ -534,7 +545,11 @@ begin
   map.Styles.addRule('@gps  {blueviolet}');
   map.Styles.addRule('@food {gold}');
   map.Styles.addRule('@parking {royalblue}');
-  map.Styles.addRule('@hotel {chocolate}');
+  map.Styles.addRule('@hotel {#2ca25f}');
+  map.Styles.addRule('@restaurant {#e34a33}');
+  map.Styles.addRule('@cafe {#fdcc8a}');
+  map.Styles.addRule('@bar {#fc8d59}');
+
 
   // if the property contains a value, any value except empty
   map.Styles.addRule('.guidance:*   {styleicon:svg;}');
@@ -576,17 +591,16 @@ begin
 
 
  Selector := Selector + '.marker.amenity';
- map.styles.addRule(Selector + ':restaurant {graphic:'+ptRestaurant.Data.data+';color:@food;hbcolor:light(@food)}');
- map.styles.addRule(Selector + ':cafe {graphic:'+ptcafe.Data.data+';color:@food;hbcolor:light(@food)}');
- map.styles.addRule(Selector + ':bar {graphic:'+ptbar.Data.data+';color:@food;hbcolor:light(@food)}');
+ map.styles.addRule(Selector + ':restaurant {graphic:'+ptRestaurant.Data.data+';color:@restaurant;hbcolor:light(@restaurant)}');
+ map.styles.addRule(Selector + ':cafe {graphic:'+ptcafe.Data.data+';color:@cafe;hbcolor:light(@cafe)}');
+ map.styles.addRule(Selector + ':bar {graphic:'+ptbar.Data.data+';color:@bar;hbcolor:light(@bar)}');
 
  map.styles.addRule(Selector + ':parking {graphic:'+ptparking.Data.data+';color:@parking;hbcolor:light(@parking)}');
 
 
  // ----------------------------------------------------------------------------
 
-  FDarkColor := claBlack;
-  FLightColor := claWhite;
+
 
   // btCompass.Visible := map.RotationAngle <> 0;
 
@@ -1240,7 +1254,7 @@ procedure TForm2.doBeforeDraw(const canvas: TECCanvas; var Rect: TRect;
 Item: TECShape);
 begin
   canvas.FillOpacity := 90;
-  canvas.brush.color := BackgroundColor;
+  canvas.brush.color := FLightColor;
 
 
   // border size
@@ -1511,6 +1525,8 @@ var bt:TCircle;
 begin
  bt := TCircle(sender);
 
+
+
  if bthotel.Tag=1 then
  switch(btHotel);
 
@@ -1518,7 +1534,7 @@ begin
  switch(btParking);
 
  if btRestaurant.Tag=1 then
- switch(btRestaurant);
+  switch(btRestaurant);
 
 
  switch(bt);
@@ -1558,22 +1574,32 @@ begin
 
  amenity := '';
 
+
  if (bthotel.Tag=1) then
  begin
   map.OverPassApi.Layer.visible := true;
   map.OverPassApi.Layer.Tag('tourism','hotel');
+  map.OverPassApi.Layer.Group.ClusterManager.Style := csEllipse;
+  map.OverPassApi.Layer.Group.ClusterManager.TextColor := strToColor('#2ca25f');
+  map.OverPassApi.Layer.Group.ClusterManager.BorderColor := map.OverPassApi.Layer.Group.ClusterManager.TextColor;
  end;
 
  if (btrestaurant.Tag=1) then
  begin
    map.OverPassApi.Layer.visible := true;
    map.OverPassApi.Layer.Amenity(['restaurant','cafe','bar']);
+   map.OverPassApi.Layer.Group.ClusterManager.TextColor := FDarkColor;
+   map.OverPassApi.Layer.Group.ClusterManager.Style := csCategories;
  end;
 
  if (btparking.Tag=1) then
  begin
    map.OverPassApi.Layer.visible := true;
    map.OverPassApi.Layer.Amenity('parking');
+   map.OverPassApi.Layer.Group.ClusterManager.TextColor   := claRoyalblue;
+   map.OverPassApi.Layer.Group.ClusterManager.BorderColor := claRoyalblue;
+
+   map.OverPassApi.Layer.Group.ClusterManager.Style := csEllipse;
  end;
 
 
@@ -1620,7 +1646,10 @@ begin
         Key := Key + '<tab="65">';
 
       // put in bold the key and return to the line after each couple key/value
-      s := s + '<b>' + Key + '</b>: ' + Value + '<br>';
+      s := s + '<b>' + Key + '</b>:' + Value + '<br>';
+
+
+
 
     // continue as long as it has properties
     until Item.PropertiesFindNext(Key, Value);
