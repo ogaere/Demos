@@ -110,6 +110,10 @@ begin
  // 'WFS' is the name of the group that will contain the elements.
  WFS_Layer := map.WFSLayers.Add(wfsEndPoint.Text,'','WFS');
 
+ WFS_Layer.Version := '2.0.0';
+ WFS_Layer.MaxFeature := 10000;
+
+ WFS_Layer.Shapes.ClusterManager.MaxZoom := 13;
  WFS_Layer.Shapes.Clusterable := true;
 
  // geographic features are loaded all at once,
