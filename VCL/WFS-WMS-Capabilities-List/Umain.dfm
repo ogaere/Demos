@@ -1,7 +1,7 @@
 object FormWFS_WMS: TFormWFS_WMS
   Left = 0
   Top = 0
-  Caption = 'WMF WMS Capabilities List'
+  Caption = 'WMS WFS Capabilities List'
   ClientHeight = 441
   ClientWidth = 624
   Color = clBtnFace
