@@ -75,7 +75,18 @@ begin
  map.Styles.addRule('.polygone {weight:1;color:#fdae6b;fcolor:#f03b20;hbcolor:#f03b20;hcolor:#fdae6b;');
 
  // markers style
- map.Styles.addRule('.marker {width:14;color:#f03b20;bcolor:#feb24c;hbcolor:#f03b20;hcolor:#feb24c;styleIcon:Flat}');
+ // The basic size of the markers is 16 pixels.
+ // For zooms from 1 to 13, this size will be 75% of the base size (12px).
+ // For zoom sizes 14 to 17, 100% of base size is applied.
+ // Beyond that, 125% of the base size (20px) is applied.
+ // Flat = full circle with a border
+ // color = fill color
+ // bcolor = border color
+ // hbcolor = mouse-over border color
+ // hcolor  = mouse-over fill color
+ map.Styles.addRule('.marker {width:16;scale:1-13=0.75,14-17=1,18-24=1.25;'+
+                              'styleIcon:Flat;color:#f03b20;bcolor:#feb24c;'+
+                              'hbcolor:#f03b20;hcolor:#feb24c}');
 
 end;
 
@@ -89,6 +100,7 @@ begin
 
  // layer creation automatically calls getCapabilities
  // map.WMSLayers.OnCapabilities (doOnCapabilities) is triggered when data is ready
+ // Layers are automatically destroyed when the map is also destroyed
  WMS_Layer := map.WMSLayers.Add(wfsEndPoint.Text);
 
  WMS_Layer.opacity := 0.7;
@@ -108,12 +120,13 @@ begin
  // layer creation automatically calls getCapabilities
  // map.WFSLayers.OnCapabilities (doOnCapabilities) is triggered when data is ready
  // 'WFS' is the name of the group that will contain the elements.
+ //  Layers are automatically destroyed when the map is also destroyed
  WFS_Layer := map.WFSLayers.Add(wfsEndPoint.Text,'','WFS');
 
  WFS_Layer.Version := '2.0.0';
  WFS_Layer.MaxFeature := 10000;
 
- WFS_Layer.Shapes.ClusterManager.MaxZoom := 13;
+ WFS_Layer.Shapes.ClusterManager.MaxZoom := 10;
  WFS_Layer.Shapes.Clusterable := true;
 
  // geographic features are loaded all at once,

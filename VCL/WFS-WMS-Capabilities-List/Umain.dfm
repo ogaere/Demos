@@ -34,11 +34,10 @@ object FormWFS_WMS: TFormWFS_WMS
           AlignWithMargins = True
           Left = 3
           Top = 3
-          Width = 602
+          Width = 82
           Height = 15
           Align = alTop
           Caption = 'WMS end point'
-          ExplicitWidth = 82
         end
         object wmfEndPoint: TEdit
           AlignWithMargins = True
