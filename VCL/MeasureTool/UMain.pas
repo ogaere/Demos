@@ -61,6 +61,9 @@ end;
 // fired when distance or area change
 procedure TFormMeasureTool.doChange(Sender : TObject);
 begin
+ // you can also access the values
+ // map.MeasureTool.Distance
+ // map.MeasureTool.Area
  if map.MeasureTool.MeasureArea then
  begin
    lbDistance.Caption := 'Perimeter : '+map.MeasureTool.DistanceText;

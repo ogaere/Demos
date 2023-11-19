@@ -29,20 +29,17 @@ object FormMeasureTool: TFormMeasureTool
       AlignWithMargins = True
       Left = 4
       Top = 420
-      Width = 160
+      Width = 4
       Height = 17
       Align = alBottom
-      ExplicitLeft = 6
     end
     object lbDistance: TLabel
       AlignWithMargins = True
       Left = 4
       Top = 397
-      Width = 160
+      Width = 4
       Height = 17
       Align = alBottom
-      ExplicitTop = 399
-      ExplicitWidth = 4
     end
     object GroupBox1: TGroupBox
       AlignWithMargins = True
