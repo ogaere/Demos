@@ -1,35 +1,33 @@
 object FormNativeLinePolygone: TFormNativeLinePolygone
   Left = 0
   Top = 0
-  Caption = 'DemoNativeLinesPolygones '#169' 2015 ESCOT-SEP Christophe'
+  Caption = 'DemoNativeLinesPolygones '#169' ESCOT-SEP Christophe'
   ClientHeight = 599
-  ClientWidth = 1008
+  ClientWidth = 877
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -11
+  Font.Height = -13
   Font.Name = 'Tahoma'
   Font.Style = []
   KeyPreview = True
-  OldCreateOrder = False
   Position = poScreenCenter
   ShowHint = True
   OnCreate = FormCreate
-  OnDestroy = FormDestroy
-  PixelsPerInch = 96
-  TextHeight = 13
+  TextHeight = 16
   object Bar_Menu: TPanel
     Left = 0
     Top = 0
-    Width = 1008
+    Width = 877
     Height = 39
     Align = alTop
     BevelOuter = bvNone
     BorderWidth = 1
     TabOrder = 0
+    ExplicitWidth = 1008
     object SpeedPolyline: TSpeedButton
       Left = 93
-      Top = 2
+      Top = 1
       Width = 32
       Height = 32
       Hint = 'Polyline'
@@ -88,7 +86,7 @@ object FormNativeLinePolygone: TFormNativeLinePolygone
     end
     object speedLoadMap: TSpeedButton
       Left = 4
-      Top = 2
+      Top = 1
       Width = 32
       Height = 32
       Hint = 'Load map'
@@ -151,7 +149,7 @@ object FormNativeLinePolygone: TFormNativeLinePolygone
     end
     object SpeedSaveMap: TSpeedButton
       Left = 36
-      Top = 2
+      Top = 1
       Width = 32
       Height = 32
       Hint = 'Save Map'
@@ -214,7 +212,7 @@ object FormNativeLinePolygone: TFormNativeLinePolygone
     end
     object SpeedPolygone: TSpeedButton
       Left = 124
-      Top = 2
+      Top = 1
       Width = 32
       Height = 32
       Hint = 'Polygone'
@@ -274,8 +272,8 @@ object FormNativeLinePolygone: TFormNativeLinePolygone
       OnClick = SpeedPolylineClick
     end
     object noshape: TSpeedButton
-      Left = 187
-      Top = 2
+      Left = 155
+      Top = 1
       Width = 32
       Height = 32
       Hint = 'No shape'
@@ -318,53 +316,8 @@ object FormNativeLinePolygone: TFormNativeLinePolygone
       ShowHint = True
       OnClick = noshapeClick
     end
-    object ruler: TSpeedButton
-      Left = 156
-      Top = 2
-      Width = 32
-      Height = 32
-      Hint = 'Ruler'
-      GroupIndex = 1
-      Glyph.Data = {
-        36030000424D3603000000000000360000002800000010000000100000000100
-        18000000000000030000C40E0000C40E00000000000000000000FFFFFFFFFFFF
-        BBC6D6133D7416427894A6BFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFBBC7D715407730699E3773A818457C94A8C0FF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFBCC8D817447A
-        326CA13F7EB33F7EB33976AB1A497F95A9C2FFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFF1A487D3570A54282B74180B54282B74282B73C7AAF1D
-        4D8294A9C1FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF1C4C813772A6
-        4281B530679D4382B64687BB4687BB417FB320518695ABC3FFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFC9D4E11F50852B6096417FB34A8CC0498ABE4A8CC04A
-        8CC04484B823558A96ADC5FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFC9D5E3
-        2255893D7CAF488BBE346DA2498DC04D92C54D92C5478ABD265B8E98AFC7FFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFCBD7E3265A8E2F669B4688BB5197CA50
-        95C85197CA5197CA4B8FC22A609399B1C9FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFCBD8E4295E914587B94F95C73873A85197C9559DCF559DCF4F95C72D65
-        989BB4CBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFCCD9E52C6496346DA14D
-        92C459A3D457A1D259A3D459A3D4539BCC306A9C9CB6CDFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFCCDBE72D67994B90C1579FCF3D7AAD57A0D14D91C25DA8
-        D857A0D0326EA0E7EDF3FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFCFDCE831
-        6B9E3772A5549ACB5196C7154077559CCD569ECF336FA1F2F6F9FFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFD0DDE8336FA05299C964B1E059A1D159A2
-        D23673A4B3C9DBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFD0DEE93674A4549CCC5BA5D53877A7B4CADCFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFD1DFEA3877A73979A9B5CC
-        DDFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFCFDFDF4F7F9FFFFFFFFFFFFFFFFFFFFFFFF}
-      ParentShowHint = False
-      ShowHint = True
-      OnClick = rulerClick
-    end
-    object Label7: TLabel
-      Left = 248
-      Top = 13
-      Width = 37
-      Height = 13
-      Caption = 'Layer : '
-    end
     object pn_latlng: TPanel
-      Left = 891
+      Left = 760
       Top = 1
       Width = 116
       Height = 37
@@ -372,249 +325,239 @@ object FormNativeLinePolygone: TFormNativeLinePolygone
       BevelOuter = bvNone
       BorderWidth = 4
       TabOrder = 0
-    end
-    object xapilayer: TComboBox
-      Left = 291
-      Top = 12
-      Width = 145
-      Height = 21
-      Style = csDropDownList
-      TabOrder = 1
-      OnChange = xapilayerChange
-      Items.Strings = (
-        'none'
-        'Roads'
-        'Roads with junction'
-        'Rivers'
-        'Bus stop'
-        'landuse')
+      ExplicitLeft = 891
     end
   end
-  object Infos: TPanel
+  object pnHelpPoint: TPanel
     Left = 0
-    Top = 39
-    Width = 1008
-    Height = 72
-    Align = alTop
-    BevelOuter = bvNone
+    Top = 574
+    Width = 877
+    Height = 25
+    Align = alBottom
+    BorderWidth = 4
     Color = clSilver
     ParentBackground = False
     TabOrder = 1
-    Visible = False
-    object pnPolygone: TPanel
-      Left = 433
-      Top = 0
-      Width = 468
-      Height = 40
-      Align = alLeft
-      BevelOuter = bvNone
-      ParentBackground = False
-      ParentColor = True
-      TabOrder = 0
-      object Label1: TLabel
-        Left = 207
-        Top = 11
-        Width = 97
-        Height = 13
-        Caption = 'Level (in meters)'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ParentFont = False
-      end
-      object Label4: TLabel
-        Left = 62
-        Top = 11
-        Width = 43
-        Height = 13
-        Caption = 'Opacity'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ParentFont = False
-      end
-      object Label6: TLabel
-        Left = 350
-        Top = 11
-        Width = 29
-        Height = 13
-        Caption = 'Style'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ParentFont = False
-      end
-      object FillColor: TPanel
-        Left = 6
-        Top = 6
-        Width = 45
-        Height = 25
-        Cursor = crHandPoint
-        Hint = 'Fill Color'
-        Caption = 'FillColor'
-        Color = 16752448
-        Font.Charset = ANSI_CHARSET
-        Font.Color = clWhite
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = []
-        ParentBackground = False
-        ParentFont = False
-        TabOrder = 0
-        OnClick = ColorBorderClick
-      end
-      object Level: TEdit
-        Left = 310
-        Top = 8
-        Width = 34
-        Height = 21
-        NumbersOnly = True
-        TabOrder = 1
-        Text = '0'
-        OnChange = LevelChange
-      end
-      object Transparence: TTrackBar
-        Left = 111
-        Top = 8
-        Width = 90
-        Height = 30
-        Ctl3D = True
-        Max = 100
-        ParentCtl3D = False
-        Frequency = 10
-        Position = 50
-        PositionToolTip = ptBottom
-        TabOrder = 2
-        OnChange = TransparenceChange
-      end
-      object style: TComboBox
-        Left = 385
-        Top = 8
-        Width = 82
-        Height = 21
-        Style = csDropDownList
-        TabOrder = 3
-        OnChange = styleChange
-        Items.Strings = (
-          'bsSolid'
-          'bsClear'
-          'bsHorizontal'
-          'bsVertical'
-          'bsFDiagonal'
-          'bsBDiagonal'
-          'bsCross'
-          'bsDiagCross')
-      end
+    ExplicitWidth = 1008
+    object Label2: TLabel
+      Left = 5
+      Top = 5
+      Width = 867
+      Height = 15
+      Align = alClient
+      Caption = 
+        'Long press  on a point to delete, double click on a border for i' +
+        'nsert a point, drag point for change the border, Drag and Drop s' +
+        'hape for move'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -12
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+      WordWrap = True
+      ExplicitWidth = 778
+      ExplicitHeight = 14
     end
-    object Panel1: TPanel
-      Left = 0
-      Top = 0
-      Width = 433
-      Height = 40
-      Align = alLeft
-      BevelOuter = bvNone
-      ParentColor = True
+  end
+  object map: TECNativeMap
+    Left = 0
+    Top = 39
+    Width = 686
+    Height = 535
+    HideShapesWhenZoom = False
+    HideShapesWhenWaitingTile = False
+    DblClickZoom = True
+    MouseWheelZoom = True
+    latitude = 43.232947274405250000
+    longitude = 0.075016021728515630
+    Reticle = False
+    ReticleColor = clBlack
+    Zoom = 16
+    ZoomScaleFactor = 0
+    NumericalZoom = 16.000000000000000000
+    DragRect = drNone
+    Draggable = True
+    OnlyOneOpenInfoWindow = False
+    WaitingForDestruction = False
+    Active = True
+    NbrThreadTile = ttFour
+    Align = alClient
+    TabOrder = 2
+    ExplicitTop = 38
+  end
+  object Tools: TPanel
+    AlignWithMargins = True
+    Left = 689
+    Top = 42
+    Width = 185
+    Height = 529
+    Align = alRight
+    BevelOuter = bvNone
+    TabOrder = 3
+    ExplicitLeft = 823
+    ExplicitTop = 111
+    ExplicitHeight = 457
+    object Distance: TLabel
+      AlignWithMargins = True
+      Left = 3
+      Top = 488
+      Width = 179
+      Height = 16
+      Align = alBottom
+      Alignment = taCenter
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+      ExplicitTop = 307
+    end
+    object Area: TLabel
+      AlignWithMargins = True
+      Left = 3
+      Top = 510
+      Width = 179
+      Height = 16
+      Align = alBottom
+      Alignment = taCenter
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+      ExplicitTop = 332
+      ExplicitWidth = 4
+    end
+    object ColorBorder: TPanel
+      AlignWithMargins = True
+      Left = 3
+      Top = 34
+      Width = 179
+      Height = 25
+      Cursor = crHandPoint
+      Hint = 'Border Color'
+      Align = alTop
+      Caption = 'Color'
+      Color = clRed
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWhite
+      Font.Height = -13
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentBackground = False
+      ParentFont = False
+      TabOrder = 0
+      OnClick = ColorBorderClick
+      ExplicitTop = 3
+      ExplicitWidth = 183
+    end
+    object HoverColor: TPanel
+      AlignWithMargins = True
+      Left = 3
+      Top = 65
+      Width = 179
+      Height = 25
+      Cursor = crHandPoint
+      Hint = 'Hover Color'
+      Align = alTop
+      Caption = 'Hover Color'
+      Color = 6381921
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWhite
+      Font.Height = -13
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentBackground = False
+      ParentFont = False
       TabOrder = 1
-      object Label3: TLabel
-        Left = 96
-        Top = 11
-        Width = 40
-        Height = 13
-        Caption = 'Weight'
+      OnClick = ColorBorderClick
+      ExplicitLeft = 50
+      ExplicitTop = 78
+      ExplicitWidth = 45
+    end
+    object BHColor: TPanel
+      AlignWithMargins = True
+      Left = 3
+      Top = 96
+      Width = 179
+      Height = 25
+      Cursor = crHandPoint
+      Hint = 'Hover Border Color'
+      Align = alTop
+      Caption = 'Hover Border Color'
+      Color = 6381921
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWhite
+      Font.Height = -13
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentBackground = False
+      ParentFont = False
+      TabOrder = 2
+      OnClick = ColorBorderClick
+      ExplicitLeft = 36
+      ExplicitTop = 110
+      ExplicitWidth = 45
+    end
+    object pn_line_specific: TPanel
+      AlignWithMargins = True
+      Left = 3
+      Top = 157
+      Width = 179
+      Height = 83
+      Align = alTop
+      BevelOuter = bvNone
+      TabOrder = 3
+      ExplicitLeft = 4
+      ExplicitTop = 144
+      ExplicitWidth = 177
+      object Label5: TLabel
+        AlignWithMargins = True
+        Left = 10
+        Top = 36
+        Width = 74
+        Height = 16
+        Caption = 'Border Size'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
+        Font.Height = -13
         Font.Name = 'Tahoma'
         Font.Style = [fsBold]
         ParentFont = False
       end
       object lbPenStyle: TLabel
-        Left = 330
-        Top = 11
-        Width = 29
-        Height = 13
+        Left = 12
+        Top = 62
+        Width = 33
+        Height = 16
         Caption = 'Style'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Height = -11
+        Font.Height = -13
         Font.Name = 'Tahoma'
         Font.Style = [fsBold]
         ParentFont = False
       end
-      object Label5: TLabel
-        Left = 260
-        Top = 11
-        Width = 30
-        Height = 13
-        Caption = 'BSize'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = [fsBold]
-        ParentFont = False
-      end
-      object ColorBorder: TPanel
-        Left = 4
-        Top = 6
-        Width = 45
-        Height = 25
-        Cursor = crHandPoint
-        Hint = 'Border Color'
-        Caption = 'Color'
-        Color = clRed
-        Font.Charset = ANSI_CHARSET
-        Font.Color = clWhite
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = []
-        ParentBackground = False
-        ParentFont = False
-        TabOrder = 0
-        OnClick = ColorBorderClick
-      end
-      object HoverColor: TPanel
-        Left = 50
-        Top = 6
-        Width = 45
-        Height = 25
-        Cursor = crHandPoint
-        Hint = 'Hover Color'
-        Caption = 'HColor'
-        Color = 6381921
-        Font.Charset = ANSI_CHARSET
-        Font.Color = clWhite
-        Font.Height = -11
-        Font.Name = 'Tahoma'
-        Font.Style = []
-        ParentBackground = False
-        ParentFont = False
-        TabOrder = 1
-        OnClick = ColorBorderClick
-      end
-      object weight: TEdit
-        Left = 142
-        Top = 8
-        Width = 16
-        Height = 21
+      object edtBSize: TEdit
+        Left = 104
+        Top = 32
+        Width = 65
+        Height = 24
         NumbersOnly = True
-        TabOrder = 2
+        TabOrder = 0
         Text = '0'
         OnChange = weightChange
       end
       object PenStyle: TComboBox
-        Left = 365
-        Top = 8
+        Left = 104
+        Top = 58
         Width = 65
-        Height = 21
+        Height = 24
         Style = csDropDownList
-        TabOrder = 3
+        TabOrder = 1
         OnChange = PenStyleChange
         Items.Strings = (
           'psSolid'
@@ -624,146 +567,168 @@ object FormNativeLinePolygone: TFormNativeLinePolygone
           'psDashDotDot')
       end
       object BColor: TPanel
-        Left = 164
-        Top = 6
-        Width = 45
+        AlignWithMargins = True
+        Left = 3
+        Top = 3
+        Width = 173
         Height = 25
         Cursor = crHandPoint
         Hint = 'Border Color'
-        Caption = 'BColor'
+        Align = alTop
+        Caption = 'Border Color'
         Color = clBlack
-        Font.Charset = ANSI_CHARSET
+        Font.Charset = DEFAULT_CHARSET
         Font.Color = clWhite
-        Font.Height = -11
+        Font.Height = -13
         Font.Name = 'Tahoma'
         Font.Style = []
         ParentBackground = False
         ParentFont = False
-        TabOrder = 4
+        TabOrder = 2
         OnClick = ColorBorderClick
+        ExplicitLeft = -1
+        ExplicitTop = 55
+        ExplicitWidth = 171
       end
-      object BHColor: TPanel
-        Left = 210
+    end
+    object Panel3: TPanel
+      AlignWithMargins = True
+      Left = 3
+      Top = 127
+      Width = 179
+      Height = 24
+      Align = alTop
+      BevelOuter = bvNone
+      TabOrder = 4
+      ExplicitLeft = 4
+      ExplicitTop = 97
+      ExplicitWidth = 177
+      object Label3: TLabel
+        Left = 10
         Top = 6
-        Width = 45
-        Height = 25
-        Cursor = crHandPoint
-        Hint = 'Hover Color'
-        Caption = 'HBColor'
-        Color = 6381921
-        Font.Charset = ANSI_CHARSET
-        Font.Color = clWhite
-        Font.Height = -11
+        Width = 46
+        Height = 16
+        Caption = 'Weight'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
         Font.Name = 'Tahoma'
-        Font.Style = []
-        ParentBackground = False
+        Font.Style = [fsBold]
         ParentFont = False
-        TabOrder = 5
-        OnClick = ColorBorderClick
       end
-      object edtBSize: TEdit
-        Left = 302
-        Top = 8
-        Width = 16
-        Height = 21
+      object weight: TEdit
+        Left = 104
+        Top = 3
+        Width = 65
+        Height = 24
         NumbersOnly = True
-        TabOrder = 6
+        TabOrder = 0
         Text = '0'
         OnChange = weightChange
       end
     end
-    object pnInfoSize: TPanel
-      Left = 0
-      Top = 40
-      Width = 1008
-      Height = 32
-      Align = alBottom
+    object pn_poly_specific: TPanel
+      AlignWithMargins = True
+      Left = 3
+      Top = 246
+      Width = 179
+      Height = 89
+      Align = alTop
       BevelOuter = bvNone
-      Color = clSilver
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -12
-      Font.Name = 'Tahoma'
-      Font.Style = [fsBold]
-      ParentBackground = False
-      ParentFont = False
-      TabOrder = 2
+      TabOrder = 5
+      ExplicitLeft = 4
+      ExplicitTop = 216
+      ExplicitWidth = 177
+      object Label4: TLabel
+        AlignWithMargins = True
+        Left = 3
+        Top = 34
+        Width = 173
+        Height = 16
+        Align = alTop
+        Alignment = taCenter
+        Caption = 'Opacity'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+        ExplicitWidth = 49
+      end
+      object FillColor: TPanel
+        AlignWithMargins = True
+        Left = 3
+        Top = 3
+        Width = 173
+        Height = 25
+        Cursor = crHandPoint
+        Hint = 'Fill Color'
+        Align = alTop
+        Caption = 'FillColor'
+        Color = 16752448
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -13
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentBackground = False
+        ParentFont = False
+        TabOrder = 0
+        OnClick = ColorBorderClick
+        ExplicitLeft = 6
+        ExplicitTop = 6
+        ExplicitWidth = 45
+      end
+      object Transparence: TTrackBar
+        AlignWithMargins = True
+        Left = 3
+        Top = 56
+        Width = 173
+        Height = 30
+        Align = alTop
+        Ctl3D = True
+        Max = 100
+        ParentCtl3D = False
+        Frequency = 10
+        Position = 46
+        PositionToolTip = ptBottom
+        TabOrder = 1
+        OnChange = TransparenceChange
+        ExplicitLeft = 87
+        ExplicitTop = 8
+        ExplicitWidth = 90
+      end
     end
-  end
-  object pnHelpPoint: TPanel
-    Left = 0
-    Top = 574
-    Width = 1008
-    Height = 25
-    Align = alBottom
-    BorderWidth = 4
-    Color = clSilver
-    ParentBackground = False
-    TabOrder = 2
-    Visible = False
-    object Label2: TLabel
-      Left = 5
-      Top = 5
-      Width = 998
-      Height = 15
-      Align = alClient
-      Caption = 
-        ' Double Click on a point to delete, double click on a border for' +
-        ' add a point, drag point for change the border, CTRL + Click for' +
-        ' move'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -12
-      Font.Name = 'Tahoma'
-      Font.Style = []
-      ParentFont = False
-      WordWrap = True
-      ExplicitWidth = 726
-      ExplicitHeight = 14
+    object Delete: TButton
+      AlignWithMargins = True
+      Left = 3
+      Top = 3
+      Width = 179
+      Height = 25
+      Align = alTop
+      Caption = 'Delete'
+      TabOrder = 6
+      OnClick = DeleteClick
+      ExplicitLeft = 27
+      ExplicitTop = -3
     end
-  end
-  object map: TECNativeMap
-    Left = 0
-    Top = 111
-    Width = 1008
-    Height = 463
-    HideShapesWhenZoom = False
-    HideShapesWhenWaitingTile = False
-    DblClickZoom = True
-    MouseWheelZoom = True
-    Latitude = 43.232947274405250000
-    Longitude = 0.075016021728515630
-    Reticle = False
-    ReticleColor = clBlack
-    Zoom = 16
-    ZoomScaleFactor = 0
-    DragRect = drNone
-    Draggable = True
-    Active = True
-    OnMapClick = mapMapClick
-    OnMapMouseUp = mapMapMouseUp
-    OnShapeClick = mapShapeClick
-    OnShapeRightClick = mapShapeRightClick
-    OnLoad = mapLoad
-    Align = alClient
-    ExplicitLeft = -1
-    ExplicitTop = 110
   end
   object ColorDialog: TColorDialog
-    Left = 834
-    Top = 58
+    Left = 690
+    Top = 10
   end
   object OpenDialog: TOpenDialog
     Filter = '*.txt||*.gpx|gpx files|*.kml|kml files|*.json|GeoJSON files'
     Options = [ofHideReadOnly, ofPathMustExist, ofFileMustExist]
     Title = 'Open Map'
-    Left = 872
-    Top = 58
+    Left = 736
+    Top = 2
   end
   object SaveDialog: TSaveDialog
     Filter = '*.txt|*.gpx|gpx files|*.kml|kml files|*.json|GeoJSON files'
     Title = 'Save Map'
-    Left = 902
-    Top = 48
+    Left = 654
+    Top = 8
   end
 end
