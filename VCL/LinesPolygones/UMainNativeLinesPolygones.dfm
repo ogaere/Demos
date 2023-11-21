@@ -342,8 +342,8 @@ object FormNativeLinePolygone: TFormNativeLinePolygone
     object Label2: TLabel
       Left = 5
       Top = 5
-      Width = 867
-      Height = 15
+      Width = 778
+      Height = 14
       Align = alClient
       Caption = 
         'Long press  on a point to delete, double click on a border for i' +
@@ -356,35 +356,7 @@ object FormNativeLinePolygone: TFormNativeLinePolygone
       Font.Style = []
       ParentFont = False
       WordWrap = True
-      ExplicitWidth = 778
-      ExplicitHeight = 14
     end
-  end
-  object map: TECNativeMap
-    Left = 0
-    Top = 39
-    Width = 686
-    Height = 535
-    HideShapesWhenZoom = False
-    HideShapesWhenWaitingTile = False
-    DblClickZoom = True
-    MouseWheelZoom = True
-    latitude = 43.232947274405250000
-    longitude = 0.075016021728515630
-    Reticle = False
-    ReticleColor = clBlack
-    Zoom = 16
-    ZoomScaleFactor = 0
-    NumericalZoom = 16.000000000000000000
-    DragRect = drNone
-    Draggable = True
-    OnlyOneOpenInfoWindow = False
-    WaitingForDestruction = False
-    Active = True
-    NbrThreadTile = ttFour
-    Align = alClient
-    TabOrder = 2
-    ExplicitTop = 38
   end
   object Tools: TPanel
     AlignWithMargins = True
@@ -394,7 +366,7 @@ object FormNativeLinePolygone: TFormNativeLinePolygone
     Height = 529
     Align = alRight
     BevelOuter = bvNone
-    TabOrder = 3
+    TabOrder = 2
     ExplicitLeft = 823
     ExplicitTop = 111
     ExplicitHeight = 457
@@ -412,7 +384,7 @@ object FormNativeLinePolygone: TFormNativeLinePolygone
       Font.Name = 'Tahoma'
       Font.Style = [fsBold]
       ParentFont = False
-      ExplicitTop = 307
+      ExplicitWidth = 4
     end
     object Area: TLabel
       AlignWithMargins = True
@@ -428,7 +400,6 @@ object FormNativeLinePolygone: TFormNativeLinePolygone
       Font.Name = 'Tahoma'
       Font.Style = [fsBold]
       ParentFont = False
-      ExplicitTop = 332
       ExplicitWidth = 4
     end
     object ColorBorder: TPanel
@@ -643,7 +614,7 @@ object FormNativeLinePolygone: TFormNativeLinePolygone
         AlignWithMargins = True
         Left = 3
         Top = 34
-        Width = 173
+        Width = 49
         Height = 16
         Align = alTop
         Alignment = taCenter
@@ -654,7 +625,6 @@ object FormNativeLinePolygone: TFormNativeLinePolygone
         Font.Name = 'Tahoma'
         Font.Style = [fsBold]
         ParentFont = False
-        ExplicitWidth = 49
       end
       object FillColor: TPanel
         AlignWithMargins = True
@@ -713,6 +683,32 @@ object FormNativeLinePolygone: TFormNativeLinePolygone
       ExplicitLeft = 27
       ExplicitTop = -3
     end
+  end
+  object map: TECNativeMap
+    Left = 0
+    Top = 39
+    Width = 686
+    Height = 535
+    HideShapesWhenZoom = False
+    HideShapesWhenWaitingTile = False
+    DblClickZoom = True
+    MouseWheelZoom = True
+    latitude = 43.232947274405250000
+    longitude = 0.075016021728515630
+    Reticle = False
+    ReticleColor = clBlack
+    Zoom = 16
+    ZoomScaleFactor = 0
+    NumericalZoom = 16.000000000000000000
+    DragRect = drNone
+    Draggable = True
+    OnlyOneOpenInfoWindow = False
+    WaitingForDestruction = False
+    Active = True
+    NbrThreadTile = ttFour
+    Align = alClient
+    TabOrder = 3
+    ExplicitTop = 38
   end
   object ColorDialog: TColorDialog
     Left = 690

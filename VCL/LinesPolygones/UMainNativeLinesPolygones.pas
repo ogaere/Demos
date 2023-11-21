@@ -62,6 +62,8 @@ type
   private
     { Déclarations privées }
 
+    FEditGroup : TECShapes;
+
     procedure doShapeClick(sender: TObject; const item: TECShape);
     procedure doMapClick(sender: TObject; const Lat, Lng: Double);
     procedure doLoad(sender: TObject; const GroupName: string;  const FinishLoading: Boolean);
@@ -96,10 +98,22 @@ begin
 
   Tools.Visible := false;
 
-  map.Shapes.Polygones.Labels.Visible := true;
-  map.Shapes.Polygones.Labels.FontSize := 10;
-  map.Shapes.Polygones.Labels.ColorType := lcContrasting;
-  map.Shapes.Polygones.Labels.ShadowText := false;
+  // Lines and polygons will be placed in the default map.Shapes group.
+  // To define another group do FEditGroup := map['group_name']
+
+  FEditGroup := map.Shapes;
+
+  // display label only if line or polygon is in edit mode
+  FEditGroup.Polygones.Labels.Visible := true;
+  FEditGroup.Polygones.Labels.ShowOnlyIf := lsoEdited;
+  FEditGroup.Polygones.Labels.FontSize := 10;
+  FEditGroup.Polygones.Labels.ColorType := lcContrasting;
+
+  FEditGroup.Lines.Labels.Visible := true;
+  FEditGroup.Lines.Labels.ShowOnlyIf := lsoEdited;
+  FEditGroup.Lines.Labels.FontSize := 10;
+  FEditGroup.Polygones.Labels.ColorType := lcContrasting;
+
 
   map.OnMapClick   := doMapClick;
   map.OnShapeClick := doShapeClick;
@@ -107,6 +121,10 @@ begin
 
   // event triggered when an element's editable property changes
   map.OnChangeEditable := doChangeEditable;
+
+  // the default value is true but I assign it for documentation purposes
+  // the point clicked on the map will be automatically  added to the edited line or polygon
+  map.EditableAddPointByClickOnMap := true;
 
 end;
 
@@ -116,8 +134,8 @@ procedure TFormNativeLinePolygone.doLoad(sender: TObject;
   const GroupName: string; const FinishLoading: Boolean);
 begin
   // show all data
-  if assigned(sender) and (sender is TECShapes) then
-    TECShapes(sender).fitBounds;
+ if (GroupName=FEditGroup.name) then
+   TECShapes(sender).fitBounds;
 end;
 
 // event triggered when click on map
@@ -134,18 +152,21 @@ begin
   begin
 
     if SpeedPolygone.down then
-    begin
-      map.addPolygone(Lat, Lng).Editable := true;
-      // by default labels uses Description field
-      map.Editshape.Description := 'polygon ' + inttostr(map.Editshape.Id);
-    end
-    else if SpeedPolyline.down then
-    begin
-      map.addLine(Lat, Lng).Editable := true;
-    end
-
+       FEditGroup.addPolygone([Lat, Lng]).Editable := true
+    else
+      FEditGroup.addLine([Lat, Lng]).Editable := true;
 
   end;
+
+  (*
+
+    by default map.EditableAddPointByClickOnMap is set to true,
+    so the point is automatically added to the line or polygon in edit mode when clicked on the map.
+
+    Otherwise you should do it yourself here by code
+
+  *)
+
 
 end;
 
@@ -213,7 +234,7 @@ begin
   // and that its group is the same as the one in which
   //  we're adding our lines and polygons
   // It's not necessary in this demo, but it's for documentation purposes.
-  if not assigned(item) or (item.Group.name <> '') then
+  if not assigned(item) or (item.Group.name <> FEditGroup.name) then
     exit;
 
   Tools.Visible := true;
@@ -241,13 +262,20 @@ end;
 procedure TFormNativeLinePolygone.doPathChange(sender: TObject);
 begin
 
-  if sender is TECShapePolygone then
-    Area.Caption := 'Area : ' + doubleToStrDigit(TECShapePolygone(sender).Area,
-      2) + ' Km²';
-
   // Polygons descend from TECShapeLine, so the same applies to polygons.
   Distance.Caption := 'Distance : ' + doubleToStrDigit
     (TECShapeLine(sender).Distance, 2) + ' Km';
+
+  if sender is TECShapePolygone then
+  begin
+    Area.Caption := 'Area : ' + doubleToStrDigit(TECShapePolygone(sender).Area,
+      2) + ' Km²';
+    TECShapePolygone(sender).Description := Area.Caption;
+  end
+  else
+   TECShapeLine(sender).Description := Distance.Caption;
+
+
 
 end;
 
