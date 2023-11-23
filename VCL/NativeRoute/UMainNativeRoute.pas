@@ -27,35 +27,35 @@ type
     rbDriving: TRadioButton;
     rbBicycle: TRadioButton;
     rbWalking: TRadioButton;
-    RouteEValue: TSpinEdit;
-    RouteColor: TPanel;
     Panel7: TPanel;
-    map: TECNativeMap;
+
     NextInstruction: TPanel;
     NextKM: TPanel;
     Instructions: TPanel;
     Follow: TCheckBox;
     infos: TPanel;
+    map: TECNativeMap;
+    itinerary: TListBox;
 
     procedure RouteAddClick(Sender: TObject);
 
     procedure routesChange(Sender: TObject);
 
-    procedure RouteColorClick(Sender: TObject);
 
     procedure cbStartChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
-    procedure FormClose(Sender: TObject; var Action: TCloseAction);
-
-    procedure RouteEValueChange(Sender: TObject);
+ 
 
     procedure rbDrivingClick(Sender: TObject);
-    procedure mapShapesPaint(Sender: TObject; const canvas: TECCanvas);
+    procedure itineraryClick(Sender: TObject);
+
 
   private
     { Déclarations privées }
 
-    MarkerInstruction: TECShapeMarker;
+
+    procedure BuildItinerary(const route: TECShapeLine);
+
 
     procedure doOnErrorRoute(Sender: TObject; const dataroute:TECThreadDataRoute);
     procedure doOnAddRoute(Sender: TECShapeLine; const params: string);
@@ -77,9 +77,9 @@ type
     procedure doShowDataRoute(const id: integer);
 
     procedure doEndAnimationMove(Sender: TObject);
-    procedure doOnMoveTriangle(Sender: TObject; const Item: TECShape;
+    procedure doOnMoveMobile(Sender: TObject; const Item: TECShape;
       var cancel: boolean);
-    procedure doOnClickTriangle(Sender: TObject; const Item: TECShape);
+    procedure doOnClickMobile(Sender: TObject; const Item: TECShape);
     procedure OnOffTracking(const Item: TECShape);
 
   public
@@ -92,6 +92,80 @@ var
 implementation
 
 {$R *.DFM}
+
+
+procedure TFDemoNativeRoute.FormCreate(Sender: TObject);
+begin
+
+  cbStart.tag := -1;
+  cbDestination.tag := -1;
+
+  // We'll use a label to display information about the mobile
+  // that activates the turn-by-turn function.
+  // by default Description property will be displayed
+  map.shapes.Pois.Labels.Visible := true;
+  map.Shapes.Pois.Labels.Align   := laTop;
+
+  // setup cache for tiles, routing
+  map.LocalCache := extractfilepath(application.exename) + 'cache';
+
+  // setup routing
+
+  map.Routing.OnAddRoute    := doOnAddRoute;
+  map.Routing.OnErrorRoute  := doOnErrorRoute;
+  map.Routing.OnChangeRoute := doOnChangeRoute;
+
+  map.Routing.RouteType     := rtCar;
+  map.Routing.weight        := 5;
+
+  // connect events for turn by turn navigation
+  map.Routing.TurnByTurn.OnAlert            := doOnTurnByTurnAlert;
+  map.Routing.TurnByTurn.OnInstruction      := doOnTurnByTurnInstruction;
+  map.Routing.TurnByTurn.OnAfterInstruction := doOnTurnByTurnInstruction;
+  map.Routing.TurnByTurn.OnArrival          := doOnTurnByTurnArrival;
+  map.Routing.TurnByTurn.OnError            := doOnTurnByTurnError;
+  map.Routing.TurnByTurn.OnDeconnectRoute   := doOnDeconnectTurnByTurn;
+
+  // by default, interactive route editing is activated by clicking on it
+  // map.Routing.editOnClick := false;
+
+
+
+
+end;
+
+
+// Move the mobile to the start of a route segment.
+procedure TFDemoNativeRoute.itineraryClick(Sender: TObject);
+var StartSegment : TLatLng;
+    Mobile       : TECShapePOI;
+    Distance     : double;
+    index        : integer;
+    FakeLat,FakeLng : double;
+begin
+ if (itinerary.tag = map.Routing.TurnByTurn.Line.id) then
+  begin
+   if (map.Routing.TurnByTurn.Line.item is TECShapePOI) and (itinerary.itemindex>-1)and(itinerary.itemindex<map.Routing.Itinerary.count) then
+  begin
+    Mobile       := TECShapePOI(map.Routing.TurnByTurn.Line.item);
+
+    if Mobile.Animation is TECAnimationMoveOnPath then
+    begin
+
+      StartSegment :=  map.Routing.Itinerary.Segment[itinerary.itemindex].PointA;
+      // Get the index of the point closest to the coordinates
+      Index := map.Routing.TurnByTurn.Line.IndexAndPositionOfNearestPointTo(StartSegment.Lat,StartSegment.Lng,fakeLat,FakeLng);
+      // Distance in kilometers from start to this point
+      Distance := map.Routing.TurnByTurn.Line.DistanceToIndexPoint(index);
+      // Animation expects distance in meters
+      TECAnimationMoveOnPath(Mobile.Animation).Distance := round(Distance * 1000);
+
+
+    end;
+  end;
+
+  end;
+end;
 
 { *
   Add new route
@@ -107,18 +181,16 @@ begin
   else if rbBicycle.checked then
     RouteType := rtBicycle
   else
-    RouteType := rtFastest;
+    RouteType := rtCar;
 
   RouteAdd.enabled := false;
- //   map.Routing.OptimizeRoute := false;
 
-  //
   map.Routing.Request(cbStart.Text, cbDestination.Text);
 
   title := cbStart.Text + ' > ' + cbDestination.Text + ' > ' +
     rtToStr(RouteType);
 
-  routes.ItemIndex := routes.items.add(title);
+  routes.items.add(title);
 
 end;
 
@@ -138,40 +210,71 @@ end;
 
 // route is ok
 //
-// a triangle is added to simulate a vehicle which moves
+// a mobile shape is added to simulate a vehicle which moves
 procedure TFDemoNativeRoute.doOnAddRoute(Sender: TECShapeLine;
   const params: string);
 var
   moving   : TECAnimationMoveOnPath;
-  triangle : TECShapePOI;
+  mobile   : TECShapePOI;
+  speed    : integer;
+  i        : integer;
 begin
+
+
+  Sender.Color := GetHashColor(params);
+  Sender.BorderSize := 5;
+  Sender.BorderColor := GetShadowColorBy(Sender.color, 32);
+  Sender.HoverBorderColor := Sender.BorderColor;
+  Sender.HoverColor := GetHighLightColorBy(Sender.color, 32);
+  
+  sender.ShowText := false;
 
   RouteAdd.enabled := true;
 
+
+  case map.Routing.RouteType of
+    
+    rtPedestrian: speed := 10;
+    rtBicycle: speed := 30;
+    else speed := 90;
+  end;
+  
   // Create an animation to move a triangle along the road
   //
   // starting from km 0
-  // speed 80 km / h
-  moving := TECAnimationMoveOnPath.create(Sender, 0, 80);
+  // speed in km / h
+  moving := TECAnimationMoveOnPath.create(Sender, 0, speed);
 
-  // create triangle
+  // create mobile
 
-  triangle := map.AddPOI(0,0);
+  mobile := map.AddPOI(0,0);
 
-  triangle.POIShape := poiTriangle;
-  triangle.width := 18;
-  triangle.height := 24;
-  triangle.color := GetShadowColorBy(RouteColor.color, 32);
+  mobile.POIShape := poiArrowHead;
+  mobile.width := 18;
+  mobile.height := 24;
+  mobile.color := GetShadowColorBy(Sender.color, 32);
+  mobile.item  := Sender;
 
-  // we want react when the triangle moves (to follow and to turn by turn)
-  triangle.OnShapeMove  := doOnMoveTriangle;
+  // find arrival instruction
+  i := sender.Count-1;
+  while (mobile.Hint='') and (i>0) do
+  begin
+   mobile.Hint := sender.Path[i].Text;
+   dec(i);
+  end;
 
-  triangle.OnShapeClick := doOnClickTriangle;
 
-  Sender.Item := triangle;
+  // we want react when the mobile moves (to follow and to turn by turn)
+  mobile.OnShapeMove  := doOnMoveMobile;
+
+  mobile.OnShapeClick := doOnClickMobile;
+
+  // we keep a reference on our mobile to find it from a reference to a route
+  Sender.Item := mobile;
 
 
-  triangle.animation := moving;
+  mobile.animation := moving;
+
 
   // event fired when arrived
   moving.OnDriveUp := doEndAnimationMove;
@@ -179,7 +282,7 @@ begin
   // start animation
   moving.stop := false;
 
-  // directing the tip of the triangle in the direction of travel
+  // directing the tip of the mobile in the direction of travel
   moving.heading := true;
 
   doShowDataRoute(Sender.indexof);
@@ -194,118 +297,101 @@ begin
   if not assigned(Sender) then
     exit;
 
+
   infos.Caption := doubleToStrDigit(Sender.Distance, 2) + 'km - ' +
                    SecondeToTimeStr(sender.duration);
+
+   if  (Sender.Item is TECShapePoi) and
+       assigned(TECShapePoi(Sender.Item).animation) and
+       assigned(TECShapePoi(Sender.Item).animation.animations)  then
+     begin
+
+      // Connect the road on which the triangle is animated, has the turn by turn navigation
+       map.Routing.TurnByTurn.Line := Sender;
+
+       BuildItinerary(Sender);
+
+     end;
 end;
 
-procedure TFDemoNativeRoute.mapShapesPaint(Sender: TObject;
-  const canvas: TECCanvas);
-begin
-end;
 
 // fired when click triangle
-// activate / deactivate auto tracking
-procedure TFDemoNativeRoute.doOnClickTriangle(Sender: TObject;
+// activate auto tracking
+procedure TFDemoNativeRoute.doOnClickMobile(Sender: TObject;
   const Item: TECShape);
 begin
-  OnOffTracking(Item);
+  // Connect the road on which the triangle is animated, has the turn by turn navigation
+  routes.ItemIndex := TECShapeLine(Item.item).id;
+  doShowDataRoute(TECShapeLine(Item.item).id);
+
 end;
 
 // activate / deactivate auto tracking
 procedure TFDemoNativeRoute.OnOffTracking(const Item: TECShape);
 var
-  Circle  : TECShapePOI;
-  anim    : TECAnimationFadePoi;
+    anim    : TECAnimationFadePoi;
 begin
 
   if not assigned(Item) then
     exit;
 
-
-  // the target is indicated by a blue circle
-  // if it does not exist you must create
-
-  if map.Group['tracking'].pois.Count = 0 then
+  // Tracking will be signaled by a second animation added to the mobile element
+  if not assigned(Item.Animation.Animations) then
   begin
 
-    map.Group['tracking'].ZIndex := 100;
+    Item.Color := strToColor('#2b8cbe');
+    Item.unFocus;
+    Item.SaveState;
 
-
-    Circle := map.AddPOI(Item.Latitude, Item.Longitude,('tracking'));
-
-    Circle.width  := 48;
-    Circle.height := 48;
-
-    Circle.color := clBlue;
-
-    Circle.POIShape := poiEllipse;
-
-    Circle.Clickable := false;
-
-  end
-
-  else
-
-    Circle := map.Group['tracking'].pois[0];
-
-  // stop tracking
-  if assigned(Circle.Item) and (Circle.Item = Item) then
-  begin
-    Circle.Item := nil;
-    // cancel turn by turn
-    map.Routing.TurnByTurn.Line := nil;
-
-  end
-
-  else // track item
-  begin
-    //  item is the triangle that we follow
-    Circle.Item := Item;
-
-    // an animation of the circle is created by varying its size
-    // anim is auto free when change circle.Animation or destroy circle
+    // an animation is created by varying size and opacity
+    // anim is auto free when change Animations or destroy item
     anim := TECAnimationFadePoi.create;
 
-    anim.MaxSize   := 48;
-    anim.StartSize := 12;
+    anim.MaxSize   := 40;
+    anim.StartSize := 24;
 
-    anim.StartOpacity := 80;
+    // opacity don't change
+    anim.StartOpacity := 0;
 
-    Circle.animation := anim;
+    Item.animation.animations := anim;
 
-    if  assigned(Item.animation) and
-       (Item.animation is TECAnimationMoveOnPath)  then
-     begin
-
-      // Connect the road on which the triangle is animated, has the turn by turn navigation
-      map.Routing.TurnByTurn.Line := TECAnimationMoveOnPath(Item.animation).ShapeLine;
-
-     end;
-
+  end
+  else
+  // if there's already a second animation,
+  // tracking has already been activated and should be deactivated.
+  begin
+    Item.animation.animations := nil;
+    // cancel turn by turn
+    map.Routing.TurnByTurn.Line := nil;
+    //
+    if Item.item is TECShapeLine then
+    begin
+      Item.color := GetShadowColorBy(TECShapeLine(Item.Item).color, 32);
+      Item.unFocus;
+      Item.SaveState;
+    end;
   end;
 
-  // hide circle if no triangle
-  Circle.Visible := Circle.Item <> nil;
+
 
 end;
 
-// fired when triangle move
-procedure TFDemoNativeRoute.doOnMoveTriangle(Sender: TObject;
+// fired when mobile move
+procedure TFDemoNativeRoute.doOnMoveMobile(Sender: TObject;
   const Item: TECShape; var cancel: boolean);
 begin
 
 
-  if assigned(Item) then
+  if assigned(Item) and assigned(Item.Animation)  then
   begin
 
-    if map.Group['tracking'].pois.Count = 1 then
-    begin
-      // tracking actif
-      if (map.Group['tracking'].pois[0].Item = Item) then
+      // The turn-by-turn mobile has a double animation (movement + size change)
+      if assigned(Item.Animation.Animations) then
       begin
 
-        map.Group['tracking'].pois[0].SetPosition(Item.Latitude,
-          Item.Longitude);
+        // Description serves as Label
+        Item.Description := Item.Hint+#13#10+'in '+doubletostrdigit(TECShapeLine(Item.item).Distance-(TECAnimationMoveOnPath(Item.animation).Distance / 1000),2)+' km';
+
 
         // 500 meter around you
         if Follow.checked then
@@ -313,10 +399,11 @@ begin
 
         // update your position in turn by turn navigation
         map.Routing.TurnByTurn.Position(Item.Latitude, Item.Longitude);
+      end
+      else
+      Item.Description := '';
 
-      end;
 
-    end;
 
   end;
 
@@ -328,12 +415,19 @@ end;
 procedure TFDemoNativeRoute.doOnTurnByTurnAlert(Sender: TECTurnByTurn;
   const Instruction: string; const Distance: double);
 begin
-  Instructions.Font.color := clBlack;
 
-  MarkerInstruction.SetPosition(map.Routing.TurnByTurn.NextInstructionPosition.
-    Lat, map.Routing.TurnByTurn.NextInstructionPosition.Lng);
+   Instructions.Font.color := clBlack;
+   Instructions.Caption := Instruction;
 
-  Instructions.Caption := Instruction;
+
+  if (itinerary.tag = map.Routing.TurnByTurn.Line.id) then
+  begin
+
+     itinerary.ItemIndex := itinerary.items.IndexOf(Instruction);
+     itinerary.TopIndex  := itinerary.ItemIndex;
+
+  end;
+
 
   if Distance > 0 then
     NextKM.Caption := doubleToStrDigit(Distance, 2) + 'km'
@@ -362,7 +456,7 @@ end;
 procedure TFDemoNativeRoute.doOnTurnByTurnError(Sender: TECTurnByTurn;
   const Lat, Lng: double; const ErrorCounter: integer);
 begin
-  ShowMessage('Error, your not on the route !');
+  Instructions.Caption := 'Error, your not on the route !';
 end;
 
 procedure TFDemoNativeRoute.doOnDeconnectTurnByTurn(Sender: TObject);
@@ -389,7 +483,7 @@ begin
   doShowDataRoute(routes.ItemIndex);
 end;
 
-{ *
+{
   update the screen with the properties of the selected route
 }
 procedure TFDemoNativeRoute.doShowDataRoute(const id: integer);
@@ -399,10 +493,12 @@ var
 
 begin
 
-  if id < 0 then
+  if (id < 0) then 
     exit;
 
-  s := routes.Text;
+
+    
+  s := routes.items[id];
 
   cbStart.Text := trim(strtoken(s, '>'));
   cbDestination.Text := trim(strtoken(s, '>'));
@@ -412,7 +508,7 @@ begin
     rtPedestrian:
       rbWalking.checked := true;
 
-    rtFastest:
+    rtCar:
       rbDriving.checked := true;
 
     rtBicycle:
@@ -421,147 +517,84 @@ begin
 
   routes.ItemIndex := id;
 
-  RouteColor.color := map.shapes.lines[id].color;
-  RouteEValue.value := map.shapes.lines[id].weight;
 
-  // move marker at start route
-  MarkerInstruction.SetPosition(map.shapes.lines[id].Path[0].Lat,
-    map.shapes.lines[id].Path[0].Lng);
 
+   //  deactivate prev vehicle tracking and turn-by-turn mode
+  if assigned(map.Routing.TurnByTurn.Line) then
+  begin
+    // find the mobile associated with the route
+    if map.Routing.TurnByTurn.Line.item is TECShapePOI then
+    begin
+      // The turn-by-turn mobile has a double animation (movement + size change).
+      if assigned(TECShapePOI(map.Routing.TurnByTurn.Line.item).animation) and
+         assigned(TECShapePOI(map.Routing.TurnByTurn.Line.item).animation.animations)
+       then
+        OnOffTracking(TECShapePOI(map.Routing.TurnByTurn.Line.item));
+
+    end;
+  end;
+
+
+
+  BuildItinerary(map.shapes.lines[id]);
+
+
+  
   // select this route for turn by turn navigation
   map.Routing.TurnByTurn.Line := map.shapes.lines[id];
 
-  MarkerInstruction.PanTo;
+   // activate new line vehicle tracking and turn-by-turn mode
+   if map.Routing.TurnByTurn.Line.item is TECShapePOI then
+    OnOffTracking(TECShapePOI(map.Routing.TurnByTurn.Line.item));
+
+  // show route  
+  map.Routing.TurnByTurn.Line.fitBounds;
 
 
   infos.Caption := doubleToStrDigit(map.shapes.lines[id].Distance, 2) + 'km - '
     + SecondeToTimeStr(map.shapes.lines[id].Duration);
 
-  OnOffTracking(TECShape(map.shapes.lines[id].Item));
 
 end;
 
 
-
-{ *
-  select color
-}
-procedure TFDemoNativeRoute.RouteColorClick(Sender: TObject);
+// build route planner
+procedure TFDemoNativeRoute.BuildItinerary(const route: TECShapeLine);
 var
-  Line: TECShapeLine;
+  i: integer;
 begin
-  if Colordialog.execute then
-  begin
-    (Sender as TPanel).color := Colordialog.color;
-    if (routes.ItemIndex > -1) then
-    begin
-      Line := map.shapes.lines[routes.ItemIndex];
-      Line.color := RouteColor.color;
-      Line.BorderColor := GetShadowColorBy(Line.color, 32);
-      Line.HoverBorderColor := Line.BorderColor;
-      Line.HoverColor := GetHighLightColorBy(Line.color, 32);
-    end;
 
-    map.Routing.color := RouteColor.color;
+  map.Routing.Itinerary.Route := route;
 
-  end;
+  itinerary.tag := route.id;
+
+  itinerary.Items.BeginUpdate;
+  itinerary.Items.Clear;
+
+  for i := 0 to Map.Routing.itinerary.Count - 1 do
+    itinerary.Items.Add(Map.Routing.itinerary[i].Instruction );
+
+
+  itinerary.Items.EndUpdate;
+
+  // disengage the route, as otherwise it cannot be edited and the itineray mode takes over,
+  // but is still available
+  map.Routing.Itinerary.Route := nil;
+
+
 end;
 
-procedure TFDemoNativeRoute.RouteEValueChange(Sender: TObject);
-begin
-  if (routes.ItemIndex > -1) then
-    map.shapes.lines[routes.ItemIndex].weight := RouteEValue.value;
 
-  map.Routing.weight := RouteEValue.value;
-end;
+
+
 
 procedure TFDemoNativeRoute.cbStartChange(Sender: TObject);
 begin
   RouteAdd.enabled := (cbStart.Text <> '') and (cbDestination.Text <> '');
 end;
 
-procedure TFDemoNativeRoute.FormClose(Sender: TObject;
-  var Action: TCloseAction);
-begin
 
-  Action := caFree;
 
-end;
-
-procedure TFDemoNativeRoute.FormCreate(Sender: TObject);
-begin
-
-  cbStart.tag := -1;
-  cbDestination.tag := -1;
-
-  // setup cache for tiles, routing
-  map.LocalCache := extractfilepath(application.exename) + 'cache';
-
-  // setup routing
-
-  // select MapZen engine, you must use YOUR KEY
-  // don't use this
-  //
-  // go to https://mapzen.com/developers
-  //map.routing.Engine(reMapZen,'valhalla-SSzliI4');
-
-  
-  map.Routing.OnAddRoute    := doOnAddRoute;
-  map.Routing.OnErrorRoute  := doOnErrorRoute;
-  map.Routing.OnChangeRoute := doOnChangeRoute;
-
-  map.Routing.RouteType     := rtFastest;
-  map.Routing.color         := RouteColor.color;
-  map.Routing.weight        := RouteEValue.value;
-
-  // connect events for turn by turn navigation
-  map.Routing.TurnByTurn.OnAlert            := doOnTurnByTurnAlert;
-  map.Routing.TurnByTurn.OnInstruction      := doOnTurnByTurnInstruction;
-  map.Routing.TurnByTurn.OnAfterInstruction := doOnTurnByTurnInstruction;
-  map.Routing.TurnByTurn.OnArrival          := doOnTurnByTurnArrival;
-  map.Routing.TurnByTurn.OnError            := doOnTurnByTurnError;
-  map.Routing.TurnByTurn.OnDeconnectRoute   := doOnDeconnectTurnByTurn;
-
-  // map.Routing.editOnClick := false;
-
-  { new marker }
-
-   MarkerInstruction := map.AddMarker(map.Latitude, map.Longitude);
-
-  { load new icon }
-
-   // 'http://maps.google.com/mapfiles/ms/icons/red-dot.png';
-  MarkerInstruction.filename := 'data:image/png;base64,iVBORw0KGgoAAA' +
-    'ANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAANbY1E9YMgAABPBJREFUWIWtl3tMW1Ucxw+'
-    + '0hfEorwIDhdFSKJRnaSnl0ZZXKa9CC4wCo1RhPESWuUQTFd2cuKiJ07hItrnBmFFnXOaymZllWZwi'
-    + 'c1uMYzGZyZZgMrc/xCnExCjh1Z+/c90qwr0Tj5J8cnO59/zO9/7O9/x+pwQACB8/dzjIrLuB3G6zk'
-    + 'fM1xeSdEgN5WZ8lcicrDIkhwYM+Pj4jhJCjxIeMKEKCdzoT4wtfM2SLjxTnkbPVZvI9jqPjaRyhOS'
-    + 'iCD+4LuIOBvqwvJ7u06TmxQYHnxL6+SzmR4dCZkgg7MlTQhVddVASIRaLl2KCAC89q1IZxWykn/H8'
-    + 'RMOt2kGc06kfwa+cbFHHwTaMVPD1OgMe2ePH0tMC3TVXQqkzAiGTpiQxV/8y98f9JwHzXZrI3X9OJ'
-    + 'QeGIOQ+gHyfsawXPVicsbW32sozQ/9PnH5QVAC4PvJSbOUDHMwv4wVVPzlSacnHyhaMlBoCBdm6ip'
-    + 'QfACRlwwXFLIc2E54Sl0DSNcZgEXG2wkmxZ2LlGTDv0//PkK4HH28GtUoAqVDrxld0iZhLwqj7LJP'
-    + 'L1hWtNlQC9reuenBPQ2wI3W2pBIvKFndq0SiYBmsjw5zNl4Vyw1V9/qb4cHkX3ywIDuCu95/OEITo'
-    + 'SkkOlQ0wC8O+wE11NjbX6C+mkYrHYC71fkwUc15WaSAONsAoY605V8gqgX75SAL3nE7AjK4UGGmMV'
-    + 'cLBBEc/tc9YMuFRyGugQkwBTbNRTyWFSWO52snkAvZOFHtJGRTzHJGC4SKfFgjI/XleOhmr7d7sAD'
-    + 'fh1g5UWJM/e/Gwjk4CLdWXEGBN1zBQThcvQBp5u57omX+7+M/1V8bG0R5wet5WxFaLpdjvB1Cr9Ra'
-    + 'LZodwMLuh6ihEtWq/nawBryK+f2UrT7mIcJgEzXC9opm3Ygkaa21eo5d0Rq403WpxHjbd4wKirW8B'
-    + 'eMMPaC+hAygKKOGTSN9GGdKbKzC0H/7q3wQSakTYizEDn/UbE3oza673MdW4m29KTd8s2+MN0hwMA'
-    + '2+/fJkd//N7VDMqQYGhPShimon9yOchdl52DScCtVpuX22115M6WOlFKWMjl9iT5mtpAU48HFgj39'
-    + '/vuelNV6K3WWjLVUuOFScAkdsOV3GiupktRRpdisvGvBgV4OPkRsxKIBWm3LqNryllDruH7K2EScK'
-    + 'G2ZA1X7BaikYV/4lRu8maBfv0redkQ4e93E7eu/2V8hx7hVsJcB1Zz1VFB3izIqcCtCbgknBcWcd8'
-    + 'rpEHQp1Y+OdloJV/ge6thEnDaalzDx8gpq1Ei9ZNM4XJwp59Ldgvd83OnrEUJVxzl5GJ92RqYBBwv'
-    + 'L+AFj2mk9KHot2ilg+1uPHCkg1waNEGX6GyVmRcmAaNmPS/vlRrI9gxVdVTABlhEDxRsjAS7/OHBk'
-    + 'xVF+CyfFyYBh016XkbNeeSN/JzYQIn4t89tpbARO+KgJs34Pk40hj9K+GAS8KIug5ehe2BRuvG0Rg'
-    + '14/WVfgVZGhQmJZhLwgjZdkD25mSQxRPqpPloGm4KDrr+Np/eDRh05IACTgF61UhAsywQPmx8GSSS'
-    + 'QFCo9jz9CCJpRECYBPalKQQbSkkmWLGw/rYrykOCPXMly0qLcJAiTgP2YOiGosezyuF1UQEVczPAx'
-    + 'NKDQrqEwCaCuFuKkpYj0qZPcVECHSr7tREUheRe3pxAPEvAHoSjT1B9h9DoAAAAASUVORK5CYII=';
-
-  MarkerInstruction.YAnchor := 32;
-
-  // on top of all over items, even if zindex <
-  MarkerInstruction.setFocus;
-
-end;
 
 procedure TFDemoNativeRoute.rbDrivingClick(Sender: TObject);
 var

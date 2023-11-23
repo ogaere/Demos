@@ -260,6 +260,7 @@ end;
 
 // line or polygon path change
 procedure TFormNativeLinePolygone.doPathChange(sender: TObject);
+var a:double;
 begin
 
   // Polygons descend from TECShapeLine, so the same applies to polygons.
@@ -268,8 +269,15 @@ begin
 
   if sender is TECShapePolygone then
   begin
-    Area.Caption := 'Area : ' + doubleToStrDigit(TECShapePolygone(sender).Area,
-      2) + ' Km²';
+    a := TECShapePolygone(sender).Area;
+
+    FEditGroup.Polygones.Labels.Visible := a>0.01;
+
+    if a<0.5 then
+      Area.Caption := 'Area : ' + doubleToStrDigit(a*1000000,2) + ' m²'
+    else
+     Area.Caption := 'Area : ' + doubleToStrDigit(a,2) + ' Km²';
+
     TECShapePolygone(sender).Description := Area.Caption;
   end
   else
