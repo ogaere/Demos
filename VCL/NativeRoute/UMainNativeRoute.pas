@@ -53,6 +53,7 @@ type
   private
     { Déclarations privées }
 
+    FMobileGroup : TECShapes;
 
     procedure BuildItinerary(const route: TECShapeLine);
 
@@ -93,6 +94,7 @@ implementation
 
 {$R *.DFM}
 
+// This demo covers the creation and modification of routes, turn by turn, itineraries and mobile animation.
 
 procedure TFDemoNativeRoute.FormCreate(Sender: TObject);
 begin
@@ -129,7 +131,11 @@ begin
   // by default, interactive route editing is activated by clicking on it
   // map.Routing.editOnClick := false;
 
-
+  FMobileGroup := map['Mobiles'];
+  // We ensure that the ZIndex of the mobile group is greater than that of the routes,
+  // and that of the instruction points,
+  // which is itself greater than that of the route to which they are associated.
+  FMobileGroup.ZIndex := 10000;
 
 
 end;
@@ -141,7 +147,7 @@ var StartSegment : TLatLng;
     Mobile       : TECShapePOI;
     Distance     : double;
     index        : integer;
-    FakeLat,FakeLng : double;
+
 begin
  if (itinerary.tag = map.Routing.TurnByTurn.Line.id) then
   begin
@@ -153,11 +159,9 @@ begin
     begin
 
       StartSegment :=  map.Routing.Itinerary.Segment[itinerary.itemindex].PointA;
-      // Get the index of the point closest to the coordinates
-      Index := map.Routing.TurnByTurn.Line.IndexAndPositionOfNearestPointTo(StartSegment.Lat,StartSegment.Lng,fakeLat,FakeLng);
       // Distance in kilometers from start to this point
-      Distance := map.Routing.TurnByTurn.Line.DistanceToIndexPoint(index);
-      // Animation expects distance in meters
+       Distance := map.Routing.TurnByTurn.Line.DistanceToPoint(StartSegment.Lat,StartSegment.Lng );
+       // Animation expects distance in meters
       TECAnimationMoveOnPath(Mobile.Animation).Distance := round(Distance * 1000);
 
 
@@ -217,51 +221,38 @@ var
   moving   : TECAnimationMoveOnPath;
   mobile   : TECShapePOI;
   speed    : integer;
-  i        : integer;
 begin
 
-
+  // we determine a color according to a string, here the parameters to build the route
   Sender.Color := GetHashColor(params);
   Sender.BorderSize := 5;
   Sender.BorderColor := GetShadowColorBy(Sender.color, 32);
   Sender.HoverBorderColor := Sender.BorderColor;
   Sender.HoverColor := GetHighLightColorBy(Sender.color, 32);
-  
-  sender.ShowText := false;
+
+  // if you don't want instruction points to be displayed on the route, set showText to false
+  //sender.ShowText := false;
 
   RouteAdd.enabled := true;
 
 
-  case map.Routing.RouteType of
-    
-    rtPedestrian: speed := 10;
-    rtBicycle: speed := 30;
-    else speed := 90;
-  end;
-  
-  // Create an animation to move a triangle along the road
-  //
-  // starting from km 0
-  // speed in km / h
-  moving := TECAnimationMoveOnPath.create(Sender, 0, speed);
-
   // create mobile
 
-  mobile := map.AddPOI(0,0);
+  // the mobile's position will be calculated automatically,
+  // so you can specify any position for creation
+  mobile := FMobileGroup.AddPoi(0,0);
 
   mobile.POIShape := poiArrowHead;
-  mobile.width := 18;
-  mobile.height := 24;
-  mobile.color := GetShadowColorBy(Sender.color, 32);
-  mobile.item  := Sender;
+  mobile.width    := 18;
+  mobile.height   := 24;
+  mobile.color    := GetShadowColorBy(Sender.color, 32);
+  // We store the reference on the mobile's route for easy retrieval
+  mobile.item     := Sender;
 
-  // find arrival instruction
-  i := sender.Count-1;
-  while (mobile.Hint='') and (i>0) do
-  begin
-   mobile.Hint := sender.Path[i].Text;
-   dec(i);
-  end;
+   // store the arrival in the mobile's 'arrival' property
+  //  This will be used to build the mobile's turn-by-turn label.
+  mobile['arrival'] := map.Routing.Itinerary.Arrival;
+
 
 
   // we want react when the mobile moves (to follow and to turn by turn)
@@ -271,6 +262,21 @@ begin
 
   // we keep a reference on our mobile to find it from a reference to a route
   Sender.Item := mobile;
+
+  // Determine speed in km / h according to travel mode
+  case map.Routing.RouteType of
+
+    rtPedestrian: speed := 10;
+    rtBicycle: speed := 30;
+    else speed := 90;
+  end;
+
+  // Create an animation to move a shape along the road
+
+  // Sender is th road (TECShapeLine)
+  // starting from km 0
+  // speed in km / h
+  moving := TECAnimationMoveOnPath.create(Sender, 0, speed);
 
 
   mobile.animation := moving;
@@ -302,20 +308,27 @@ begin
                    SecondeToTimeStr(sender.duration);
 
    if  (Sender.Item is TECShapePoi) and
-       assigned(TECShapePoi(Sender.Item).animation) and
-       assigned(TECShapePoi(Sender.Item).animation.animations)  then
+       assigned(TECShapePoi(Sender.Item).animation) then
+   begin
+
+     // store the new arrival in the mobile's 'arrival' property
+     TECShapePoi(Sender.Item)['arrival'] := map.Routing.Itinerary.Arrival;
+
+     // Tracking will be signaled by a second animation added to the mobile element
+     if  assigned(TECShapePoi(Sender.Item).animation.animations)  then
      begin
 
-      // Connect the road on which the triangle is animated, has the turn by turn navigation
+      // Connect the road on which the mobile is animated, has the turn by turn navigation
        map.Routing.TurnByTurn.Line := Sender;
 
        BuildItinerary(Sender);
 
      end;
+   end;
 end;
 
 
-// fired when click triangle
+// fired when click mobile
 // activate auto tracking
 procedure TFDemoNativeRoute.doOnClickMobile(Sender: TObject;
   const Item: TECShape);
@@ -332,7 +345,7 @@ var
     anim    : TECAnimationFadePoi;
 begin
 
-  if not assigned(Item) then
+  if not assigned(Item) or not assigned(Item.Animation) then
     exit;
 
   // Tracking will be signaled by a second animation added to the mobile element
@@ -360,13 +373,18 @@ begin
   // if there's already a second animation,
   // tracking has already been activated and should be deactivated.
   begin
+    // passing nil (or even another animation) releases the previous one
     Item.animation.animations := nil;
     // cancel turn by turn
     map.Routing.TurnByTurn.Line := nil;
-    //
+    // Give the mobile the color of the road it's traveling on
     if Item.item is TECShapeLine then
     begin
       Item.color := GetShadowColorBy(TECShapeLine(Item.Item).color, 32);
+      //  We remove any focus given by the click on the mobile
+      // and call SaveState to save the new graphic properties.
+      // otherwise, when the mouse leaves the device,
+      // the properties active when the mouse entered are restored.
       Item.unFocus;
       Item.SaveState;
     end;
@@ -390,7 +408,7 @@ begin
       begin
 
         // Description serves as Label
-        Item.Description := Item.Hint+#13#10+'in '+doubletostrdigit(TECShapeLine(Item.item).Distance-(TECAnimationMoveOnPath(Item.animation).Distance / 1000),2)+' km';
+        Item.Description := Item['arrival']+' in '+doubletostrdigit(TECShapeLine(Item.item).Distance-(TECAnimationMoveOnPath(Item.animation).Distance / 1000),2)+' km';
 
 
         // 500 meter around you
@@ -496,8 +514,6 @@ begin
   if (id < 0) then 
     exit;
 
-
-    
   s := routes.items[id];
 
   cbStart.Text := trim(strtoken(s, '>'));
@@ -583,8 +599,6 @@ begin
 
 
 end;
-
-
 
 
 
