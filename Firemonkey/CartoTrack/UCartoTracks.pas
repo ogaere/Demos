@@ -314,15 +314,8 @@ begin
 {$ENDIF}
 
 
-  //map.DirectPaintToForm := false;
+ map.BeginUpdate;
 
- // map.LocalCache := '';
-
- // map.NbrThreadTile := ttFour;
-
- map.MaxTimeForDrawMoving := 200;
-
- //map.HideShapesWhenZoom := true;
 
   FECNativeScaleMap := TECNativeScaleMap.Create;
   FECNativeScaleMap.OnChange := doNotifyScale;
@@ -349,7 +342,7 @@ begin
   map.OverPassApi.Layer.Group.Markers.Labels.LabelType := ltHint;
   map.OverPassApi.Layer.Group.Markers.Labels.Visible := true;
   map.OverPassApi.Layer.Group.Markers.Labels.Rotation:= lsrHideRotation;
-  map.OverPassApi.Layer.Group.Markers.Labels.Margin := 12;
+  map.OverPassApi.Layer.Group.Markers.Labels.Margin := 4;
 
   // start of search
   map.OverPassApi.Layer.OnBeginQuery := doSearchAmenity;
@@ -643,6 +636,8 @@ begin
 
   // use the dark or light theme
   setSystemTheme;
+
+  map.EndUpdate;
 
 
  
